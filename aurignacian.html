@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurignacian Night - Dog Years</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a1a;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.03) 2px, rgba(0,0,0,.03) 4px);
+            color: #e8dcc8;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 20px;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 80px 40px 100px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .story-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.5em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #f5e6d3;
+            margin-bottom: 15px;
+        }
+
+        .story-meta {
+            color: #8b7355;
+            font-size: 1em;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        .story-content {
+            margin-bottom: 80px;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5em;
+        }
+
+        .story-content em {
+            font-style: italic;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid #3a3a3a;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #c4a57b;
+            text-decoration: none;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #f5e6d3;
+        }
+
+        .nav-center {
+            text-align: center;
+        }
+
+        .story-image {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding-top: 40px;
+            border-top: 1px solid #3a3a3a;
+        }
+
+        .story-image img {
+            max-width: 100%;
+            height: auto;
+            opacity: 0.85;
+        }
+
+        .soundscape-control {
+            text-align: center;
+            margin: 30px 0 50px;
+        }
+
+        .soundscape-control button {
+            background: transparent;
+            border: 1px solid #8b7355;
+            color: #c4a57b;
+            padding: 12px 30px;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .soundscape-control button:hover {
+            background: rgba(139, 115, 85, 0.1);
+            border-color: #c4a57b;
+            color: #f5e6d3;
+        }
+
+        .soundscape-control button.playing {
+            background: rgba(139, 115, 85, 0.2);
+            border-color: #c4a57b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 25px 80px;
+            }
+
+            .story-title {
+                font-size: 1.8em;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="story-title">Aurignacian Night</h1>
+            <p class="story-meta">32,000 BCE — Southern France</p>
+        </header>
+
+        <article class="story-content">
+            <p>The child had been told not to wander beyond the jumping circle of firelight, that the dark held eyes that remembered hunger better than mercy, but children in any age test the edges of things. So he sat just outside the glow, where the warmth still touched his skin but the shadows held a watch of their own.</p>
+
+            <p>His older brother was inside the circle, already big enough to work flint alongside the men. The child had tried earlier, mimicking the angle of the strike, but his hands were still soft and the stone had skittered away. Someone had laughed. Not unkindly, but enough. So he'd brought himself here, to their threshold, where he could still hear them but where the darkness hid the fire in his cheeks.</p>
+
+            <p>Behind him, the adults spoke in low voices, working flint and softening hide with reindeer tallow. They rehashed old news from other valleys, other winters. The fire spat resin; the air was fat and smoke and damp furs. It was late. When they spoke like this, of other times and places, and he tried to think of the distance in between them, the boy felt the night grow impossible and vast.</p>
+
+            <p>He was not afraid.</p>
+
+            <p>Not yet.</p>
+
+            <p>Across the clearing, where the trees drew their dark shapes together, another watcher waited.</p>
+
+            <p>It was not wolf, not exactly. Wolf-shaped, yes: narrow muzzle, the long patience of predators in the stillness, but this one's stillness did not hold the coiled threat of the hunt. Its eyes ranged, weighing something.</p>
+
+            <p>It had been circling the camp for three nights, drawn by warmth and the scent of marrow. Hunger brought it, at first. But hunger alone would not have kept it there. Wolves followed hunger down many paths, and most did not end at the edge of a fire. Still it stayed.</p>
+
+            <p>The child felt eyes on him before he saw them. He lifted his head. Across the dark, two pale embers regarded him, steady as the moon. The not-quite-wolf's gaze rested on him- not the quick measure of prey, but something slower, weighing, choosing.</p>
+
+            <p>He had words for many things now- more than the elders did when they were small- but none for this. He only felt his breath go still.</p>
+
+            <p>He did not look away.</p>
+
+            <p>A twig snapped in the forest behind the creature, but it didn't startle. It stepped forward, one silent pace, into a shaft of firelight thin as a reed. The light caught the edges of its fur, tipping each hair with bronze.</p>
+
+            <p>He <em>should</em> have called out. Should have returned to the circle. But the air between the boy and the wolf held its own still spell, seemed to dare them both to break it.</p>
+
+            <p>So he stayed where he was, breathing as quietly as he could, letting the warmth of the fire brush his back, and kept his gaze soft and open.</p>
+
+            <p>Across the clearing, the wolf-shape tilted its head. The child mirrored it without thinking. The creature blinked once, long and unthreatening. The child did the same. A rhythm formed: unspoken, tentative, real.</p>
+
+            <p>Behind him, a woman laughed low, tired and genuine, and the child glanced back for half a heartbeat. When he turned again, the creature was closer. Not near enough to touch, but a jump. A lunge.</p>
+
+            <p>A breeze moved between them, thin with night-cold. The creature lifted its nose to catch the child's scent: smoke, earth, milk-tooth breath, and something in it eased.</p>
+
+            <p>Not prey. Not danger.</p>
+
+            <p>It lowered itself to the ground, watching. Staying.</p>
+
+            <p>This small human was not predator, nor prey, nor rival.</p>
+
+            <p>His scent settled in the creature's body in a way that eased the muscles along its spine.</p>
+
+            <p>It did not move away.</p>
+
+            <p>The child eased his fingers toward the ground until his hand rested on the dirt between them. He didn't extend it fully, just placed his palm flat to the earth.</p>
+
+            <p>The creature rose, lowered its head.</p>
+
+            <p>Listened to the quiet inside itself.</p>
+
+            <p>Shifted.</p>
+
+            <p>Stepped.</p>
+
+            <p>Closer.</p>
+
+            <p>The fire popped; sparks rose like brief stars.</p>
+
+            <p>No one turned to look.</p>
+
+            <p>Now the child could see its breath in the cold. See the line of its ribs. See that its eyes were not just hungry or rageful as the stories said, but full of knowing. They measured him, as he measured it. Its front paw hovered for a heartbeat then settled closer.</p>
+
+            <p>It had chosen <em>stay</em>.</p>
+
+            <p>If either had moved or made a sound, the moment would have broken.</p>
+
+            <p>They stayed, still.</p>
+
+            <p>It was not language.</p>
+
+            <p>It was a knowing, wordless in the dark.</p>
+
+            <p>A shout from the fire: the child's name.</p>
+
+            <p>He flinched, only a little.</p>
+
+            <p>The creature stepped back. Not in fear. Just a moment ending. It slipped into the dark, and the night closed around it.</p>
+
+            <p>The child went back to the fire. He said nothing. Had not words to tell it.</p>
+
+            <p>Some things are carried, like a coal wrapped in ash, to light the next place you come to.</p>
+
+            <p>He kept it warm inside him.</p>
+
+            <p>At the treeline, the creature paused and looked back once.</p>
+
+            <p>Its body turned away, but something in it leaned toward the fire. Toward the small human who had not run.</p>
+
+            <p>It would circle back.</p>
+
+            <p>Not tonight.</p>
+
+            <p>But soon.</p>
+
+            <p>Years would pass before a wolf lay down inside the ring of firelight.</p>
+
+            <p>Generations before hands and paws lived by the same warmth.</p>
+
+            <p>Thousands of winters before anyone carved them side by side in stone.</p>
+
+            <p>But it began here in a breath held between two small lives:</p>
+
+            <p>each seeing the other across the dark,<br>
+            and not turning away.</p>
+
+            <p>The child grew. Had children of his own.</p>
+
+            <p>He taught them how to master flint, tallow, and their own fears- and how to sit at the edge of the light with open hands, so that someone would be ready to sit, to stay, if ever something stepped out of the vastness of the night.</p>
+        </article>
+
+        <div class="story-image">
+            <img src="aurignacian-carving.png" alt="Ancient carved figure of a canid">
+        </div>
+
+        <div class="soundscape-control">
+            <button id="soundscapeToggle">Listen with soundscape</button>
+        </div>
+
+        <audio id="soundscapeAudio" loop>
+            <source src="aurignacian-soundscape.mp3" type="audio/mpeg">
+        </audio>
+
+        <nav>
+            <a href="stories.html" class="nav-link">← Back to Stories</a>
+            <div class="nav-center">
+                <a href="echo.html" class="nav-link">Next: Echo →</a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Soundscape toggle
+        const soundscapeToggle = document.getElementById('soundscapeToggle');
+        const soundscapeAudio = document.getElementById('soundscapeAudio');
+        let isPlaying = false;
+
+        soundscapeAudio.volume = 0.25; // Keep it low and atmospheric
+
+        soundscapeToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                soundscapeAudio.pause();
+                soundscapeToggle.textContent = 'Listen with soundscape';
+                soundscapeToggle.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                soundscapeAudio.play();
+                soundscapeToggle.textContent = 'Stop soundscape';
+                soundscapeToggle.classList.add('playing');
+                isPlaying = true;
+            }
+        });
+    </script>
+</body>
+</html>
