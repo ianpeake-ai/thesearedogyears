@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo - Dog Years</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #2a2a2a;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.02) 2px, rgba(255,255,255,.02) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,.02) 2px, rgba(255,255,255,.02) 4px);
+            color: #f0e6d8;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 20px;
+            line-height: 1.9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 80px 40px 100px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #454545;
+        }
+
+        .story-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.5em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #f5ead3;
+            margin-bottom: 15px;
+        }
+
+        .story-meta {
+            color: #a89777;
+            font-size: 1em;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        .story-content {
+            margin-bottom: 80px;
+        }
+
+        .story-content p {
+            margin-bottom: 1.8em;
+        }
+
+        .story-content em {
+            font-style: italic;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid #454545;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #c4a57b;
+            text-decoration: none;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #f5ead3;
+        }
+
+        .nav-center {
+            text-align: center;
+        }
+
+        .story-image {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding-top: 40px;
+            border-top: 1px solid #454545;
+        }
+
+        .story-image img {
+            max-width: 100%;
+            height: auto;
+            opacity: 0.9;
+            border-radius: 4px;
+        }
+
+        .soundscape-control {
+            text-align: center;
+            margin: 30px 0 50px;
+        }
+
+        .soundscape-control button {
+            background: transparent;
+            border: 1px solid #a89777;
+            color: #c4a57b;
+            padding: 12px 30px;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .soundscape-control button:hover {
+            background: rgba(168, 151, 119, 0.1);
+            border-color: #c4a57b;
+            color: #f5ead3;
+        }
+
+        .soundscape-control button.playing {
+            background: rgba(168, 151, 119, 0.15);
+            border-color: #c4a57b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 25px 80px;
+            }
+
+            .story-title {
+                font-size: 1.8em;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="story-title">Echo</h1>
+            <p class="story-meta">Scotland, present day</p>
+        </header>
+
+        <article class="story-content">
+            <p>The car smelled of vanilla air freshener. He'd stood in the shop with spruce frost and vanilla secret in his hands, frozen for several seconds deciding which would be less offensive to a puppy's delicate senses. Now his hands sat tighter on the wheel than the road required. The sky had that undecided April look: winter not quite finished, spring not quite motivated.</p>
+
+            <p>They'd set off from Ayrshire early, heading for the Borders. Now the morning was thinning, and the satnav said just over an hour to Coldstream.</p>
+
+            <p>His stomach hadn't settled since he woke.</p>
+
+            <p>An urban park. Seven years old, calling a name until his voice cracked. His mother's hand on his shoulder: "He's probably found somewhere so nice he doesn't want to leave." Even then, he'd known it was a lie told kindly. Wherever Bruno had gone, he wasn't coming back.</p>
+
+            <p>"Are you okay?" Pete said from the passenger seat.</p>
+
+            <p>"Yeah. Fine."</p>
+
+            <p>"You've said that twice already."</p>
+
+            <p>He eased his grip on the wheel. "I'm fine."</p>
+
+            <p>He wasn't fine. He was terrified.</p>
+
+            <p>They stopped for breakfast near Dalkeith in a farm shop café that seemed to have a sideline in highland cow art. He ordered a bacon roll he didn't really want. Pete added two coffees to the tray, both too hot to hold comfortably.</p>
+
+            <p>"So," Pete tried again across the table, "you think we're ready?"</p>
+
+            <p>"I think so."</p>
+
+            <p>"You think so?"</p>
+
+            <p>He exhaled. "I've read everything. Training schedules, socialisation windows, crate training, bite inhibition, raw feeding, fresh feeding, supplements-"</p>
+
+            <p>"Ian."</p>
+
+            <p>"-vet registration, puppy-proofing-"</p>
+
+            <p>"Ian. Breeeeathe." Pete smiled.</p>
+
+            <p>He stopped. Picked up his coffee. Put it down again.</p>
+
+            <p>"What if I'm shit at it?"</p>
+
+            <p>"At what?"</p>
+
+            <p>"At… this. Having a dog. What if I've waited this long and I'm just… bad at it?"</p>
+
+            <p>Pete chewed, considering. "Then you'll learn and adapt. Same as everyone else."</p>
+
+            <p>"Some people have annoying dogs though. What if-"</p>
+
+            <p>"She's a puppy, not a bomb. She'll chew things and piss on the floor and maybe drive us both up the wall for a bit, but they settle down, right?"</p>
+
+            <p>He took a bite of the bacon roll. Grease, salt, anxiety.</p>
+
+            <p>The name hadn't been chosen, more like recognised when it arrived. Echo. Because an echo always comes back. That would be the most important thing about the Next Dog, whenever she existed: she would stay.</p>
+
+            <p>"You settled on a name yet?"</p>
+
+            <p>"Echo."</p>
+
+            <p>"You know if you're going round shouting Echo, people are going to shout it back…"</p>
+
+            <p>He didn't say: I've known her name since I was eight. It was the only name on the shortlist.</p>
+
+            <p>Didn't say: I've been carrying it for thirty years, waiting for a life that could hold her.</p>
+
+            <p>He just said, "Hah, maybe. I guess it'll be a whole thing then."</p>
+
+            <p>The farmhouse sat at the end of a long gravel drive, fields rolling toward the Cheviots. When they pulled up, the extended pack came to meet them at the gate: half a dozen German Shepherds, a couple of Labs, all jostling, tails high, curious and territorial.</p>
+
+            <p>Echo's mum was among them. A black Lab, broad-chested, calm. Her first litter. Echo was the last but one to leave. Ian wondered if she knew the drill now. If she minded.</p>
+
+            <p>The breeder, a woman in her fifties, cheerful and efficient, ushered them inside. The kitchen smelled of woodsmoke and something tangy and raw. There was a puppy pen in the corner, lined with newspaper.</p>
+
+            <p>Echo was in it.</p>
+
+            <p>Small. Black as ink. Ears too big for her head. She was tugging at a toy, growling in a way that was supposed to be fierce and wasn't.</p>
+
+            <p>Ian tried to listen while the breeder talked through feeding schedules, the remaining vaccinations, microchip details. He nodded at the right moments. Signed the paperwork. Transferred the money on his phone, a value somewhere between his phone and his laptop. Watched the numbers drain from his account and felt nothing about it.</p>
+
+            <p>Mostly, he watched Echo bumble around the pen, tripping over her own paws, investigating the water bowl with the gravity of a scientist.</p>
+
+            <p>He hadn't even come close before. The flat in Glasgow: too small. The years working seventy-hour weeks: no time. The long stretch when Pete wasn't ready, hadn't grown up with dogs, didn't see the point. Until the friend with the well-behaved Lab. Until Pete said, quietly, one evening after they'd moved out of the city, got the garden: "You can finally have your dog now."</p>
+
+            <p>The breeder scooped Echo up, passed her to Ian. She was warm. Wriggly. Her nose went straight for his face, tongue out, tail a blur.</p>
+
+            <p>"Enjoy her," the breeder said. If she was sentimental, she didn't show it.</p>
+
+            <p>Ian held her against his chest. His hands didn't shake. She was real now, and not frightening in the least.</p>
+
+            <p>Pete drove home. Ian sat in the back with Echo.</p>
+
+            <p>She didn't settle. She was energised, nosy, sniffing his hands, his jacket, the seatbelt, the window, the bag of toys they'd brought. He kept one hand on her always.</p>
+
+            <p>"You two alright back there?" Pete called.</p>
+
+            <p>"Yeah. She's good."</p>
+
+            <p>"Want to cry? Just a bit?" he raised an eyebrow.</p>
+
+            <p>"Hah, fuck off!" and then "Maybe later…"</p>
+
+            <p>The satnav ticked down the miles. An hour became forty minutes became twenty.</p>
+
+            <p>Echo climbed into his lap, curled up for thirty seconds, then sprang up again to investigate the window latch.</p>
+
+            <p>Ian let her. Watched her. Didn't look away.</p>
+
+            <p>They pulled into the drive just after one.</p>
+
+            <p>Ian carried her inside. The living room was ready: crate, pen, blankets, toys arranged with the precision of someone who'd read everything he could find and wanted to get it right.</p>
+
+            <p>He set her down.</p>
+
+            <p>She didn't hesitate. Just ran: sniffing, exploring, tail up, ears forward, taking it all in with the confidence of something that had never learned to doubt its welcome.</p>
+
+            <p>Ian sat on the floor, watched her bumble around.</p>
+
+            <p>Pete leaned in the doorway, grinning. "You good?"</p>
+
+            <p>"Yeah."</p>
+
+            <p>And this time, he meant it.</p>
+        </article>
+
+        <div class="story-image">
+            <img src="echo.png" alt="Echo on her first day, in the car on the way home">
+        </div>
+
+        <div class="soundscape-control">
+            <button id="soundscapeToggle">Listen while you read</button>
+        </div>
+
+        <audio id="soundscapeAudio" loop>
+            <source src="firstday.mp3" type="audio/mpeg">
+        </audio>
+
+        <nav>
+            <a href="stories.html" class="nav-link">← Back to Stories</a>
+            <div class="nav-center">
+                <a href="herrengasse.html" class="nav-link">Next: Herrengasse Elegy →</a>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // Soundscape toggle
+        const soundscapeToggle = document.getElementById('soundscapeToggle');
+        const soundscapeAudio = document.getElementById('soundscapeAudio');
+        let isPlaying = false;
+
+        soundscapeAudio.volume = 0.3; // Gentle volume for the song
+
+        soundscapeToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                soundscapeAudio.pause();
+                soundscapeToggle.textContent = 'Listen while you read';
+                soundscapeToggle.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                soundscapeAudio.play();
+                soundscapeToggle.textContent = 'Stop music';
+                soundscapeToggle.classList.add('playing');
+                isPlaying = true;
+            }
+        });
+    </script>
+</body>
+</html>
