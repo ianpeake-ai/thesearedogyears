@@ -6,7 +6,7 @@
     <title>Dog Years - From First Fire to the Stars, Together</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,8 +16,12 @@
 
         body {
             background: #0a0a0a;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.05) 2px, rgba(0,0,0,.05) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.05) 2px, rgba(0,0,0,.05) 4px);
             color: #e8dcc8;
-            font-family: 'Georgia', serif;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 20px;
             line-height: 1.8;
             overflow-x: hidden;
         }
@@ -65,18 +69,17 @@
         }
 
         h1 {
-            font-family: 'Arvo', serif;
-            font-size: 2.5em;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 3em;
             text-align: center;
-            margin-bottom: 40px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            margin-bottom: 50px;
+            font-weight: 600;
+            letter-spacing: 3px;
             color: #f5e6d3;
-            text-transform: uppercase;
         }
 
         .content {
-            font-size: 1.1em;
+            font-size: 1.15em;
             margin-bottom: 30px;
         }
 
@@ -89,29 +92,22 @@
             color: #d4c5a9;
         }
 
-        .content strong {
-            font-family: 'Arvo', serif;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
         .enter-link {
             text-align: center;
             margin-top: 50px;
         }
 
         .enter-link a {
-            font-family: 'Arvo', serif;
+            font-family: 'Crimson Text', Georgia, serif;
             color: #f5e6d3;
             text-decoration: none;
-            font-size: 1.1em;
-            font-weight: 700;
+            font-size: 1.2em;
+            font-weight: 600;
             padding: 15px 40px;
             border: 2px solid #8b7355;
             display: inline-block;
             transition: all 0.3s ease;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .enter-link a:hover {
@@ -164,41 +160,26 @@
     <div class="firelight"></div>
     
     <div class="container">
-        <h1>Dog Years: An Invitation to the Long Story</h1>
+        <h1>Dog Years</h1>
         
         <div class="content">
-            <p><em>Before there were kings or saints or cities, there was a fire in the dark.</em></p>
+            <p>Before we built cities, we tended our fires out in the dark.</p>
             
-            <p><em>And just beyond it, watching us, a shape with patient eyes.</em></p>
+            <p>Just beyond them, shapes with patient, curious eyes.</p>
             
-            <p>One night — no one can say where — a child and a not-quite-wolf looked at one another across the glow and did not turn away. Something began there. It has been beginning ever since.</p>
+            <p>We'll never know when or where, but one night someone looked across the glow at those eyes, and they did not turn away.</p>
             
-            <p>This space is about that.</p>
+            <p>Something began there. It has been beginning ever since.</p>
             
-            <p><strong>Dog Years</strong> is a long, cross-time story about the oldest partnership we have: human and dog, side by side. Thirty-five thousand years of warmth, work, grief, fur, meat, loyalty, and the strange shared dream of staying alive together.</p>
+            <p style="margin-top: 30px;">Thirty-five thousand years. Myth, memory, dogs and humans across deep time and in every place we've ever made home.</p>
             
-            <p>I'm not here to sentimentalise it.</p>
+            <p>If you've ever looked into a dog's eyes and felt that jolt of recognition, you'll know what we're reaching for.</p>
             
-            <p>I want to re-wild it.<br>
-            I want to return its teeth.<br>
-            I want to let it be strange again.</p>
+            <p style="margin-top: 30px;">Here, we are exploring that ancient contract: the one we never signed, but kept anyway. What do we owe each other? What does it mean to be tied to one another yet so deeply unknowable?</p>
             
-            <p>Dogs have been gods, workers, omens, status symbols, comrades, scapegoats, and family. They've slept in our beds and died in our wars. They've guarded our babies and eaten our dead. They've survived because of us and in spite of us — and we have done the same.</p>
-            
-            <p>This is a project about that ancient contract:<br>
-            <em>the one we never signed, but kept anyway.</em></p>
-            
-            <p style="text-align: center; margin-top: 40px;">* * *</p>
-            
-            <p>This isn't nostalgia. It's ancestry.</p>
-            
-            <p>If you've ever looked into a dog's eyes and felt that jolt of recognition — that ancient, unreasonable love — you've met the thing I'm trying to write towards.</p>
-            
-            <p><strong>Dog Years</strong> is for the people who feel that without needing it explained.</p>
-            
-            <p style="text-align: center; margin-top: 40px; font-style: italic;">The fire is small on purpose.<br>
-            There's room.<br>
-            Pull up a place by the flames.</p>
+            <p style="text-align: center; margin-top: 50px; font-style: italic;">You found this place.<br>
+            Sit by the fire.<br>
+            Discover your place in the oldest story.</p>
         </div>
         
         <div class="enter-link">
@@ -209,8 +190,7 @@
     <button class="audio-control" id="audioToggle">Mute Fire</button>
 
     <audio id="fireAudio" loop autoplay>
-        <!-- Fire crackle audio would go here - you'll need to add an actual audio file -->
-        <!-- <source src="fire-crackle.mp3" type="audio/mpeg"> -->
+        <source src="fire-crackle.mp3" type="audio/mpeg">
     </audio>
 
     <script>
