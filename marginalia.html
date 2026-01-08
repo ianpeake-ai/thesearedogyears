@@ -785,7 +785,11 @@
 
         </div>
     </div>
+<button class="audio-control" id="audioToggle">Play Soundscape</button>
 
+    <audio id="soundscapeAudio" loop>
+        <source src="YOUR-SOUNDSCAPE-FILE.mp3" type="audio/mpeg">
+    </audio>
     <script>
         const soundscapeToggle = document.getElementById('soundscapeToggle');
         const soundscapeAudio = document.getElementById('soundscapeAudio');
