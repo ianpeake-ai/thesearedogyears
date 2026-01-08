@@ -328,26 +328,23 @@
         <source src="thunder.mp3" type="audio/mpeg">
     </audio>
     <script>
-        // Soundscape toggle
-        const soundscapeToggle = document.getElementById('soundscapeToggle');
-        const soundscapeAudio = document.getElementById('soundscapeAudio');
-        let isPlaying = false;
+    const audioToggle = document.getElementById('audioToggle');
+    const soundscapeAudio = document.getElementById('soundscapeAudio');
+    let isPlaying = false;
 
-        soundscapeAudio.volume = 0.3;
+    soundscapeAudio.volume = 0.25;
 
-        soundscapeToggle.addEventListener('click', function() {
-            if (isPlaying) {
-                soundscapeAudio.pause();
-                soundscapeToggle.textContent = 'Listen to the thunder';
-                soundscapeToggle.classList.remove('playing');
-                isPlaying = false;
-            } else {
-                soundscapeAudio.play();
-                soundscapeToggle.textContent = 'Stop thunder';
-                soundscapeToggle.classList.add('playing');
-                isPlaying = true;
-            }
-        });
-    </script>
+    audioToggle.addEventListener('click', function() {
+        if (isPlaying) {
+            soundscapeAudio.pause();
+            audioToggle.textContent = 'Play Soundscape';
+            isPlaying = false;
+        } else {
+            soundscapeAudio.play();
+            audioToggle.textContent = 'Mute Soundscape';
+            isPlaying = true;
+        }
+    });
+</script>
 </body>
 </html>
