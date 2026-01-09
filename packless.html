@@ -177,7 +177,7 @@
     <div class="container">
         <header>
             <h1 class="story-title">Packless</h1>
-            <p class="story-meta">Dakota Territory, 1885</p>
+            <p class="story-meta">Dakota Territory, USA, 1885</p>
         </header>
 
         <article class="story-content">
@@ -288,11 +288,11 @@
     audioToggle.addEventListener('click', function() {
         if (isPlaying) {
             soundscapeAudio.pause();
-            audioToggle.textContent = 'Play Soundscape';
+            audioToggle.textContent = 'Listen';
             isPlaying = false;
         } else {
             soundscapeAudio.play();
-            audioToggle.textContent = 'Mute Soundscape';
+            audioToggle.textContent = 'Mute';
             isPlaying = true;
         }
     });
