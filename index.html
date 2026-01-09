@@ -226,11 +226,11 @@
         audioToggle.addEventListener('click', function() {
             if (isPlaying) {
                 fireAudio.pause();
-                audioToggle.textContent = 'Unmute Fire';
+                audioToggle.textContent = 'Listen';
                 isPlaying = false;
             } else {
                 fireAudio.play();
-                audioToggle.textContent = 'Mute Fire';
+                audioToggle.textContent = 'Mute';
                 isPlaying = true;
             }
         });
