@@ -346,6 +346,33 @@
                 text-align: center;
             }
         }
+        .audio-control {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+    background: rgba(139,105,20,.15);
+    border: 2px solid #8b6914;
+    color: #4a1a0a;
+    padding: 12px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.audio-control:hover {
+    background: rgba(139,105,20,.25);
+}
+
+@media (max-width: 768px) {
+    .audio-control {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 15px;
+        font-size: 0.85em;
+    }
+}
     </style>
 </head>
 <body>
