@@ -787,8 +787,8 @@
             </div>
 
             <div class="colophon">
-                <p>Here endeth The Truce, being an account of that which was not recorded by history.
-                <p>Gloria in excelsis Deo, et in terra pax hominibus bonae voluntatis.</p>
+                <p><i>Here endeth The Truce, being an account of that which was not recorded by history.</i><p>
+                <p><i>In terra pax hominibus bonae voluntatis.</i></p>
             </div>
 
             <nav>
@@ -798,7 +798,7 @@
 
         </div>
     </div>
-<button class="audio-control" id="audioToggle">Play Soundscape</button>
+<button class="audio-control" id="audioToggle"Hark!</button>
 
     <audio id="soundscapeAudio" loop>
         <source src="covcarol.mp3" type="audio/mpeg">
@@ -813,11 +813,11 @@
     audioToggle.addEventListener('click', function() {
         if (isPlaying) {
             soundscapeAudio.pause();
-            audioToggle.textContent = 'Play Soundscape';
+            audioToggle.textContent = 'Hark!';
             isPlaying = false;
         } else {
             soundscapeAudio.play();
-            audioToggle.textContent = 'Mute Soundscape';
+            audioToggle.textContent = 'Hush';
             isPlaying = true;
         }
     });
