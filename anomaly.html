@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anomaly at ARCESS-7 - Dog Years</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #e8eaed;
+            color: #1a1d23;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 20px;
+            line-height: 1.85;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background-color 0.8s ease, color 0.5s ease;
+        }
+
+        /* Harsh headlamp vignette - cone of visibility */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 45%, 
+                transparent 25%, 
+                rgba(8, 12, 18, 0.15) 45%,
+                rgba(4, 6, 10, 0.5) 65%,
+                rgba(0, 2, 5, 0.85) 85%,
+                rgba(0, 0, 0, 0.95) 100%);
+            pointer-events: none;
+            z-index: 10;
+            transition: all 1s ease;
+        }
+
+        /* Flicker overlay */
+        .flicker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .flicker.active {
+            animation: headlampFlicker 0.15s ease-in-out;
+        }
+
+        @keyframes headlampFlicker {
+            0% { background: rgba(0, 0, 0, 0); }
+            20% { background: rgba(0, 0, 0, 0.7); }
+            25% { background: rgba(0, 0, 0, 0.1); }
+            40% { background: rgba(0, 0, 0, 0.8); }
+            50% { background: rgba(0, 0, 0, 0); }
+            65% { background: rgba(0, 0, 0, 0.5); }
+            80% { background: rgba(0, 0, 0, 0.1); }
+            100% { background: rgba(0, 0, 0, 0); }
+        }
+
+        /* Spatial distortion container */
+        .container {
+            position: relative;
+            z-index: 5;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 50px 100px;
+            transition: max-width 2s ease, padding 2s ease, transform 0.5s ease;
+        }
+
+        .container.compressed {
+            max-width: 580px;
+            padding-left: 70px;
+            padding-right: 70px;
+        }
+
+        .container.wrongness {
+            transform: perspective(1000px) rotateX(0.5deg) rotateY(-0.3deg);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #8a9099;
+        }
+
+        .story-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.2em;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: #0a0c10;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .story-meta {
+            color: #5a6570;
+            font-size: 1em;
+            letter-spacing: 1px;
+            font-style: normal;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+
+        .story-content {
+            margin-bottom: 80px;
+        }
+
+        .story-content p {
+            margin-bottom: 1.7em;
+            transition: opacity 0.5s ease, letter-spacing 1s ease, line-height 2s ease;
+        }
+
+        .story-content p.thought {
+            font-style: italic;
+            color: #2a3040;
+        }
+
+        .story-content p.break {
+            margin-top: 2.5em;
+            margin-bottom: 2.5em;
+        }
+
+        .story-content p.beat {
+            margin-top: 2em;
+            margin-bottom: 2em;
+        }
+
+        .story-content p.close {
+            margin-bottom: 0.7em;
+        }
+
+        .story-content p.spaced {
+            letter-spacing: 0.5px;
+        }
+
+        /* The wrongness zone - text gets uncomfortable */
+        .wrongness-zone p {
+            transition: all 0.3s ease;
+        }
+
+        .wrongness-active .wrongness-zone p {
+            line-height: 1.65;
+            letter-spacing: -0.3px;
+        }
+
+        /* Memory/guilt - the thing he carries */
+        .story-content p.memory {
+            font-style: italic;
+            color: #3a3a4a;
+            border-left: 2px solid rgba(60, 70, 90, 0.3);
+            padding-left: 1.2em;
+            margin-left: -1.4em;
+        }
+
+        /* Pack communication */
+        .story-content p.pack-voice {
+            color: #1a1a2a;
+            font-weight: 500;
+        }
+
+        /* Command words */
+        .command {
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        .norwegian {
+            font-style: italic;
+        }
+
+        /* Section breaks - harsh, clinical */
+        .section-break {
+            text-align: center;
+            margin: 3em 0;
+            color: #5a6570;
+            font-size: 1.2em;
+            letter-spacing: 8px;
+        }
+
+        /* Final section - slightly warmer */
+        .story-content.safe {
+            color: #252520;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid #8a9099;
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 1.2s ease-out;
+        }
+
+        nav.visible {
+            opacity: 1;
+        }
+
+        .nav-link {
+            color: #5a6570;
+            text-decoration: none;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #1a1d23;
+        }
+
+        .story-image {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding-top: 50px;
+            border-top: 1px solid #8a9099;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 2s ease-out, transform 2s ease-out;
+        }
+
+        .story-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-image img {
+            max-width: 100%;
+            height: auto;
+            opacity: 0.9;
+            filter: saturate(0.7) contrast(1.1);
+        }
+
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(90, 100, 110, 0.2);
+            border: 1px solid #5a6570;
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #3a4550;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(90, 100, 110, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 25px 80px;
+            }
+
+            .container.compressed {
+                max-width: 100%;
+                padding-left: 35px;
+                padding-right: 35px;
+            }
+
+            .story-title {
+                font-size: 1.6em;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .story-content p.memory {
+                margin-left: -0.8em;
+                padding-left: 1em;
+            }
+        }
+
+        /* Safe zone - kennel warmth */
+        body.safe-zone {
+            background: #e5e2dc;
+            color: #2a2520;
+        }
+
+        body.safe-zone .vignette {
+            background: radial-gradient(ellipse at 50% 50%, 
+                transparent 35%, 
+                rgba(20, 18, 15, 0.1) 55%,
+                rgba(15, 12, 10, 0.3) 75%,
+                rgba(10, 8, 5, 0.5) 100%);
+        }
+
+        /* Deep wrongness - the anomaly zone */
+        body.deep-wrongness {
+            background: #dde0e5;
+        }
+
+        body.deep-wrongness .vignette {
+            background: radial-gradient(ellipse at 50% 45%, 
+                transparent 15%, 
+                rgba(8, 12, 18, 0.25) 35%,
+                rgba(4, 6, 10, 0.6) 55%,
+                rgba(0, 2, 5, 0.9) 75%,
+                rgba(0, 0, 0, 1) 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="vignette" id="vignette"></div>
+    <div class="flicker" id="flicker"></div>
+
+    <div class="container" id="container">
+        <header>
+            <h1 class="story-title">Anomaly at ARCESS-7</h1>
+            <p class="story-meta">Svalbard Archipelago · Norwegian Arctic · 1983</p>
+        </header>
+
+        <article class="story-content" id="storyContent">
+
+            <p class="thought">Fucking Eriksen and his fool's errand.</p>
+
+            <p>Four kilometers out. Another six to the ridge. Strøm's arm already aches from gripping the sled's handlebar. The dogs pull steady: Freya sets pace, the others fall in, and the runners hiss over snow that's more ice than powder this far from the coast.</p>
+
+            <p>His breath fogs the scarf wrapped across his face. He pulls it down, spits, watches the saliva freeze before it lands. Minus forty, maybe worse with wind. Cold that demands attention every moment outside the base.</p>
+
+            <p class="break">He'd done enough winters to rotate out. Most did. Eriksen wouldn't serve another winter. That fucker would be warm behind a desk in Tromsø by next summer, for sure.</p>
+
+            <p>Strøm had stopped counting his nights. The dark suited him. Out here you could go days without speaking to anyone but the dogs, who asked things of you, but not in words.</p>
+
+            <p>Freya knows the route, has run it a dozen times since summer. Her pace is metronomic: faster and she'd burn out, slower and the deadly cold would settle in. Behind her, Birk runs with his head low, eyes fixed on nothing. Then Halvard, who'd lick your face off given half a chance, and Petter, the youngest, still acting like mushing is a game instead of work.</p>
+
+            <p>They're good dogs. A small team, but that's the point: fast, light, efficient. Strøm trusts them like he trusts his hands. They are a team in the way that four fingers and a thumb are a team. They work together now with the sparsest of commands. The long night pares everything down.</p>
+
+            <p>The ridge is up ahead somewhere. He can't see it yet, just white on white on white, his headlamp cutting a cone of visibility that ends three meters out. Beyond that: nothing. The polar night doesn't give you horizons. Doesn't give you depth. Just <em>here</em>, and then <em>void</em>.</p>
+
+            <p>The sensors are up there. Radar, seismographs, magnetometers. Hundreds of thousands of krone of equipment across hundreds of kilometers of the ice, all to give Tromsø an extra few minutes if the missiles fly. Washington a few more.</p>
+
+            <p class="thought">Don't think about Tromsø, because then you'll think of the icy road and the stupid kid out in the snow without his parents and then you'll need a drink, and the flask is buried in the pack.</p>
+
+            <p>Three sensors down in a week. Different systems, failing in different ways. No big weather surprises. No maintenance fuck-ups. He'd serviced them himself.</p>
+
+            <p>Eriksen—station chief, the kind who saw shadows everywhere even in all this white—decided it needed checking. Personally. Physically. <em>Now</em>.</p>
+
+            <p>"Could be sabotage," he'd said, face drawn tight. "Could be they're testing something new. Could be—"</p>
+
+            <p>"Could be the cold," Strøm had said. "Metal fatigue. Ice expansion. The usual. Nothing lasts here, you know this."</p>
+
+            <p>"Could be cold." Eriksen hadn't looked convinced. "But you'll check."</p>
+
+            <p class="beat">So here he is. <em>Fucking Eriksen.</em></p>
+
+            <p class="section-break">— — —</p>
+
+            <p>The sled jolts: Freya's navigating around something, a pressure ridge maybe, hard to tell. Strøm shifts weight, trusts her judgment. She's been running this route since she was two. Knows every dip, every rise, every place the ice lies.</p>
+
+            <p>The wind shifts. Comes from the side now, cutting across the path. The dogs lean into it without breaking stride. Strøm pulls his scarf back up, tucks his chin. His beard is ice by now, frozen solid from his breath. His eyelashes want to stick together when he blinks.</p>
+
+            <p>He blinks less.</p>
+
+            <p>Six more kilometers. Check the array. Ten back. Easy.</p>
+
+            <p data-flicker="true">The headlamp flickers. Strøm taps it with a gloved fist against the battery pack on his belt. It steadies. The batteries hate the cold as much as he does, drain faster, die harder. He's got spares, but changing them out here means stopping, means exposing his hands, means time he'd rather not spend.</p>
+
+            <p>The dogs pull. The runners hiss. The wind pushes. The world reduces to forward motion, managed cold, and the rhythm of work. <em>So far so good,</em> he thinks. "Flink hunde."</p>
+
+            <p class="section-break">— — —</p>
+
+            <!-- FREYA STOPS - tension begins -->
+            <p class="beat" data-tension="start">Freya stops abruptly: a full halt, mid-stride, like she hit a wall.</p>
+
+            <p>The sled glides forward on momentum, nearly runs into her before Strøm hits the brake. The other dogs bunch up, confused, tangling slightly before sorting themselves.</p>
+
+            <p>Strøm waits. Counts to ten. Lets Freya work through whatever she's working through—scent, sound, something in the ice he can't make out.</p>
+
+            <p>She doesn't move. Her head is up, ears forward. She is reading something, but when Strøm looks where she's looking, he sees only the great white dark. Beyond the reach of his headlamp he might as well be blind.</p>
+
+            <p>"<span class="norwegian">Hei</span>," he says. "I see you stopped, lady. What is it?"</p>
+
+            <p>Freya's ears twitch. She shifts her weight, looks back at him. Her eyes catch the light—gold flash, then dark again.</p>
+
+            <p>The other dogs are restless. Petter whines. Halvard presses close to Birk, who stands perfectly still, staring into nothing with that unnerving focus he gets sometimes. Like he's listening to something no one else can hear.</p>
+
+            <p>Strøm gets off the sled. Knees stiff. Walks forward, stops next to Freya. Puts a hand on her head.</p>
+
+            <p>"What is it, girl?"</p>
+
+            <p>Staring into the blank, she doesn't acknowledge him.</p>
+
+            <p>Strøm follows her gaze. Sweeps the headlamp across the white. Sees: snow, ice, maybe the faint rise of the ridge a kilometer out. Nothing unusual. Nothing there. Until—just once, in the corner of his eye as he turns—a small figure alone on the ice. <em>Fuck. No. Not this far out.</em></p>
+
+            <p>He checks the wind: steady. Checks the ice: solid. Checks his compass: fine. He turns around on the spot. Laughs briefly. Nothing.</p>
+
+            <p>He crouches next to Freya. "Talk to me."</p>
+
+            <p class="close">She is tense as a wire. The pack waits on her. Even Petter's whining has stopped. Birk's hum begins—a soft, low vibration, like something small and mechanical winding up.</p>
+            <p class="close">Strøm stands. One more look around. Still nothing.</p>
+            <p>"All right," he says. "All right."</p>
+
+            <p>He returns to the sled. Stands on the runners. "<span class="norwegian">Freya. Fram.</span>"</p>
+
+            <p>Nothing.</p>
+
+            <p>"<span class="norwegian">FRAM.</span>"</p>
+
+            <p>Nothing.</p>
+
+            <p>He pulls the lead line—he is insistent now. This cannot go on forever, not out here.</p>
+
+            <p>Freya takes one step. Then another. He tugs again. She looks to be fighting something. She shakes, begins to trot. <em>Yes, professional,</em> thinks Strøm.</p>
+
+            <p>The pack follows, uneasy. Petter's whining edges toward something else—tension pointed ahead now, not back. Birk's hum continues, audible through wind and layers. Halvard presses so close to Birk their flanks touch.</p>
+
+            <p>They move forward. Just a couple of kilometers before the ridge emerges from the white. The sensor array: skeletal shapes against the dark.</p>
+
+            <p>Strøm brakes, dismounts, anchors the sled with the screw.</p>
+
+            <p class="section-break">— — —</p>
+
+            <!-- THE ARRAY - something wrong -->
+            <p data-compression="start">He is several paces from the seismograph housing when he sees: the first sensor is sheared off. It is a clean cut through the mounting bracket, metal bright where it snapped. A quarter inch of steel. The sensor itself is ten meters down the slope, half-buried in snow.</p>
+
+            <p>Strøm crouches. Runs his glove over the break. <em>What did this?</em> Metal fatigue or wind damage he has seen before—there's a pinched-off edge to the break. The ends stretched out like taffy before the break. This is <em>sliced</em>.</p>
+
+            <p>He stands, looks at the other sensors. Both are tilted wrong. Cables hanging loose, connections broken. <em>This isn't weather.</em></p>
+
+            <p>He walks to the junction box. The door hangs open. <em>Impossible.</em> This thing is double-locked and insulated. As he walks around it, he sees it is disembowelled. Wires trail out into a tangle. Components warped and slumped, but no burn marks, no fire smell. <em>Why would they do it like this?</em></p>
+
+            <p>Freya barks sharply from the sled and he startles, turns to them. As the cone of light from the headlamp moves, it catches the small figure again out at the edge of the ridge. Strøm cries out suddenly then feels stupid for it. <em>This is too much drink or too little—either way the cure's in the flask.</em></p>
+
+            <p>His hands shake as he seals the box as best he can. He is breathing hard and checks over both shoulders. <em>Bastard Soviets. Not ghosts.</em></p>
+
+            <p>Strøm turns back toward the dogs. Forty meters away, Freya is sitting now, but fixes him with her stare. The others are bunched too close, pressed together even though they should be fine in this cold. He checks the others: Halvard's tail is low. He waits for Strøm, ears up, ready.</p>
+
+            <p>Birk faces outwards, blank. As Strøm approaches he hears the dog humming again. <em>Fucking whine if you're going to whine,</em> he thinks.</p>
+
+            <p class="beat">And Petter—now he's closer, Strøm sees Petter is destroying his harness. He's chewed almost through the leather, head thrashing, making whines, growls, something desperate and angry and scared.</p>
+
+            <p>Strøm walks toward him. "Petter." The dog doesn't stop.</p>
+
+            <p>Strøm reaches the sled. Moves closer. "Knock it off—"</p>
+
+            <p>He grabs the harness. Shakes hard, tries to snap him out of it.</p>
+
+            <p class="pack-voice">Petter lunges.</p>
+
+            <p>Strøm gets his arm up—instinct, too slow—and Petter's teeth close on his forearm through the parka, through the layers, into skin. The pain is white-hot. Strøm shouts, tries to pull back, but Petter's locked on, shaking his head. "You <em>bastard</em>—" Pain makes his voice crack. <em>What will I do, out here?</em></p>
+
+            <p>Then Freya slams into Petter. She makes no sound other than the contact. They go down, tangled, snarling. Freya's jaws are at Petter's throat. No pressure. She holds. Petter goes still. Whines. Submits.</p>
+
+            <p>Freya holds Petter this way until he stops moving entirely. Then she releases. Steps back. Stands over him. Petter stays down, trembling.</p>
+
+            <p class="break">Strøm is on the ground. He doesn't remember falling. His arm throbs and he grunts as he moves it. He can feel blood, wet inside his sleeve, already starting to freeze.</p>
+
+            <p>He looks at Petter. At the blood. At his arm.</p>
+
+            <p>Gets to his feet.</p>
+
+            <p class="beat">Kicks.</p>
+
+            <p>His boot catches Petter in the ribs—not full force, but enough. The dog yelps, scrambles back.</p>
+
+            <p class="pack-voice" data-wrongness="start">And every dog growls. All of them. Low. Unified. A sound Strøm has never heard from them.</p>
+
+            <p>All except Freya. She steps between him and Petter. Silent. Head low. Hackles up.</p>
+
+            <p>Birk's hum drops to a rumble. Halvard shows teeth.</p>
+
+            <p>Even Petter—still trembling, still down—watching Strøm. <em>You're not pack anymore.</em></p>
+
+            <p class="beat">Strøm freezes.</p>
+
+            <p>His hand goes to the rifle on the sled. Slowly.</p>
+
+            <p>The growling intensifies.</p>
+
+            <p>Freya doesn't move. Just stands there. Between him and the rest of them.</p>
+
+            <p>Strøm takes a step back.</p>
+
+            <p>The growling continues.</p>
+
+            <p>Another step.</p>
+
+            <p>He's losing them. Right here. Right now. Everything he built with them—years of it—cracking open. And if he pushes—if he reaches for that rifle—they'll scatter or they'll rush him, and either way he's dead.</p>
+
+            <p>His arm throbs. Blood dripping into the snow.</p>
+
+            <p>He needs them. Needs them to get home. Needs them to survive.</p>
+
+            <p class="pack-voice">But they don't need him anymore.</p>
+
+            <p class="beat">Strøm turns. Walks away from the sled. Away from the pack.</p>
+
+            <p>Into the white.</p>
+
+            <p class="section-break">— — —</p>
+
+            <!-- THE WRONGNESS ZONE -->
+            <div class="wrongness-zone" data-anomaly="true">
+
+            <p>His headlamp cuts three meters. Beyond that: nothing.</p>
+
+            <p>He walks. Ten meters. Twenty.</p>
+
+            <p class="thought">Needs to see what they're seeing. What they know that he doesn't. Needs to understand why they'd turn on him, why they'd—</p>
+
+            <p class="beat pack-voice" data-flicker="true">Something's wrong with the space. Not visually. Spatially. Like depth perception failing, like being pushed forward into nothing.</p>
+
+            <p>He takes another step.</p>
+
+            <p>His stomach lurches. He puts a hand out to steady himself on nothing. Can't tell which way is up.</p>
+
+            <p class="pack-voice">The wind sounds wrong. Not louder. Just: wrong. Like it's coming from directions that don't exist.</p>
+
+            <p class="beat">Something at the edge of the light. Small. Still.</p>
+
+            <p>He doesn't turn his head.</p>
+
+            <p class="memory">He knows the size of it without looking. Has measured it every night for six years, in the space between waking and sleep, in the bottom of whatever bottle he could find. The road outside Tromsø. The shape in the headlights. The moment he didn't stop.</p>
+
+            <p class="beat pack-voice"><em>Run.</em></p>
+
+            </div>
+
+            <p class="beat" data-wrongness="end">Behind him: the dogs scream.</p>
+
+            <p>Strøm runs. Back toward the sound. Back toward the pack. His boots slip on ice. He catches himself. Keeps running.</p>
+
+            <p>The dogs are pulling backward, all of them, lines taut, the sled moving even though the brake is set.</p>
+
+            <p>Freya is pulling so hard the harness is choking her.</p>
+
+            <p>Strøm reaches the sled. Grabs the handlebar. "<span class="norwegian">Snu!</span>" <em>Turn around.</em></p>
+
+            <p>Freya doesn't wait. She wheels, and the pack follows, and they run.</p>
+
+            <p class="pack-voice">Not mushing. Running.</p>
+
+            <p>Freya flat-out, pace she's never set before. The others match it. Even Petter. Even after everything. Head down, pulling hard.</p>
+
+            <p>Strøm crouches low, good arm gripping the handlebar, bad arm tucked against his chest. The blood has stopped—frozen solid in his sleeve.</p>
+
+            <p class="section-break">— — —</p>
+
+            <p data-compression="end">The cold settles in without the work of mushing. Into his joints. His lungs. His bones. Every jolt of the sled sends pain through his arm.</p>
+
+            <p>He doesn't look back.</p>
+
+            <p>The dogs are silent now. No whining. No play. Just: run.</p>
+
+            <p>Birk's hum has stopped. Or Strøm can't hear it.</p>
+
+            <p>Halvard runs with ears flat, head low.</p>
+
+            <p>Freya doesn't falter. Pace perfect. Line perfect. She knows where they're going even when Strøm can't see five meters ahead.</p>
+
+            <p>Time stops meaning anything. Could be an hour. Could be twenty minutes.</p>
+
+            <p>His arm throbs. His face is numb. His feet. Everything numb except the cold burning in his core.</p>
+
+            <p class="close">So he doesn't stop. Freya doesn't stop. None of them stop.</p>
+            <p>They run.</p>
+
+            <p class="section-break">— — —</p>
+
+            <!-- RETURN - approaching safety -->
+            <p data-safe="start">The station appears out of the white.</p>
+
+            <p>Orange hatchlight cutting through the dark. Real. Familiar.</p>
+
+            <p>Freya slows. Stops twenty meters out.</p>
+
+            <p>Strøm stumbles off the sled. His legs don't work right. Nearly goes down. Catches himself.</p>
+
+            <p>The dogs pant. Exhausted. But alive. All of them alive.</p>
+
+            <p>He anchors the sled with the snow hook. Moves along the gangline. His bad arm useless, he fumbles with frozen fingers to unsnap the tug lines.</p>
+
+            <p>Freya first. She's free, and immediately runs to the station door. Barks. Loud. Sharp. <em>Help here. Humans. Now.</em></p>
+
+            <p>Nothing.</p>
+
+            <p>Birk is next. Strøm unclips him and the dog immediately runs—not toward the station, but out, scanning the horizon. Looking back toward the ridge. Standing watch.</p>
+
+            <p>Halvard presses close to Strøm while he works. Won't leave his side.</p>
+
+            <p class="beat">Then Petter.</p>
+
+            <p>Strøm's hands shake as he reaches for the clip. The dog watches him. Still trembling. Still submissive.</p>
+
+            <p>"I should shoot you tomorrow," Strøm mutters.</p>
+
+            <p>But his hands unclip the line anyway.</p>
+
+            <p>Petter doesn't run. Just stands there. Waiting.</p>
+
+            <p class="break">Freya barks again at the station door. Still nothing.</p>
+
+            <p>Strøm looks at the door. At the orange light. No one's coming.</p>
+
+            <p>Then at the dog kennels. Twenty meters to the left. Low structures, half-buried in snow, but accessible. Shelter. Theirs.</p>
+
+            <p>He walks toward them. Freya sees, abandons the door, trots after him.</p>
+
+            <p>"<span class="norwegian">Sammen</span>," Strøm says. "<span class="norwegian">Min flokk.</span>"</p>
+
+            <p class="thought"><em>Together. My pack.</em> Hard to tell anymore who belongs to whom.</p>
+
+            <p>Halvard follows immediately. Petter hesitates, then comes.</p>
+
+            <p class="beat">But Birk—</p>
+
+            <p>Birk is still out there. Staring toward the ridge. Hackles up. On watch.</p>
+
+            <p>"<span class="norwegian">Sammen!</span>" Strøm calls. Firmer.</p>
+
+            <p>He looks back. Reluctant. Still reading something in the dark.</p>
+
+            <p>"<span class="norwegian">Sammen</span>," he says again.</p>
+
+            <p>Freya barks once. Sharp. <em>Now.</em></p>
+
+            <p>Birk trots in.</p>
+
+            <p class="section-break">— — —</p>
+
+            <!-- KENNEL - safety, warmth, pack -->
+            <p data-safe="full">The kennel is cramped. Meant for summer maybe, or shorter stays. But it's shelter. Strøm crawls in first, the dogs following. They press against him—all of them, even Petter—bodies warm, breath visible in the small space.</p>
+
+            <p>Freya settles by his injured arm. Halvard curls against his side. Petter at his feet. Birk by the door, still watching, but in.</p>
+
+            <p>His arm has stopped hurting. That's not good.</p>
+
+            <p>The flask is still on the sled. Buried in the pack. He should go get it. Should do a lot of things.</p>
+
+            <p class="thought"><em>Faen. Faen. Faen.</em></p>
+
+            <p>Outside, the snow falls soft. The wind dies. The dark settles.</p>
+
+            <p class="beat">The dogs press close.</p>
+
+            <p>Strøm closes his eyes.</p>
+
+            <p class="beat"><em>Sammen.</em></p>
+
+        </article>
+
+        <div class="story-image">
+            <img src="arcess7.png" alt="A dog team disappearing into polar darkness, headlamp cutting a cone of light">
+        </div>
+
+        <nav>
+            <a href="stories.html" class="nav-link">← Back to Stories</a>
+            <div class="nav-center">
+                <a href="#" class="nav-link">Next story coming soon</a>
+            </div>
+        </nav>
+    </div>
+
+    <button class="audio-control" id="audioToggle">Play Soundscape</button>
+
+    <audio id="soundscapeAudio" loop>
+        <source src="arcess7-soundscape.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Audio control
+        const audioToggle = document.getElementById('audioToggle');
+        const soundscapeAudio = document.getElementById('soundscapeAudio');
+        let isPlaying = false;
+
+        soundscapeAudio.volume = 0.25;
+
+        audioToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                soundscapeAudio.pause();
+                audioToggle.textContent = 'Listen';
+                isPlaying = false;
+            } else {
+                soundscapeAudio.play();
+                audioToggle.textContent = 'Mute';
+                isPlaying = true;
+            }
+        });
+
+        // Elements
+        const body = document.body;
+        const container = document.getElementById('container');
+        const vignette = document.getElementById('vignette');
+        const flicker = document.getElementById('flicker');
+        const storyContent = document.getElementById('storyContent');
+
+        // Track states
+        let inCompression = false;
+        let inWrongness = false;
+        let inSafeZone = false;
+        let flickerTriggered = {};
+
+        // Flicker function
+        function triggerFlicker() {
+            flicker.classList.add('active');
+            setTimeout(() => {
+                flicker.classList.remove('active');
+            }, 150);
+        }
+
+        // Random flicker during wrongness zone
+        let wrongnessFlickerInterval = null;
+
+        function startWrongnessFlicker() {
+            if (wrongnessFlickerInterval) return;
+            wrongnessFlickerInterval = setInterval(() => {
+                if (Math.random() > 0.7) {
+                    triggerFlicker();
+                }
+            }, 3000);
+        }
+
+        function stopWrongnessFlicker() {
+            if (wrongnessFlickerInterval) {
+                clearInterval(wrongnessFlickerInterval);
+                wrongnessFlickerInterval = null;
+            }
+        }
+
+        // Scroll handler for spatial effects
+        function handleScroll() {
+            const scrollY = window.scrollY;
+            const viewportMiddle = scrollY + window.innerHeight * 0.6;
+
+            // Find marker elements
+            const tensionStart = document.querySelector('[data-tension="start"]');
+            const compressionStart = document.querySelector('[data-compression="start"]');
+            const compressionEnd = document.querySelector('[data-compression="end"]');
+            const wrongnessStart = document.querySelector('[data-wrongness="start"]');
+            const wrongnessEnd = document.querySelector('[data-wrongness="end"]');
+            const anomalyZone = document.querySelector('[data-anomaly="true"]');
+            const safeStart = document.querySelector('[data-safe="start"]');
+            const safeFull = document.querySelector('[data-safe="full"]');
+
+            // Check flicker triggers
+            document.querySelectorAll('[data-flicker="true"]').forEach((el, i) => {
+                const rect = el.getBoundingClientRect();
+                const elPos = scrollY + rect.top;
+                if (viewportMiddle > elPos && !flickerTriggered[i]) {
+                    flickerTriggered[i] = true;
+                    setTimeout(triggerFlicker, 100 + Math.random() * 500);
+                }
+            });
+
+            // Compression zone
+            if (compressionStart && compressionEnd) {
+                const startPos = scrollY + compressionStart.getBoundingClientRect().top;
+                const endPos = scrollY + compressionEnd.getBoundingClientRect().top;
+                
+                if (viewportMiddle > startPos && viewportMiddle < endPos) {
+                    if (!inCompression) {
+                        container.classList.add('compressed');
+                        inCompression = true;
+                    }
+                } else {
+                    if (inCompression) {
+                        container.classList.remove('compressed');
+                        inCompression = false;
+                    }
+                }
+            }
+
+            // Wrongness zone - spatial distortion
+            if (wrongnessStart && wrongnessEnd) {
+                const startPos = scrollY + wrongnessStart.getBoundingClientRect().top;
+                const endPos = scrollY + wrongnessEnd.getBoundingClientRect().top;
+                
+                if (viewportMiddle > startPos && viewportMiddle < endPos) {
+                    if (!inWrongness) {
+                        container.classList.add('wrongness');
+                        body.classList.add('deep-wrongness');
+                        storyContent.classList.add('wrongness-active');
+                        startWrongnessFlicker();
+                        inWrongness = true;
+                    }
+                } else {
+                    if (inWrongness) {
+                        container.classList.remove('wrongness');
+                        body.classList.remove('deep-wrongness');
+                        storyContent.classList.remove('wrongness-active');
+                        stopWrongnessFlicker();
+                        inWrongness = false;
+                    }
+                }
+            }
+
+            // Safe zone - kennel warmth
+            if (safeFull) {
+                const safePos = scrollY + safeFull.getBoundingClientRect().top;
+                
+                if (viewportMiddle > safePos) {
+                    if (!inSafeZone) {
+                        body.classList.add('safe-zone');
+                        inSafeZone = true;
+                    }
+                } else {
+                    if (inSafeZone) {
+                        body.classList.remove('safe-zone');
+                        inSafeZone = false;
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        // Initial flicker after page load - batteries hate the cold
+        setTimeout(() => {
+            triggerFlicker();
+        }, 8000 + Math.random() * 7000);
+
+        // Intersection observer for image and nav
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        const storyImage = document.querySelector('.story-image');
+        if (storyImage) {
+            observer.observe(storyImage);
+        }
+
+        const nav = document.querySelector('nav');
+        if (nav) {
+            observer.observe(nav);
+        }
+    </script>
+</body>
+</html>
