@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Importance of Consistency and Attention in One Specific Canine-Human Relationship - Dog Years</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0ece4;
+            color: #2a2825;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 20px;
+            line-height: 1.85;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background-color 2s ease;
+        }
+
+        /* Subtle paper texture - like a well-kept notebook */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(180,170,150,.015) 1px, rgba(180,170,150,.015) 2px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Warm interior glow - lamp-lit flat feeling */
+        .interior-warmth {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 30%, rgba(255, 248, 235, 0.4) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+
+        .interior-warmth.active {
+            opacity: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 50px 100px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 35px;
+            border-bottom: 1px solid #c4b8a8;
+        }
+
+        .story-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.7em;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #1a1815;
+            margin-bottom: 18px;
+            line-height: 1.35;
+        }
+
+        .story-meta {
+            color: #7a7265;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        .story-content {
+            margin-bottom: 80px;
+        }
+
+        .story-content p {
+            margin-bottom: 1.7em;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .story-content p.settling {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .story-content p.settled {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-content em {
+            font-style: italic;
+        }
+
+        /* Breathing room classes */
+        .story-content p.beat {
+            margin-top: 2.2em;
+            margin-bottom: 2.2em;
+        }
+
+        .story-content p.breath {
+            margin-bottom: 2.4em;
+        }
+
+        .story-content p.close {
+            margin-bottom: 0.7em;
+        }
+
+        /* Data/spreadsheet moments - Andy's way of seeing */
+        .story-content p.data {
+            font-size: 0.92em;
+            color: #4a4540;
+            padding-left: 1.2em;
+            border-left: 2px solid rgba(120, 110, 95, 0.25);
+            margin-left: -1.4em;
+            background: linear-gradient(90deg, rgba(200, 190, 170, 0.08) 0%, transparent 50%);
+        }
+
+        /* Dialogue - slightly distinct */
+        .story-content p.dialogue {
+            color: #35322d;
+        }
+
+        /* Internal voice - Ifti's care, Andy's processing */
+        .story-content p.internal {
+            font-style: italic;
+            color: #4a4540;
+        }
+
+        /* Section breaks - like spreadsheet rows, quiet divisions */
+        .section-break {
+            text-align: center;
+            margin: 2.8em 0;
+            color: #a09585;
+            font-size: 0.85em;
+            letter-spacing: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* The final settling - when it all comes together */
+        .story-content p.final {
+            margin-top: 2.5em;
+        }
+
+        .story-content p.final-last {
+            margin-top: 2em;
+            color: #1a1815;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid #c4b8a8;
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 1.2s ease-out;
+        }
+
+        nav.visible {
+            opacity: 1;
+        }
+
+        .nav-link {
+            color: #7a7265;
+            text-decoration: none;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #2a2825;
+        }
+
+        .nav-center {
+            text-align: center;
+        }
+
+        .story-image {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding-top: 50px;
+            border-top: 1px solid #c4b8a8;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 2s ease-out, transform 2s ease-out;
+        }
+
+        .story-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-image img {
+            max-width: 100%;
+            height: auto;
+            opacity: 0.92;
+        }
+
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(200, 190, 175, 0.15);
+            border: 1px solid #a09585;
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #5a5550;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(200, 190, 175, 0.25);
+            color: #2a2825;
+        }
+
+        /* Warm state - as the story progresses and things settle */
+        body.warming {
+            background: #f4f0e8;
+        }
+
+        body.warm {
+            background: #f7f3eb;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 25px 80px;
+            }
+
+            .story-title {
+                font-size: 1.4em;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .audio-control {
+                bottom: 15px;
+                right: 15px;
+                font-size: 0.8em;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="interior-warmth" id="interiorWarmth"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="story-title">The Importance of Consistency and Attention in One Specific Canine-Human Relationship</h1>
+            <p class="story-meta">Glasgow, Scotland · 2020 CE</p>
+        </header>
+
+        <article class="story-content" id="storyContent">
+            <p class="settling">Andy announces the decision on a Thursday.</p>
+
+            <p class="settling">Ifti is leaning over the bills spread across the table, ID lanyard flipping against the wood—two cards, a pen, and a tiny troll keychain bumping together. Andy flinches at the clatter. Why anyone would carry that much weight around their neck is beyond him. Madness.</p>
+
+            <p class="settling dialogue">"I'm getting a dog," Andy says.</p>
+
+            <p class="settling">Ifti looks up from the paperwork. "A dog?"</p>
+
+            <p class="settling dialogue">"A Cavalier King Charles Spaniel. Specifically." Andy has a folder. Inside: printouts, notes in careful handwriting, a spreadsheet with columns Ifti can't quite parse. "I've done the research. They're good for flats. Low to moderate exercise requirements. Friendly temperament. I can afford one with Dad's money."</p>
+
+            <p class="settling">Ifti's careful: "That's... that's a big thing, mate. The space, the exercising, all the kit and the food. If it's a lot of money then you know you'll have to speak to your Auntie. We should maybe talk through-"</p>
+
+            <p class="settling dialogue">"I've talked it through. With myself. For three months. I'm getting a dog."</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">The planning takes two months. Ifti brings worksheets to help plan feeding schedules, vaccination protocols, toilet training methods.</p>
+
+            <p class="settling data">Andy maps the nearest vet, the nearest emergency vet, three backup emergency vets. He calculates monthly costs in a spreadsheet that would make an accountant weep with joy.</p>
+
+            <p class="settling">Aunty Christine countersigns the forms. "You sure about this, Andrew?"</p>
+
+            <p class="settling dialogue">"I'm sure."</p>
+
+            <p class="settling">"Your mum would've liked this. You having company."</p>
+
+            <p class="settling">Andy doesn't look up. "Yes."</p>
+
+            <p class="settling beat">At the bank, withdrawing eight hundred pounds, Andy's hands shake. He's only seen this much money on gameshows. The cashier counts it twice. "Big purchase?"</p>
+
+            <p class="settling dialogue">"A dog," Andy says. "Cavalier King Charles Spaniel. Eight weeks old."</p>
+
+            <p class="settling">"Lovely! First one?"</p>
+
+            <p class="settling dialogue">"Yes. Thankyou, bye."</p>
+
+            <p class="settling breath">Ifti, standing slightly behind, catches the cashier's flicker of confusion, then understanding. She smiles at Andy's back, "Good luck with the pup!" as he strides past Ifti and out through the door.</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">The breeder is in East Kilbride. They take the train: Andy with his folder, Ifti with his concerns, both keeping them tucked away.</p>
+
+            <p class="settling">The puppy comes in a cardboard box with holes. Ginger and white, small enough to fit in two hands, making small, lost sounds.</p>
+
+            <p class="settling">The taxi back costs seventeen pounds. Andy holds the box on his lap, rigid.</p>
+
+            <p class="settling">"Wit ye got there?" the driver asks.</p>
+
+            <p class="settling dialogue">"A dog. Cavalier King Charles Spaniel. Eight weeks old."</p>
+
+            <p class="settling">"Ach, thas braw! First one?"</p>
+
+            <p class="settling dialogue">"Yes."</p>
+
+            <p class="settling">The driver tries again. "Wit ye callin him?"</p>
+
+            <p class="settling dialogue">Andy is quiet for three seconds. "Archimedes. He's named after the Owl in The Sword in the Stone. He's Merlin's companion but my Dad used to say he's also Arthur's mentor. He's not magic in the story, but he does talk."</p>
+
+            <p class="settling">The driver's eyes in the mirror clock Ifti, the lanyard, are amused but knowing. "Listen pal, ven in the West End, ye cannae be shoutin' Archimedes in the park".</p>
+
+            <p class="settling dialogue">Andy's way ahead of him. "Wellllll, actually it's kind of only his formal name anyway. 'Archie' is better for training so it's that that I'd call in the park. If I have to. Some books say if you're shouting after them then you've already lost."</p>
+
+            <p class="settling">"He's got it all worked out." says Ifti after a silence.</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling" data-warmth="start">In the flat, the puppy won't settle. At 11 PM Andy disregards their conversation about boundaries and phones Ifti, who disregards it and answers.</p>
+
+            <p class="settling dialogue">"Why won't he lie still?"</p>
+
+            <p class="settling">"It's his first night away from his mum, mate. He's scared."</p>
+
+            <p class="settling dialogue">"The breeder said he'd sleep and I've given him a warm bed with a hot water bottle and a clock to mimic the mother's heartbeat. He's still running around though. I don't want to be tired tomorrow cos we have to do toilet training and get used to some sounds."</p>
+
+            <p class="settling">"I think maybe you might need to rethink the plan in the morning. Maybe just try doing different things with him tonight until he settles. You can do this mate but you've read all the books and he hasn't."</p>
+
+            <p class="settling">Silence. Then: "Oh. That makes sense. Okay. Thanks, bye."</p>
+
+            <p class="settling beat">At 2 AM they're both asleep. Archie on Andy's chest, Andy's hand curved around him. Both scared. Both okay.</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">Week two is chaos. The flat smells like accident. Andy has dark circles. Archie has learned nothing.</p>
+
+            <p class="settling">Ifti visits, steps over a chewed trainer. "How's it going?"</p>
+
+            <p class="settling dialogue">"I don't understand. I'm following the guidance." Andy has a printout, highlighted in three colors. "It says puppies can hold their bladder for one hour per month of age. He's nine weeks. He should manage two hours. He doesn't.</p>
+
+            <p class="settling">"Okay, well you always said there'd be-"</p>
+
+            <p class="settling dialogue">"Also he won't eat the food I put down so I try something else and then it looks like he likes it, so I get more, but then he stops liking that too."</p>
+
+            <p class="settling">"Right, so it sounds like you might need to-"</p>
+
+            <p class="settling dialogue">"And every time we're out for a wee- him for a wee, me just with him- he either jumps up at somebody and they look annoyed at me and I have to come up with an apology or he drags me over to them and wants to be friendly and I have to come up with something to say or they ask loads of questions."</p>
+
+            <p class="settling internal">"Maybe…" Ifti treads carefully. "Maybe it's going to get better, but also: maybe this is it? Would it be okay if this is as good as he gets? Cos if not, we could find him a good home. Someone with a garden, more time…"</p>
+
+            <p class="settling dialogue">"No." Andy is very quiet. "I just need more data."</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">Week three: Andy has a new spreadsheet.</p>
+
+            <p class="settling data">"Look." He turns the laptop. Columns: Time Fed, Amount Fed, Activity Level, Time Toileted, Location, Success/Failure. Color-coded. Cross-referenced.</p>
+
+            <p class="settling data">"If he eats at 7:42, he toilets at 8:17. If he eats at 8:00, he toilets at 8:34. The interval is consistent when you account for activity variables."</p>
+
+            <p class="settling">Ifti stares. "That's... actually brilliant."</p>
+
+            <p class="settling dialogue">"It's just consistent. He's a dog. Dogs are consistent."</p>
+
+            <p class="settling beat">Week four: no accidents.</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">March 2020. The news is all virus, lockdown, stay home. Ifti calls through on the laptop: "You okay, mate? I know change is hard-"</p>
+
+            <p class="settling dialogue">"It's fine."</p>
+
+            <p class="settling">"I can't come round for a bit. New rules. But we can talk like this-"</p>
+
+            <p class="settling dialogue">"It's fine. We're training."</p>
+
+            <p class="settling">On screen behind Andy: Archie in perfect sit-stay, twelve weeks old, focused on Andy's hand.</p>
+
+            <p class="settling">"Jesus. How'd you teach him that?"</p>
+
+            <p class="settling dialogue">"Repetition. Consistency. Positive reinforcement. It's not complicated."</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">Lockdown stretches. The virus bends time into unfamiliar shapes, enacts petty cruelties, stills the gallus city for a while. Andy wears mask, gloves, carries spares in his bag. Keeps his distance. Talking through perspex screens and never seeing a full face don't bother him and he thinks more than once that the whole thing is a lot of fuss. But he Googles 'can dogs catch COVID 19?' and paces the flat when Archie sneezes.</p>
+
+            <p class="settling">Ifti calls twice weekly. Andy seems... fine? Better than fine? The flat is clean. Archie knows seven commands. Then a dozen. Then seventeen.</p>
+
+            <p class="settling dialogue">"He just did the wee-whine," Andy says one call, standing.</p>
+
+            <p class="settling">"The what?"</p>
+
+            <p class="settling data">"The wee-whine. It's different from the hungry-whine and the play-whine. Means he needs toilet. I have them all recorded."</p>
+
+            <p class="settling">"...How many whines does he have?"</p>
+
+            <p class="settling data">"Fourteen distinct vocalizations. Plus I think twenty non-vocal communications. The head-tilt means he doesn't understand the command. The paw-lift means he's uncertain. The ear-twitch means he heard something outside."</p>
+
+            <p class="settling">Silence on the line.</p>
+
+            <p class="settling">"Andy, that's... that's amazing. You know that, right? Are you enjoying it? Being a dog dad?"</p>
+
+            <p class="settling dialogue">"It's just paying attention. And 'dog dad' isn't what it's like. He knows I'm not like him and I know he's not my baby. 'Dog dad' makes us both sound stupid."</p>
+
+            <p class="settling">"Aight, Sheesh!"</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling" data-warmth="mid">August. Restrictions ease slightly and Ifti meets Andy at Kelvingrove Park, first time in five months.</p>
+
+            <p class="settling">Andy looks the same. Archie is bigger, sleek, moves like water beside Andy's leg. They walk. Archie heels without a command, matches Andy's pace exactly. He only has eyes for Andy.</p>
+
+            <p class="settling">"He's doing brilliant," Ifti says.</p>
+
+            <p class="settling dialogue">"Welllll… He's a good dog and we have a routine."</p>
+
+            <p class="settling">They pass the ice cream van. Andy usually avoids it: too many people, too much noise. But Archie pulls slightly toward it, other dogs there, tail waving.</p>
+
+            <p class="settling">Andy stops. "Do you... want ice cream?"</p>
+
+            <p class="settling">"Uh, sure?"</p>
+
+            <p class="settling">They join the queue in socially distanced formation. A woman with a terrier: "Oh, he's gorgeous! How old?"</p>
+
+            <p class="settling dialogue">"Six months."</p>
+
+            <p class="settling">"He's so well-behaved! Mine's a nightmare."</p>
+
+            <p class="settling dialogue">"Training helps. Consistency. Positive reinforcement. Thanks for being nice about my dog, bye."</p>
+
+            <p class="settling breath">The woman smiles, moves to the counter. Andy orders: "Two 99s please. And can dogs have ice cream?"</p>
+
+            <p class="settling">"Aye, I've got pup cups! He's a handsome fella! What's the wee man's name?"</p>
+
+            <p class="settling dialogue">"Archim... Archie. He's called Archie. And yes, he's handsome, which is statistically likely for a Cavalier King Charles Spaniel, who consistently rank highly in polls of the UK public's favourite dogs."</p>
+
+            <p class="settling">The vendor blinks. "Aye... Well... I see ya Archie! Here's your pup cup.... Wow, what a good boy! You've trained him trained eh!"</p>
+
+            <p class="settling dialogue">"I just pay attention really. Thank you for the ice creams and pup cup. Bye."</p>
+
+            <p class="settling">They find a bench. Archie demolishes his pup cup with absolute focus. Andy eats his 99 methodically, cone last.</p>
+
+            <p class="settling">Ifti: "That was good chat, mate. You didn't… want to tell him about Merlin's owl?"</p>
+
+            <p class="settling dialogue">"Wellllll." Andy watches Archie lick the last of the cream. "I think maybe he just wanted to be nice to Archie. Maybe he sells ice cream all day and it's a bit boring in his van so he just wants to chat a bit when people buy stuff. He probably wouldn't be as interested in Archimedes the owl, just Archie the dog who's here now."</p>
+
+            <p class="settling internal">"That's... Wow. Andy, that's..." Ifti doesn't finish. They eat their ice creams.</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">October. Phone call: "Ifti, I want to go to Edinburgh."</p>
+
+            <p class="settling">"Oh aye? What for?"</p>
+
+            <p class="settling dialogue">"Dog show. Spaniel Society. We're competing."</p>
+
+            <p class="settling">"...You're competing?"</p>
+
+            <p class="settling dialogue">"Obviously."</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling" data-warmth="full">Edinburgh. A hall that smells like dog and nerves and carpet cleaner. Andy in the ring, Archie beside him.</p>
+
+            <p class="settling">The judge asks them to walk. Andy's gait is his- always has been- and Archie matches it exactly. The judge asks for sit. Stand. Down. Recall. Every command clean, immediate, like they're one organism with two bodies.</p>
+
+            <p class="settling">Other handlers are smooth, practiced. Andy is Andy. But the partnership is visible: his tiny hand signal, Archie's instant response. The way Archie checks Andy's face between commands. The way Andy's shoulders drop when Archie gets it right.</p>
+
+            <p class="settling beat">They win their class. The judge: "Remarkable connection. You can see they understand each other completely." Andy: "Obviously."</p>
+
+            <p class="settling internal">Ifti is in the stands, trying not to cry.</p>
+
+            <p class="section-break">· · ·</p>
+
+            <p class="settling">Evening. Flat in Kelvinbridge. Archie asleep on the couch—allowed now, rules relaxed over time. Andy at his laptop, updating the training log.</p>
+
+            <p class="settling data">November 2020. Commands mastered: 23. Non-verbal communications catalogued: 47. Show wins: 1.</p>
+
+            <p class="settling">He looks at Archie, twitching in dreams, probably chasing something.</p>
+
+            <p class="settling">"Good boy, Archie."</p>
+
+            <p class="settling beat">He saves the spreadsheet. Tomorrow: practice for the spring championships. Tonight: routine. Dinner at six. Walk at seven. Training from eight to eight-thirty. Bed by ten.</p>
+
+            <p class="settling">The world outside locks down again, still uncertain, still frightening for many.</p>
+
+            <p class="settling final">Inside, Andy has data. Patterns. A dog who has become expert in him.</p>
+
+            <p class="settling final-last">It's not complicated.</p>
+
+            <p class="settling final-last">You just pay attention.</p>
+        </article>
+
+        <div class="story-image">
+            <img src="glasgow-archie.png" alt="Andy and Archie at Kelvingrove Park">
+        </div>
+
+        <nav>
+            <a href="stories.html" class="nav-link">← Back to Stories</a>
+            <div class="nav-center">
+                <a href="#" class="nav-link">Next Story →</a>
+            </div>
+        </nav>
+    </div>
+
+    <button class="audio-control" id="audioToggle">Listen</button>
+
+    <audio id="soundscapeAudio" loop>
+        <source src="glasgow-rain.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Audio control
+        const audioToggle = document.getElementById('audioToggle');
+        const soundscapeAudio = document.getElementById('soundscapeAudio');
+        let isPlaying = false;
+
+        soundscapeAudio.volume = 0.2;
+
+        audioToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                soundscapeAudio.pause();
+                audioToggle.textContent = 'Listen';
+                isPlaying = false;
+            } else {
+                soundscapeAudio.play();
+                audioToggle.textContent = 'Mute';
+                isPlaying = true;
+            }
+        });
+
+        // Elements
+        const body = document.body;
+        const interiorWarmth = document.getElementById('interiorWarmth');
+        const paragraphs = document.querySelectorAll('.story-content p.settling');
+
+        // Track warmth states
+        let warmthState = 'cold';
+
+        // Settling effect - paragraphs fade in as you scroll
+        const settleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Small delay for settling feel
+                    setTimeout(() => {
+                        entry.target.classList.remove('settling');
+                        entry.target.classList.add('settled');
+                    }, 100);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        paragraphs.forEach(p => {
+            settleObserver.observe(p);
+        });
+
+        // Warmth progression - subtle background warming as story progresses
+        function checkWarmth() {
+            const viewportMiddle = window.scrollY + window.innerHeight * 0.6;
+
+            const warmthStart = document.querySelector('[data-warmth="start"]');
+            const warmthMid = document.querySelector('[data-warmth="mid"]');
+            const warmthFull = document.querySelector('[data-warmth="full"]');
+
+            if (warmthFull) {
+                const fullPos = window.scrollY + warmthFull.getBoundingClientRect().top;
+                if (viewportMiddle > fullPos && warmthState !== 'full') {
+                    body.classList.remove('warming');
+                    body.classList.add('warm');
+                    interiorWarmth.classList.add('active');
+                    warmthState = 'full';
+                    return;
+                }
+            }
+
+            if (warmthMid) {
+                const midPos = window.scrollY + warmthMid.getBoundingClientRect().top;
+                if (viewportMiddle > midPos && warmthState === 'cold') {
+                    body.classList.add('warming');
+                    warmthState = 'warming';
+                    return;
+                }
+            }
+        }
+
+        window.addEventListener('scroll', checkWarmth);
+        checkWarmth();
+
+        // Intersection observer for image and nav
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        const storyImage = document.querySelector('.story-image');
+        if (storyImage) {
+            revealObserver.observe(storyImage);
+        }
+
+        const nav = document.querySelector('nav');
+        if (nav) {
+            revealObserver.observe(nav);
+        }
+    </script>
+</body>
+</html>
