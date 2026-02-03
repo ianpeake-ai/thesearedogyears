@@ -235,40 +235,30 @@
         </div>
     </div>
 
-    <button class="audio-control" id="audioToggle">Mute</button>
+    <button class="audio-control" id="audioToggle">Listen</button>
 
-    <audio id="fireAudio" loop autoplay>
+    <audio id="fireAudio" loop>
         <source src="fire-crackle.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // Audio control
-        const audioToggle = document.getElementById('audioToggle');
-        const fireAudio = document.getElementById('fireAudio');
-        let isPlaying = true;
+    const audioToggle = document.getElementById('audioToggle');
+    const fireAudio = document.getElementById('fireAudio');
+    let isPlaying = false;
 
-        // Note: Autoplay with sound often requires user interaction first on modern browsers
-        // This attempts to play, but may need a click first
-        fireAudio.volume = 0.3;
-        
-        audioToggle.addEventListener('click', function() {
-            if (isPlaying) {
-                fireAudio.pause();
-                audioToggle.textContent = 'Listen';
-                isPlaying = false;
-            } else {
-                fireAudio.play();
-                audioToggle.textContent = 'Mute';
-                isPlaying = true;
-            }
-        });
-
-        // Try to play on any user interaction if autoplay blocked
-        document.addEventListener('click', function() {
-            if (fireAudio.paused && isPlaying) {
-                fireAudio.play().catch(e => console.log('Audio play prevented'));
-            }
-        }, { once: true });
-    </script>
+    fireAudio.volume = 0.3;
+    
+    audioToggle.addEventListener('click', function() {
+        if (isPlaying) {
+            fireAudio.pause();
+            audioToggle.textContent = '🔥 Listen';
+            isPlaying = false;
+        } else {
+            fireAudio.play();
+            audioToggle.textContent = '🔇 Mute';
+            isPlaying = true;
+        }
+    });
+</script>
 </body>
 </html>
