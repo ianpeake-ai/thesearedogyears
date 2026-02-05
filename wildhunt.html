@@ -545,5 +545,180 @@
             observer.observe(nav);
         }
     </script>
+    <style>
+.pawprint-container {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+  user-select: none;
+}
+
+.pawprint-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  position: relative;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+  color: inherit;
+}
+
+.pawprint-button:hover {
+  opacity: 0.8;
+}
+
+.pawprint-button:disabled {
+  cursor: default;
+}
+
+.pawprint-button svg {
+  width: 96px;
+  height: 96px;
+  fill: currentColor;
+  transition: transform 0.15s ease, filter 0.3s ease;
+}
+
+.pawprint-button:active:not(:disabled) svg,
+.pawprint-button.pressing svg {
+  transform: scale(0.85);
+}
+
+.pawprint-button.pressed svg {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: glowFade 1.5s ease forwards;
+}
+
+.pawprint-button.pressed {
+  opacity: 1;
+}
+
+@keyframes glowFade {
+  0% {
+    filter: drop-shadow(0 0 12px currentColor);
+    transform: scale(0.85);
+  }
+  30% {
+    filter: drop-shadow(0 0 20px currentColor);
+    transform: scale(1.05);
+  }
+  100% {
+    filter: drop-shadow(0 0 4px currentColor);
+    transform: scale(1);
+  }
+}
+
+.pawprint-button::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  margin-bottom: 8px;
+}
+
+.pawprint-button:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pawprint-button.pressed::before {
+  content: "thank you";
+}
+
+.pawprint-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.4;
+  margin-top: 0.25rem;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+}
+</style>
+
+<div class="pawprint-container">
+  <div>
+    <button 
+      class="pawprint-button" 
+      data-tooltip="leave a paw print if you came this way and liked it"
+      aria-label="Leave a paw print to show this story meant something to you"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <defs>
+          <filter id="inkbleed" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+          </filter>
+        </defs>
+        <path filter="url(#inkbleed)" d="M256 224c-79.41 0-192 122.76-192 200.25 0 34.9 26.81 55.75 71.74 55.75 48.84 0 81.09-25.08 120.26-25.08 39.51 0 71.85 25.08 120.26 25.08 44.93 0 71.74-20.85 71.74-55.75C448 346.76 335.41 224 256 224zm-147.28-12.61c-10.4-34.65-42.44-57.09-71.56-50.13-29.12 6.96-44.29 40.69-33.89 75.34 10.4 34.65 42.44 57.09 71.56 50.13 29.12-6.96 44.29-40.69 33.89-75.34zm84.72-20.78c30.94-8.14 46.42-49.94 34.58-93.36s-46.52-72.01-77.46-63.87-46.42 49.94-34.58 93.36c11.84 43.42 46.53 72.02 77.46 63.87zm281.39-29.34c-29.12-6.96-61.15 15.48-71.56 50.13-10.4 34.65 4.77 68.38 33.89 75.34 29.12 6.96 61.15-15.48 71.56-50.13 10.4-34.65-4.77-68.38-33.89-75.34zm-156.27 29.34c30.94 8.14 65.62-20.45 77.46-63.87 11.84-43.42-3.64-85.21-34.58-93.36s-65.62 20.45-77.46 63.87c-11.84 43.42 3.64 85.22 34.58 93.36z"/>
+      </svg>
+    </button>
+    <div class="pawprint-label">leave a print</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const FORMSPREE_ID = 'mlgwrbjw';
+  const STORY_TITLE = 'The Wild Hunt';
+
+  const button = document.querySelector('.pawprint-button');
+  const storageKey = 'pawprint_' + STORY_TITLE.toLowerCase().replace(/\s+/g, '_');
+  
+  if (localStorage.getItem(storageKey)) {
+    button.classList.add('pressed');
+    button.disabled = true;
+  }
+
+  button.addEventListener('click', async function() {
+    if (button.classList.contains('pressed')) return;
+    
+    button.classList.add('pressing');
+    
+    try {
+      const response = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          story: STORY_TITLE,
+          page: window.location.href,
+          timestamp: new Date().toISOString(),
+          _subject: '🐾 Paw print left on: ' + STORY_TITLE
+        })
+      });
+
+      if (response.ok) {
+        setTimeout(() => {
+          button.classList.remove('pressing');
+          button.classList.add('pressed');
+          button.disabled = true;
+          localStorage.setItem(storageKey, 'true');
+        }, 150);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Paw print error:', error);
+      button.classList.remove('pressing');
+      button.classList.add('pressed');
+      button.disabled = true;
+    }
+  });
+})();
+</script>
 </body>
 </html>
