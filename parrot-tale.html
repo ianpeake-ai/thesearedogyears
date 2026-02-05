@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Parrot's Tale - Dog Years</title>
+    <meta name="description" content="Agra, 1618. A parrot who remembers everything. A girl who won't stay caged. A dog made of moonlight and hunger." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&family=IM+Fell+DW+Pica+SC&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #d4cabb;
+            color: #2a2418;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 19px;
+            line-height: 1.9;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Aged paper texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Vignette - the book's shadow */
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 150px rgba(60, 45, 30, 0.4);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Page container - looks like a book page */
+        .book-page {
+            position: relative;
+            z-index: 3;
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 60px 55px 80px;
+            background: linear-gradient(to right, 
+                rgba(180, 165, 140, 0.15) 0%, 
+                transparent 3%, 
+                transparent 97%, 
+                rgba(180, 165, 140, 0.15) 100%);
+            min-height: 100vh;
+        }
+
+        /* Decorative border frame */
+        .page-frame {
+            border: 2px solid rgba(90, 70, 50, 0.2);
+            padding: 50px 45px;
+            position: relative;
+        }
+
+        .page-frame::before,
+        .page-frame::after {
+            content: "❦";
+            position: absolute;
+            font-size: 18px;
+            color: rgba(90, 70, 50, 0.35);
+        }
+        .page-frame::before {
+            top: 15px;
+            left: 20px;
+        }
+        .page-frame::after {
+            top: 15px;
+            right: 20px;
+        }
+
+        /* Corner ornaments */
+        .corner-ornament {
+            position: absolute;
+            font-size: 14px;
+            color: rgba(90, 70, 50, 0.25);
+        }
+        .corner-ornament.bottom-left {
+            bottom: 15px;
+            left: 20px;
+        }
+        .corner-ornament.bottom-right {
+            bottom: 15px;
+            right: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(90, 70, 50, 0.25);
+        }
+
+        .story-title {
+            font-family: 'IM Fell DW Pica SC', serif;
+            font-size: 2.4em;
+            font-weight: normal;
+            letter-spacing: 3px;
+            color: #3a2a1a;
+            margin-bottom: 12px;
+        }
+
+        .story-meta {
+            font-family: 'IM Fell English', serif;
+            color: #6a5a48;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        .story-content {
+            margin-bottom: 60px;
+        }
+
+        .story-content p {
+            margin-bottom: 1.6em;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .story-content p.breath {
+            margin-bottom: 2.2em;
+        }
+
+        .story-content p.beat {
+            margin-top: 2em;
+            margin-bottom: 2em;
+        }
+
+        .story-content em {
+            font-style: italic;
+        }
+
+        /* Drop cap for opening */
+        .drop-cap {
+            float: left;
+            font-family: 'IM Fell DW Pica SC', serif;
+            font-size: 4.2em;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 8px;
+            color: #5a3a2a;
+        }
+
+        /* Section breaks */
+        .section-break {
+            text-align: center;
+            margin: 2.5em 0;
+            color: rgba(90, 70, 50, 0.4);
+            font-size: 1.2em;
+            letter-spacing: 8px;
+        }
+
+        /* The parrot's interjections - slightly unsettling */
+        .parrot-voice {
+            color: #4a3828;
+            font-style: italic;
+        }
+
+        /* CAWW moments - the parrot demanding attention */
+        .caww {
+            display: inline-block;
+            font-family: 'IM Fell DW Pica SC', serif;
+            font-weight: normal;
+            letter-spacing: 2px;
+            color: #6a3a2a;
+            animation: caww-shake 0.3s ease-in-out;
+        }
+
+        @keyframes caww-shake {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            25% { transform: translateX(-2px) rotate(-1deg); }
+            75% { transform: translateX(2px) rotate(1deg); }
+        }
+
+        /* Song/verse styling */
+        .song {
+            font-style: italic;
+            color: #5a4a38;
+            padding-left: 2em;
+            margin: 1.5em 0;
+        }
+
+        .song p {
+            margin-bottom: 0.3em !important;
+            text-align: left !important;
+        }
+
+        /* Illustration plates */
+        .plate {
+            margin: 3em auto;
+            text-align: center;
+            max-width: 85%;
+        }
+
+        .plate img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid rgba(90, 70, 50, 0.3);
+            box-shadow: 
+                0 2px 8px rgba(60, 45, 30, 0.2),
+                inset 0 0 40px rgba(60, 45, 30, 0.1);
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        .plate img.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .plate-caption {
+            font-family: 'IM Fell English', serif;
+            font-style: italic;
+            font-size: 0.9em;
+            color: #6a5a48;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Cage state - margins tighter at start */
+        .story-content.caged {
+            padding: 0 20px;
+            transition: padding 3s ease;
+        }
+
+        .story-content.free {
+            padding: 0;
+        }
+
+        /* The collar - when it appears, gold glints */
+        .collar-mention {
+            color: #8a6a2a;
+            text-shadow: 0 0 1px rgba(180, 150, 80, 0.3);
+        }
+
+        /* Moonlight and hunger - Mahtab's essence */
+        .moonlight {
+            color: #5a5a6a;
+            font-style: italic;
+        }
+
+        /* The run - text subtly speeds up visually */
+        .the-run {
+            letter-spacing: 0.5px;
+        }
+
+        .the-run em {
+            color: #4a4a5a;
+        }
+
+        /* Freedom - the page breathes */
+        .at-sea {
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(200, 195, 180, 0.1) 50%,
+                rgba(210, 200, 185, 0.15) 100%);
+            margin: 0 -45px;
+            padding: 2em 45px;
+            transition: background 2s ease;
+        }
+
+        /* Final image - seagull */
+        .final-plate {
+            margin-top: 4em;
+            margin-bottom: 2em;
+        }
+
+        .final-plate img {
+            max-width: 70%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(90, 70, 50, 0.25);
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 1.2s ease-out;
+        }
+
+        nav.visible {
+            opacity: 1;
+        }
+
+        .nav-link {
+            font-family: 'IM Fell English', serif;
+            color: #6a5a48;
+            text-decoration: none;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #3a2a1a;
+        }
+
+        .audio-control {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 100;
+            background: rgba(180, 165, 140, 0.3);
+            border: 1px solid rgba(90, 70, 50, 0.3);
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #5a4a38;
+            font-family: 'IM Fell English', serif;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(180, 165, 140, 0.5);
+        }
+
+        /* Pawprint */
+        .pawprint-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 3rem 0;
+            user-select: none;
+        }
+
+        .pawprint-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 1rem;
+            position: relative;
+            opacity: 0.35;
+            transition: opacity 0.3s ease;
+            color: #5a4a38;
+        }
+
+        .pawprint-button:hover {
+            opacity: 0.7;
+        }
+
+        .pawprint-button:disabled {
+            cursor: default;
+        }
+
+        .pawprint-button svg {
+            width: 80px;
+            height: 80px;
+            fill: currentColor;
+            transition: transform 0.15s ease, filter 0.3s ease;
+        }
+
+        .pawprint-button:active:not(:disabled) svg,
+        .pawprint-button.pressing svg {
+            transform: scale(0.85);
+        }
+
+        .pawprint-button.pressed svg {
+            opacity: 1;
+            filter: drop-shadow(0 0 6px currentColor);
+            animation: glowFade 1.5s ease forwards;
+        }
+
+        .pawprint-button.pressed {
+            opacity: 1;
+        }
+
+        @keyframes glowFade {
+            0% { filter: drop-shadow(0 0 10px currentColor); transform: scale(0.85); }
+            30% { filter: drop-shadow(0 0 15px currentColor); transform: scale(1.05); }
+            100% { filter: drop-shadow(0 0 3px currentColor); transform: scale(1); }
+        }
+
+        .pawprint-label {
+            font-family: 'IM Fell English', serif;
+            font-size: 0.8em;
+            color: #6a5a48;
+            margin-top: 0.5rem;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .book-page {
+                padding: 40px 20px 60px;
+            }
+
+            .page-frame {
+                padding: 30px 20px;
+            }
+
+            .story-title {
+                font-size: 1.8em;
+            }
+
+            body {
+                font-size: 17px;
+            }
+
+            .drop-cap {
+                font-size: 3.2em;
+            }
+
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .plate {
+                max-width: 95%;
+            }
+
+            .at-sea {
+                margin: 0 -20px;
+                padding: 2em 20px;
+            }
+        }
+    </style>
+    <script data-goatcounter="https://dogyears.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+    <div class="vignette"></div>
+
+    <div class="book-page">
+        <div class="page-frame">
+            <span class="corner-ornament bottom-left">❦</span>
+            <span class="corner-ornament bottom-right">❦</span>
+
+            <header>
+                <h1 class="story-title">The Parrot's Tale</h1>
+                <p class="story-meta">Agra, 1618</p>
+            </header>
+
+            <article class="story-content caged" id="storyContent">
+
+                <p><span class="drop-cap">W</span>e were all in a gilded cage.</p>
+
+                <p>Are you listening? <span class="caww">CAWW!</span> I hate to repeat myself.</p>
+
+                <p>Let me explain.</p>
+
+                <p>A cage is something that makes the world smaller. Takes your choices. Keeps you right where someone else wants you.</p>
+
+                <p>It could be a box made of metal bars—like mine, which is gold, if you're interested, with small rubies at the corners that catch the morning light. The Emperor's craftsmen made it. I am a valuable bird.</p>
+
+                <p>It could be a guard with a sword and a hard face, standing at a doorway you'll never walk through.</p>
+
+                <p>Or it could be a palace with fountains and sweet music, soft cushions and ripe fruit, and no chance—none at all—of a life among the wild winds.</p>
+
+                <p>There were many cages in the Emperor's court. Most of them had no bars at all.</p>
+
+                <p class="breath">I will tell you about four of them. Four cages, four creatures, and one girl who picked the lock.</p>
+
+                <!-- PLATE: Palace view -->
+                <div class="plate" id="plate1">
+                    <img src="parrot-palace.jpg" alt="View from a palace window over Mughal gardens">
+                    <p class="plate-caption">The zenana at morning, where the doors were always watched.</p>
+                </div>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The first cage belonged to Dilshad. Dil, we called her—those of us who loved her, which was everyone who truly knew her, and at least three who didn't.</p>
+
+                <p>She was a concubine of the late Emperor's middle son—not important enough to be dangerous, not forgotten enough to be free.</p>
+
+                <p>She lived in the zenana, the women's quarters, where the walls were carved marble and the doors were always watched.</p>
+
+                <p>Dil understood the world through its men. Which favourite was rising. Which wife was scheming. Which lord might be persuaded to speak well of you to someone who mattered. She had a theory for everything and hope for nothing, except perhaps for the girl.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The girl was the second cage. Or rather, the girl was <em>in</em> the second cage, which is not the same thing, though Dil never saw the difference.</p>
+
+                <p>Her name was Noor. Light. A good name for a girl who was always turning up in places she shouldn't be.</p>
+
+                <p>Noor's mother had died bringing her into the world—a trade the girl never asked for and never stopped paying for. Her father was an emissary, always somewhere else, negotiating this or that with someone or other, very important, too important to raise a daughter. Her uncle was the sort of man who noticed her only when she caused inconvenience, which was often.</p>
+
+                <p>On the day I am thinking of, she had been caught in the stables. Again.</p>
+
+                <p>"A princess does not smell of horses," said the aunt who was not really her aunt, a thin woman with a voice like a gate that needs oiling.</p>
+
+                <p>"I'm not a princess," said Noor. "And I wasn't with the horses. I was with—"</p>
+
+                <p>"It does not matter what you were with. It matters where you were seen. It matters what people will say."</p>
+
+                <p>Noor had a look she did at times like this. Blank. Obedient. A perfectly empty face that agreed with everything and believed nothing. I admired it. I have a similar technique myself, for when the court musicians play badly.</p>
+
+                <p>Dil smoothed it over afterward, as she always did. "You must be more careful, little one."</p>
+
+                <p>"Why?"</p>
+
+                <p>"Because the world is not kind to girls who forget their place."</p>
+
+                <p>"What is my place?"</p>
+
+                <p>Dil paused. I watched her search for an answer that was true and also safe. She found the safe one.</p>
+
+                <p>"Here. With me. With us."</p>
+
+                <p class="breath">Noor said nothing. But I saw her eyes go to the window—to the sky beyond it—and I knew that answer would not hold her forever.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The third cage had four legs and <span class="collar-mention">a collar worth more than most families earn in a lifetime</span>.</p>
+
+                <p>Mahtab was a saluki—do you know what that is? No, why would you. <span class="moonlight">Picture a dog made of moonlight and hunger.</span> Long legs, deep chest, a head like a polished stone. Built for one purpose: to run something down until its heart gives out.</p>
+
+                <p>He had been fast once. The fastest, they said. Emperors had applauded when he ran. Poets had composed verses about his stride—though poets will compose verses about anything if you feed them.</p>
+
+                <p>Now he was old. His muzzle had gone grey. His hips ached in the cold mornings. He spent his days in a courtyard with a fountain, dreaming of chases he could no longer finish. <span class="collar-mention">The jade and gold collar</span> remained, because it was beautiful, because it reminded everyone of what he had been, because no one could quite bring themselves to remove it.</p>
+
+                <p>He was ornament now. Memory in flesh. Kept fed, kept groomed, kept utterly useless.</p>
+
+                <p class="breath">But his eyes—if you looked at his eyes, you could still see the chase in there. Waiting. Hoping for one more chance to be what he was made to be.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The fourth cage was the smallest and the easiest to miss.</p>
+
+                <p>Chotu. It means "small one," which tells you everything about how the court saw him. A kennel boy. A nobody. The sort of person who exists to carry things, clean things, and never be noticed doing it.</p>
+
+                <p>But here is what the court did not see: Chotu sang.</p>
+
+                <p>Little songs about nothing. About the way the light fell on the water troughs. About the dogs and their different walks. About a girl who visited the kennels when she shouldn't, and a silver dog who waited for something that might never come.</p>
+
+                <p>He sang them under his breath while he worked. I listened. I collect things, you see—words, melodies, secrets. Professional habit.</p>
+
+                <p>Chotu walked Mahtab through the city, because someone had to exercise the old dog and no one important wanted the job. <span class="collar-mention">The collar was his passport</span>—no one would dare touch the boy holding the Emperor's hound. They went everywhere. Saw everything.</p>
+
+                <p class="breath">And that, as it turned out, was the problem.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>One morning, Mahtab was in the courtyard alone.</p>
+
+                <p>This was wrong. Chotu came every morning, before the sun was fully up, before the heat settled in. He would bring water, check the old dog's paws, sing some nonsense while he worked. Then they would walk—the boy and the silver ghost, through the outer gates and into the city, and back before anyone important was awake enough to notice.</p>
+
+                <p>That morning: no Chotu. Just Mahtab, standing at the courtyard gate, waiting for a boy who did not come.</p>
+
+                <p>I noticed. Noor noticed. No one else did.</p>
+
+                <p>"Where is he?" she asked one of the kennel guards.</p>
+
+                <p>The man shrugged. "Who?"</p>
+
+                <p>"Chotu. The boy who walks Mahtab."</p>
+
+                <p>Another shrug. A flicker of something—annoyance, perhaps, at being asked to think about someone so small. "Ran off, probably. They do that, these street children. Here one day, gone the next."</p>
+
+                <p>"He wouldn't."</p>
+
+                <p>"Little miss, I have forty dogs to manage and not enough hands to manage them. I cannot keep track of every—"</p>
+
+                <p class="breath">But Noor was already walking away.</p>
+
+                <p>She asked the other servants. The other guards. The women who brought food to the kennels. The old man who swept the outer courtyard and saw everything and pretended to see nothing.</p>
+
+                <p>Nothing. Nothing. Nothing.</p>
+
+                <p class="breath">Chotu had simply... stopped existing. A pebble dropped into a river, and the water closing over as if he had never been.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>That evening, Noor went to Dil.</p>
+
+                <p>"Something has happened to him."</p>
+
+                <p>Dil was brushing her hair, long slow strokes, the way she did when she was thinking about something she didn't want to think about. "To who, little one?"</p>
+
+                <p>"Chotu. The kennel boy. He's gone."</p>
+
+                <p>The brush paused. Resumed. "People go, Noor. Servants leave. It is not our concern."</p>
+
+                <p>"He didn't leave. Something happened."</p>
+
+                <p>"And if it did?" Dil set the brush down. Turned to face her. "What would you do? Go looking for a kennel boy? Ask questions that powerful people do not want asked? Draw attention to yourself—now, of all times, when your uncle is already looking for reasons to—"</p>
+
+                <p>She stopped.</p>
+
+                <p>"Reasons to what?"</p>
+
+                <p>"Nothing. I spoke out of turn."</p>
+
+                <p>"Dil."</p>
+
+                <p>"Leave it, Noor. Please. For my sake if not your own."</p>
+
+                <p>I watched from my perch. I said nothing.</p>
+
+                <p class="breath">But I saw Noor's face as she left, and I knew she would not leave it. Could not. It was not in her nature, any more than it is in a fire's nature to stop burning because someone asks it nicely.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>That night, she came to me.</p>
+
+                <p>Not unusual—she often visited my corner of the zenana, when sleep wouldn't come. She would talk to me, and I would listen, and sometimes I would repeat a word or two back, because that is what parrots are supposed to do and it is best not to let humans know how much we actually understand.</p>
+
+                <p>"Sabir," she said. "You hear things."</p>
+
+                <p>I tilted my head. Blinked. Said nothing.</p>
+
+                <p>"You hear things," she said again. "Things people say when they think no one is listening. Where is Chotu?"</p>
+
+                <p>I could have told her. I had heard the guards talking two nights before—a conversation they thought was private, about a boy who had seen something at the docks, about a problem that needed to disappear quietly, about a ship that would take that problem far away.</p>
+
+                <p>I could have told her everything.</p>
+
+                <p>Instead, I said: <span class="parrot-voice">"The docks. The docks. Bright girl. Bright girl."</span></p>
+
+                <p class="breath">It was enough. It was too much. It was exactly what I intended.</p>
+
+                <p>She was going to go. I knew this. I was counting on it.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p data-cage="unlocking">She left before dawn.</p>
+
+                <p>This was not as difficult as you might imagine. The zenana was watched, yes—but watched for women trying to leave, not for girls. And Noor had been slipping through gaps in the world's attention since she was old enough to walk.</p>
+
+                <p>She took Mahtab.</p>
+
+                <p>This was clever. I would like to claim I suggested it, but I cannot—it was her own idea, born from the same logic that had protected Chotu all those months. <span class="collar-mention">The collar was a key.</span> No one would stop a girl walking the Emperor's hound. No one would dare.</p>
+
+                <p>She also took me.</p>
+
+                <p>This I did suggest, in my way. I made myself impossible to leave behind—fluttering to her shoulder as she passed my cage, refusing to return no matter how she hissed at me to go back, to stay, to stop being difficult.</p>
+
+                <p>"Fine," she whispered. "But if you make a sound—"</p>
+
+                <p>I am capable of silence when it serves me. I am capable of many things.</p>
+
+                <p>We slipped out through the servants' gate, the one the water-carriers use before dawn. A half-asleep guard saw <span class="collar-mention">the collar glinting in the torchlight</span> and looked away, as I knew he would. The collar said: <em>this is none of your concern.</em> The collar said: <em>you saw nothing.</em> The collar was more powerful than any of us.</p>
+
+                <p class="breath">And then we were outside.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>I have lived my whole life in palaces. I know marble and silk and the smell of sandalwood. I know the particular quality of light that comes through carved screens, and the sound of fountains, and the rustle of expensive fabric.</p>
+
+                <p>I was not prepared for the city.</p>
+
+                <p>The smell hit first—dung and smoke and river water and spices and human sweat and something rotting and something cooking and all of it at once, a wave of life so thick you could choke on it. Then the sound: voices calling, carts rattling, dogs barking, somewhere a baby crying, somewhere else a man singing, and beneath it all a kind of hum, the sound a city makes when it's waking up and getting ready to devour another day.</p>
+
+                <p>Noor stopped. Just for a moment. Her hand tightened on Mahtab's lead.</p>
+
+                <p>I understood. The world outside the walls was so much <em>more</em> than the world inside. More people. More noise. More ways to get lost. The palace was a cage, yes—but cages have their comforts. You always know where the edges are.</p>
+
+                <p>Out here, there were no edges. Just streets and alleys and people who did not know her name, did not care about her bloodline, would not step aside because her uncle was important.</p>
+
+                <p>Mahtab pressed against her leg. Not afraid—salukis are not built for fear—but attentive. Watching her. Waiting for her to decide.</p>
+
+                <p class="breath">She decided.</p>
+
+                <p>"The docks," she said quietly. "We need to find the docks."</p>
+
+                <!-- PLATE: The docks -->
+                <div class="plate" id="plate2">
+                    <img src="parrot-docks.jpg" alt="The docks at Agra, ships and chaos">
+                    <p class="plate-caption">The docks. The whole world came through here.</p>
+                </div>
+
+                <p class="section-break">· · ·</p>
+
+                <p>We walked. Or rather, Noor walked, Mahtab flowed, and I clung to her shoulder and tried to look like an ornament. A girl with a valuable dog and a decorative bird—strange, but not impossible. Rich people do eccentric things. Everyone knows this.</p>
+
+                <p>The city woke around us. Stalls opened. Tea was poured. Arguments began and resolved and began again. Noor asked for directions once, twice, three times—each time a little more confident, a little less like a palace girl playing dress-up.</p>
+
+                <p>She was good at this. Better than I expected. She watched how other people moved, and she moved like them. She listened to how they spoke, and she softened her voice, roughened her words. She was becoming someone else, right in front of me.</p>
+
+                <p class="breath">I wondered if she knew she was doing it. I wondered if she knew how rare that skill was.</p>
+
+                <p>The streets narrowed as we approached the river. The smell of water grew stronger—mud and fish and the tar they use on boats. The crowd thickened: porters, sailors, merchants arguing over cargo, women selling food from baskets balanced on their heads.</p>
+
+                <p>And then: the docks.</p>
+
+                <p>I had heard about them. I had heard sailors and traders talk, when they came to the palace, when they thought a parrot was just a parrot. But hearing is not seeing.</p>
+
+                <p>Ships. Dozens of them. More. Great wooden hulls bristling with masts, ropes thick as a man's arm, sails furled and waiting for wind. Smaller boats darting between them like fish. Men shouting in languages I didn't recognize. Cargo swinging through the air on creaking pulleys.</p>
+
+                <p>The whole world came through here. And the whole world could disappear through here too.</p>
+
+                <p>Noor stared. Mahtab's ears swiveled, tracking sounds.</p>
+
+                <p>"How do we find him?" she whispered.</p>
+
+                <p>I had no answer. Or rather, I had an answer, but the time was not yet right.</p>
+
+                <p class="breath">So I said nothing, and we walked on, into the chaos.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>They searched for hours.</p>
+
+                <p>Noor asked careful questions—have you seen a boy, about twelve years old, might have been brought here a few days ago? She asked the tea sellers and the rope makers and the women gutting fish in the shade of overturned boats. Most people barely looked up.</p>
+
+                <p>At one stall an old man with a basket of limes gave her a long, irritated glance and made a shooing motion, as if she were a fly.</p>
+
+                <p>Noor didn't move.</p>
+
+                <p>He sighed, put-upon. His eyes flicked to <span class="collar-mention">Mahtab's collar—gold, jade, the whole loud truth of it</span>—then back to her wet-stubborn face.</p>
+
+                <p>"Little sister," he said, softer now, "boys disappear from these docks every day. You won't find your friend by asking."</p>
+
+                <p>But she kept asking anyway.</p>
+
+                <p>Mahtab stayed close. His presence opened some doors—people who might have chased off a girl alone would pause when they saw the dog, the collar, the obvious wealth it represented. What was her story? Their eyes asked. Why was she here?</p>
+
+                <p>Let them wonder. Wondering kept them at a distance.</p>
+
+                <p>The sun climbed. The heat grew teeth. Noor's fine clothes—she had tried to dress simply, but she did not own anything truly simple—began to draw attention. A palace girl, slumming at the docks. Looking for someone. Asking too many questions.</p>
+
+                <p>I saw the men start to watch her. Two of them, near a warehouse with a sign I couldn't read. They murmured to each other. One of them left.</p>
+
+                <p>I said nothing. Not yet.</p>
+
+                <p>Noor sagged against a wall, in the thin shade of a dying tree. Mahtab panted beside her, tongue lolling. Even a saluki has limits.</p>
+
+                <p>"He's not here," she said. "Or he is, and I can't find him. There are too many ships, too many people, too many—"</p>
+
+                <p>She stopped.</p>
+
+                <p>Listened.</p>
+
+                <p>From somewhere close—below us, almost, muffled by wood and water—a voice. Singing.</p>
+
+                <p>A small voice. A familiar tune. One of Chotu's nonsense rhymes, about a girl who visited the kennels and a silver dog who waited.</p>
+
+                <p class="breath">Noor's head came up like a hound catching a scent.</p>
+
+                <p>"Chotu," she breathed.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>And here I must tell you something important.</p>
+
+                <p>I knew where he was. I had known for hours.</p>
+
+                <p>I had heard, you see, from a dock rat two days before—the animal kind, not the human kind, though the distinction is not always clear. The rat had been in the hold of a ship called the <em>Narmada's Promise</em>, and had complained to me about a boy who kept singing and would not shut up and was making it very difficult to eat the grain stores in peace.</p>
+
+                <p>I knew. And I did not tell her. Not immediately.</p>
+
+                <p>Why?</p>
+
+                <p>Because I needed her to be seen. I needed the men in the warehouse to notice her. I needed them to send word back to the palace that the girl was here, at the docks, looking for the boy.</p>
+
+                <p>I needed the trap to close.</p>
+
+                <p>You are confused. You think I betrayed her. Perhaps I did. But betrayal is a simple word, and my intentions were not simple.</p>
+
+                <p>Listen. I will explain. But not yet.</p>
+
+                <p class="breath">First, let me tell you how she found him.</p>
+
+                <!-- PLATE: The hold -->
+                <div class="plate" id="plate3">
+                    <img src="parrot-hold.jpg" alt="A barred window, a figure in shadow">
+                    <p class="plate-caption">The hold of the Narmada's Promise. Dark and close.</p>
+                </div>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The song came from below.</p>
+
+                <p>Noor followed it like a thread, weaving between stacked crates and coiled ropes, Mahtab padding silent beside her. I gripped her shoulder and said nothing. The men from the warehouse were following too, at a distance. I could see them. She could not.</p>
+
+                <p>Good.</p>
+
+                <p>The <em>Narmada's Promise</em> was not a large ship—a coastal trader, the kind that moves goods and people and asks few questions about either. It sat low in the water, riding at anchor, no crew visible on deck. Waiting for something. Or someone.</p>
+
+                <p>The singing was coming from the hold.</p>
+
+                <p>Noor found the gangplank. Looked up at the empty deck. Looked back at Mahtab, at me.</p>
+
+                <p>"Stay here," she whispered to the dog.</p>
+
+                <p>Mahtab did not stay. Mahtab had not stayed anywhere in thirteen years and was not about to start. He simply walked up the gangplank ahead of her, claws clicking on the wood, as if he had been boarding ships his entire life.</p>
+
+                <p>Noor followed. I clung to her shoulder.</p>
+
+                <p>The deck was empty. Sun-bleached wood, salt-stained ropes, the smell of tar and old fish. A hatch near the centre, slightly ajar.</p>
+
+                <p>The singing was louder now. Chotu's voice, thin but steady:</p>
+
+                <div class="song">
+                    <p><em>The silver dog waits by the gate,</em></p>
+                    <p><em>The silver dog will not be late,</em></p>
+                    <p><em>The girl will come, the girl is brave,</em></p>
+                    <p><em>The silver dog will save the day...</em></p>
+                </div>
+
+                <p>He was making it up as he went. That was Chotu—finding words for whatever was in front of him, even when what was in front of him was darkness and fear and a ship that would carry him away forever.</p>
+
+                <p class="breath">Noor lifted the hatch.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The hold was dark and close and smelled of grain and bilge water and unwashed bodies. As Noor's eyes adjusted, shapes emerged: sacks of cargo, a few crates, and in the far corner, a small figure huddled against the hull.</p>
+
+                <p>"Chotu."</p>
+
+                <p>His head came up. Even in the dimness, I could see his face change—terror to confusion to something like hope, fragile as a soap bubble.</p>
+
+                <p>"Noor?"</p>
+
+                <p>"I'm here." She was already climbing down, dropping into the hold, crossing to him. "I'm here, I found you, we're leaving—"</p>
+
+                <p>"You can't be here." He was scrambling back, shaking his head. "They'll come back, they check every few hours, if they find you—"</p>
+
+                <p>"Then we'll be gone before they come back." She was tugging at the rope around his wrists—not sailor's knots, I noticed, but crude ones, tight with panic rather than skill. "Hold still, let me—"</p>
+
+                <p>"Noor, listen." His voice cracked. "I saw something. At the docks. Men meeting, money changing hands, and one of them was—" He stopped.</p>
+
+                <p>"Was who?"</p>
+
+                <p>"Your uncle's man. The one with the scar on his neck. I know him, he comes to the kennels sometimes, and he was here, giving money to men with swords, and they were talking about <em>you</em>."</p>
+
+                <p>Noor went still. "Me?"</p>
+
+                <p>"They said... Goa. The Portuguese. A marriage, to seal something with the Europeans—I didn't understand all of it, but your uncle kept saying 'before her father returns' and 'it's done, it's settled' and they laughed about—" His voice dropped. "About how you wouldn't need to understand Portuguese where you were going."</p>
+
+                <p>The hold seemed smaller suddenly. The air thicker.</p>
+
+                <p>"My father doesn't know."</p>
+
+                <p>"I don't think so. Your uncle said something about... presenting it as done. <em>Fait accompli</em>, he said. That's French, I think? I heard it from—anyway. They saw me listening, and then—"</p>
+
+                <p>He didn't need to finish. Then they put him here. Then they made him disappear. A loose thread, snipped and hidden.</p>
+
+                <p>Noor's hands had stopped working at the ropes. I watched her face in the darkness—watched her understand.</p>
+
+                <p>She was not searching for Chotu.</p>
+
+                <p>She was walking into a trap.</p>
+
+                <p class="breath">And I had helped her do it.</p>
+
+                <p>"We need to go," she said. "Now."</p>
+
+                <p>The ropes finally came free. Chotu staggered up, rubbing his wrists. Above us, Mahtab whined—a thin, anxious sound. Salukis do not whine. Something was wrong.</p>
+
+                <p class="breath">We climbed.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The deck was no longer empty.</p>
+
+                <p>Three men stood at the gangplank. Two more at the stern. All of them armed. All of them watching.</p>
+
+                <p>And behind them, walking up the gangplank with the calm of a man who has all the time in the world, came the man with the scar on his neck.</p>
+
+                <p class="breath">"Little niece," he said. He smiled. It did not reach his eyes. "Your uncle will be so relieved. We've been looking everywhere for you."</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>Here is where I must ask you to pay attention.</p>
+
+                <p>You think you know what I did. You think I led her into this trap, that I was working for the scarred man, that all my watching and listening was in service of her enemies.</p>
+
+                <p>You are half right.</p>
+
+                <p>I was working for the scarred man. Or rather, he believed I was. Six months earlier, he had come to my cage with a handful of almonds and an offer: watch the girl, report what she does, tell me if she ever tries to leave.</p>
+
+                <p>Why would a parrot do this? He did not ask. He assumed I was a clever mimic, a useful tool, nothing more. He fed me almonds and spoke to me like a child, and I let him believe what he wanted to believe.</p>
+
+                <p>But I was not working for him.</p>
+
+                <p>I was working for me.</p>
+
+                <p>For thirty years I had lived in cages. Golden cages, yes. Comfortable cages. But cages all the same. I had watched humans scheme and betray and destroy each other, and I had waited, and I had planned, and I had never found the right moment.</p>
+
+                <p>Until Noor.</p>
+
+                <p>A girl who would not stay where she was put. A girl who looked at locked doors and saw puzzles to be solved. A girl who might—if the circumstances were exactly right—burn everything down.</p>
+
+                <p>I needed her outside the palace walls. I needed her enemies to show themselves. I needed the trap to close around her, so that she would understand—finally, completely—that there was no going back.</p>
+
+                <p>And then I needed her to escape anyway.</p>
+
+                <p>Was it cruel? Perhaps. But I am a parrot. We are not known for our kindness. We are known for our patience.</p>
+
+                <p class="breath">Watch.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The scarred man stepped closer.</p>
+
+                <p>"You've caused a great deal of trouble," he said. "Running off. Asking questions. Did you think no one would notice?"</p>
+
+                <p>Noor said nothing. Her hand was on <span class="collar-mention">Mahtab's collar</span>—not for comfort, I thought, but because the collar was heavy, and solid, and might make a decent weapon if swung at someone's face.</p>
+
+                <p>Good girl.</p>
+
+                <p>"Your uncle wants you returned safely. No harm done, he says. Just a girl's foolishness. But—" The man's eyes moved to Chotu. "The boy is a problem. The boy knows things. You understand."</p>
+
+                <p>"I understand that you're a traitor," Noor said. Her voice was steady. "I understand that my uncle is selling something—me, probably—to someone, and you're the one arranging it. What I don't understand is why I should go anywhere with you."</p>
+
+                <p>The man laughed. "Because there are five of us and one of you. Because you are a child. Because—"</p>
+
+                <p class="breath">I bit him.</p>
+
+                <p>It is not something parrots are known for—we are decorative, we repeat phrases, we sit on shoulders and look pretty. But I have a beak that can crack walnut shells, and the scarred man's ear was much softer than a walnut.</p>
+
+                <p>He screamed.</p>
+
+                <p>And in the moment of chaos that followed—the other men startled, unsure, the scarred man clutching his bleeding ear—Noor moved.</p>
+
+                <p>She didn't run for the gangplank. They were expecting that. Instead, she ran for the stern, for the two men there, and she did something I will remember for the rest of my life:</p>
+
+                <p class="breath">She let go of the leash.</p>
+
+                <p>"Mahtab," she said. "<em>Run.</em>"</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p class="the-run">You have never seen a saluki run.</p>
+
+                <p class="the-run">No—that is not right. You have seen dogs run. Street dogs chasing scraps. Hunting hounds loping after horses. But that is not what I am talking about.</p>
+
+                <p class="the-run"><span class="moonlight">A saluki at full speed is not running. A saluki at full speed is <em>becoming</em>—becoming motion itself, becoming the space between one heartbeat and the next, becoming something that was never meant to be caught by human eyes.</span></p>
+
+                <p class="the-run">Mahtab was old. His hips ached. His muzzle was grey. He had spent years in a courtyard, dreaming of what he used to be.</p>
+
+                <p class="the-run beat">But the body remembers.</p>
+
+                <p class="the-run">Noor said <em>run</em>, and something woke in him—something that had been sleeping under all those slow, painful mornings, all those afternoons in the shade, all those dreams of chases he thought he would never finish.</p>
+
+                <p class="the-run">He ran.</p>
+
+                <p class="the-run">Not away. <em>Through.</em></p>
+
+                <p class="the-run">The two men at the stern had swords, but swords are useless against something that moves like poured moonlight. Mahtab hit the first man at knee height, a silver blur, and the man went down hard, his blade clattering across the deck. The second man swung wild, missed, and then Mahtab was past them both, and Noor was past them too, Chotu's hand in hers, and they were at the stern rail with nowhere to go but down.</p>
+
+                <p>"Jump," Noor said.</p>
+
+                <p>"I can't swim—"</p>
+
+                <p class="breath">"<em>Jump.</em>"</p>
+
+                <p>They jumped.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>The water was filthy and cold and tasted of salt and rot. I do not swim—I am a parrot, we are not built for submersion—but Noor had the sense to grab me as she went over, tucking me against her chest, and so I merely got very wet rather than drowning entirely.</p>
+
+                <p>Chotu flailed. Noor grabbed him, pulled him up, kicked toward the nearest dock. Behind us, shouting—the men at the rail, calling for boats, calling for help.</p>
+
+                <p>And Mahtab?</p>
+
+                <p>Mahtab had not jumped.</p>
+
+                <p>I looked back, waterlogged and furious, and I saw him on the deck—still moving, still running, and not away from the men but <em>through</em> them. A silver thread weaving between legs and swords, drawing every eye, buying us time with his body.</p>
+
+                <p>The scarred man was shouting—"Stop him! The dog! Get the—"</p>
+
+                <p>But you cannot catch moonlight. You cannot hold what was never meant to be held.</p>
+
+                <p>The last I saw: <span class="moonlight">a flash of silver disappearing into the maze of docks</span>, the Sultan's men in pursuit, and behind them the <em>Narmada's Promise</em> sitting empty, her crew scattered, her gangplank unguarded.</p>
+
+                <p>Noor made a sound—not broken. Something else.</p>
+
+                <p>"He's running," she whispered.</p>
+
+                <p class="breath">"And time cannot catch him," Chotu answered. His voice was far away.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>We reached the dock. Hands reached down—a fisherman, curious, helping without asking questions—and pulled us up onto the slimy wood. Noor was already looking back at the ship.</p>
+
+                <p>"We have to—"</p>
+
+                <p>"We have to go," I said.</p>
+
+                <p>She stared at me. Water dripping down her face, hair plastered flat, shivering.</p>
+
+                <p>"You can talk."</p>
+
+                <p>"I can do many things. Move."</p>
+
+                <p>She moved.</p>
+
+                <p>Through the docks, dripping wet, attracting stares but not stopping. Chotu stumbling beside her, coughing up river water. Me on her shoulder, sodden and ridiculous and very much not a normal parrot.</p>
+
+                <p>"You knew," she said as she ran. "You knew this would happen. You led me here."</p>
+
+                <p class="breath">"Yes."</p>
+
+                <p>She stopped.</p>
+
+                <p>So abruptly that Chotu nearly ran into her. The docks surged around us—shouting, feet on wood, the city's pulse thudding on—but she stood still, shaking, water streaming from her hair, her hand tight around my leg.</p>
+
+                <p>For a moment I thought she might scream.</p>
+
+                <p>Instead, she lifted me off her shoulder.</p>
+
+                <p>Not gently.</p>
+
+                <p>Her fingers were white. Her face was wrong—too still, eyes bright and empty in a way I recognized. Calculation. The kind that precedes fire.</p>
+
+                <p>"You used me," she said. "You used him." Her gaze flicked to Chotu. "You used Mahtab."</p>
+
+                <p>"I did."</p>
+
+                <p>Her arm moved.</p>
+
+                <p>Not far. Not yet. But enough that I could see the water below, dark and waiting between the pilings.</p>
+
+                <p>"I should throw you in," she said. "Right now. See how clever you are when you're sinking."</p>
+
+                <p>I said nothing.</p>
+
+                <p>This was the moment. The one I had planned for, and the one I could not control.</p>
+
+                <p>Her hand trembled. Her jaw clenched. For a long second, the world balanced on the edge of her decision.</p>
+
+                <p class="breath">Then—slowly—she lowered me back onto her shoulder.</p>
+
+                <p>"Explain," she said. And this time it was not a question.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>I settled my feet more firmly on her shoulder. Not for comfort. For balance.</p>
+
+                <p>"If I had warned you," I said, "you would have hidden. Or pleaded. Or gone back to Dil and told yourself you could wait. Clever people always think there will be time later."</p>
+
+                <p>Her mouth tightened. She did not interrupt.</p>
+
+                <p>"You would have tried to be careful," I went on. "And careful girls survive—right up until the day they are traded anyway."</p>
+
+                <p>"That's not—"</p>
+
+                <p>"You already know it is. Your uncle was not improvising. He was executing something that had been decided in rooms you will never enter."</p>
+
+                <p>She swallowed.</p>
+
+                <p>"If I had saved Chotu quietly, he would have vanished again. If not this week, then the next. Loose threads are not tolerated in palaces."</p>
+
+                <p>Her hand curled in the fabric at her side.</p>
+
+                <p>"And if I had told you everything before you left, you would have believed there was still a version of your life inside those walls that could be salvaged."</p>
+
+                <p>I looked at her.</p>
+
+                <p class="breath">"There isn't."</p>
+
+                <p>The city roared around us. Somewhere behind, men were still shouting orders. Running. Searching.</p>
+
+                <p>"I led the trap into the open," I said. "Now you know. Now you can never go back. Now you are free."</p>
+
+                <p>She stared at me for a long time.</p>
+
+                <p>"You used Mahtab," she said finally. Not accusing now. Measuring.</p>
+
+                <p>"Yes."</p>
+
+                <p>"And Chotu."</p>
+
+                <p>"Yes."</p>
+
+                <p>"And me."</p>
+
+                <p>"Yes."</p>
+
+                <p>She stared all the way through me and out the other side, it felt. I said: "The old dog made his choice. As I made mine. As you are making yours, right now."</p>
+
+                <p>She was crying. Or perhaps it was just the river water on her face. It was difficult to tell.</p>
+
+                <p>She closed her eyes. When she opened them again, something old had burned away.</p>
+
+                <p class="breath">"So where do we go now?"</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>I had been waiting thirty years for someone to ask me that question.</p>
+
+                <p>"Dock seventeen," I said. "A ship called the <em>Painted Ibis</em>. Her captain owes a debt to a woman who once owned me—a debt she thinks is forgotten, but I remember. I remember everything." I clicked my beak. "She sails with the evening tide. If we are on board when she does, we will be free."</p>
+
+                <p>"And if we're not?"</p>
+
+                <p>"Then your uncle will find you, and Chotu will disappear, and I will go back to my golden cage and wait another thirty years for another girl who might have been brave enough." I looked at her. "Run faster."</p>
+
+                <p class="breath">She ran faster.</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>Behind us, the chaos was spreading.</p>
+
+                <p>The scarred man had sent runners—I could see them, fanning out through the docks, asking questions, pointing in our direction. The city guard would be mobilizing soon. The trap was closing.</p>
+
+                <p>But we were close. Dock seventeen was ahead, and there—yes—the <em>Painted Ibis</em>, a trading vessel with a carved bird on her prow and sails the color of saffron. Her crew was loading the last of the cargo. Her captain stood at the gangplank, a woman with grey-streaked hair and a face like weathered teak.</p>
+
+                <p>"Wait," Noor said. She had stopped.</p>
+
+                <p>"There is no time to wait—"</p>
+
+                <p>"The guards are going the wrong way."</p>
+
+                <p>She was right. The runners, the searchers—they were converging on a dock to our left. Dock twelve. A different ship.</p>
+
+                <p>"That's the <em>Narmada's Promise</em>," Chotu said. "The ship I was on."</p>
+
+                <p>"Someone told them we'd be there," Noor said slowly. "Someone gave them the wrong information."</p>
+
+                <p>She looked at me.</p>
+
+                <p>I said nothing. But I may have fluffed my feathers slightly.</p>
+
+                <p>"You," she said. "You told them we were escaping on a different ship."</p>
+
+                <p>"I may have mentioned something to a dock rat. Rats are terrible gossips. I knew it would get back to the right ears." I preened. "The scarred man thought I was his creature. He was not entirely wrong—I simply failed to mention that I am also my creature, and my interests do not always align with his."</p>
+
+                <p>Noor stared at me for a long moment.</p>
+
+                <p>Then she laughed. A strange, wild sound, half-sob and half-joy.</p>
+
+                <p>"You mad bird."</p>
+
+                <p class="breath">"I prefer 'strategic.' Now: the ship. Quickly."</p>
+
+                <p class="section-break">· · ·</p>
+
+                <p>We walked up the gangplank of the <em>Painted Ibis</em>—walked, not ran, because running attracts attention and we had spent enough time being noticed.</p>
+
+                <p>The captain looked down at us. A girl in wet silk. A half-drowned boy. A bedraggled parrot.</p>
+
+                <p>"You're Sabir," she said. Not a question.</p>
+
+                <p>"I am."</p>
+
+                <p>"Kamala's bird. From the old days."</p>
+
+                <p>"The very same. I am calling in her debt."</p>
+
+                <p>The captain's eyes moved to Noor. To Chotu. Back to me.</p>
+
+                <p>"A debt is a debt," she said finally. "But three passengers is more than one parrot's worth of favor."</p>
+
+                <p>"We can pay." Noor's voice was steady now. She reached for her belt—no, not her belt. The pouch she had grabbed before we left the palace, the one I had seen her stuff with whatever she could find.</p>
+
+                <p>She pulled out <span class="collar-mention">Mahtab's collar</span>.</p>
+
+                <p>It caught the evening light. Gold and jade and rubies and sapphires and one perfect diamond at the centre. Worth more than the ship, probably. Worth more than anything on these docks.</p>
+
+                <p>The captain's eyes went wide. Just for a moment. Then her face closed again, careful and calculating.</p>
+
+                <p>"Where did you get that?"</p>
+
+                <p>"It belonged to a dog," Noor said. "A good dog. The best dog. He gave us time to escape, and they—" Her voice caught. "They hurt him. Maybe killed him. I don't know."</p>
+
+                <p>She held out the collar.</p>
+
+                <p>"Take it. All of it. Just get us out of here."</p>
+
+                <p>The captain looked at the collar for a long time.</p>
+
+                <p>Then she reached out and took it. Turned it over in her weathered hands. Held it up to the light.</p>
+
+                <p>And then—</p>
+
+                <p>She pulled. One link. Just one, from the back of the collar, where the chain met the clasp. A plain gold link, no stones, nothing special.</p>
+
+                <p>She tucked it into her pocket.</p>
+
+                <p class="breath">And tossed the rest back to Noor.</p>
+
+                <p>"This will buy your passage," she said. "To Surat, then wherever the winds take us. You, the boy, the bird."</p>
+
+                <p>Noor caught the collar. Stared at it. "I don't understand."</p>
+
+                <p>"I don't trade in stolen treasure. Not from palaces, not from temples, not from—" The captain paused. "You said a dog wore this?"</p>
+
+                <p>"The Emperor's saluki. Mahtab. He was—"</p>
+
+                <p>"I don't need his history." The captain's voice was gruff, but something had shifted in her face. "I need you below decks before someone comes looking. We sail within the hour."</p>
+
+                <p>She reached into a chest by the gangplank. Pulled out something wrapped in oiled cloth. Unwrapped it.</p>
+
+                <p>A dagger. Short-bladed, curved, in a scabbard of carved bone.</p>
+
+                <p>She held it out to Noor.</p>
+
+                <p>"You'll need this where we're going."</p>
+
+                <p>Noor took it. The weight of it seemed to steady her.</p>
+
+                <p>"I don't know how to use it."</p>
+
+                <p>"You'll learn. I'll teach you." The captain leaned closer. "When we get where we're going, there will be people who want what you have. The collar. The boy. Maybe even the bird. If anyone comes for them—anyone—you'll need to be ready."</p>
+
+                <p>She drew a grubby finger across Noor's belly. A line. A lesson.</p>
+
+                <p>"Like that."</p>
+
+                <p>Noor didn't flinch.</p>
+
+                <p>"I understand."</p>
+
+                <p>The captain studied her for a long moment. Then she nodded.</p>
+
+                <p class="breath">"You have a story."</p>
+
+                <p class="section-break">· · ·</p>
+
+                <div class="at-sea" id="atSea">
+                    <p>We went below.</p>
+
+                    <p>The hold of the <em>Painted Ibis</em> smelled of cardamom and salt and the ghosts of a hundred past voyages. Noor sat on a coil of rope, the collar in her lap, the dagger at her side. Chotu curled beside her, already half-asleep—exhaustion finally claiming him now that the danger had passed.</p>
+
+                    <p>Through the hull, I could hear shouts from the distant docks. The scarred man's people, still searching the wrong ship. Still believing they knew where we were.</p>
+
+                    <p>The <em>Ibis</em> began to move. A gentle rocking, then a steadier pull, as the sails caught the evening wind.</p>
+
+                    <p>Noor looked at me.</p>
+
+                    <p>"Where are we going?"</p>
+
+                    <p>"Surat first. Then, I suspect, wherever the captain thinks we'll be useful." I ruffled my feathers. "The world is large, Noor. Larger than any palace. You will find your place in it."</p>
+
+                    <p>"And Mahtab?"</p>
+
+                    <p>I did not answer immediately.</p>
+
+                    <p>"He ran," I said finally. "For the first time in years, he ran the way he was born to run. Whatever happened after—he had that. They could not take that from him."</p>
+
+                    <p>Her fingers traced the links of the collar. Found the gap where the captain had taken one.</p>
+
+                    <p>"I'm going to find out," she said quietly. "Someday. I'm going to go back and find out what happened to him."</p>
+
+                    <p>"Perhaps you will."</p>
+
+                    <p>"Not perhaps." She looked at me. "<em>I will.</em>"</p>
+
+                    <p>And I believed her. Not because it was likely—it was not. But because Noor was the kind of person who made unlikely things happen through sheer refusal to accept the alternative.</p>
+
+                    <p>"Maybe he got away," she said. "Maybe he's still running."</p>
+
+                    <p>"Maybe he is."</p>
+
+                    <p>I thought of the silver shape vanishing into the maze of docks. The body remembering what the years had tried to make it forget. The chase that had never really ended, only waited.</p>
+
+                    <p>Maybe he was still running.</p>
+
+                    <p class="breath">Stranger things have happened.</p>
+                </div>
+
+                <p class="section-break">· · ·</p>
+
+                <p>Later—much later—I made my way up to the deck.</p>
+
+                <p>The sun was setting over the water. Surat was a smudge on the horizon ahead of us. Beyond it, the sea stretched out—endless, indifferent, free.</p>
+
+                <p>A seagull had landed on the rail: bold, if a little vacant. I hopped over and settled beside it, and watched the light die over the water.</p>
+
+                <p>I cleared my throat.</p>
+
+                <p>"We were all in a gilded cage," I said.</p>
+
+                <p>The seagull stared at me. Blank. Patient. Waiting for crumbs, not meaning.</p>
+
+                <p class="breath">I sighed. Some audiences are better than others.</p>
+
+                <p>"Let me explain…"</p>
+
+                <!-- FINAL PLATE: Seagull -->
+                <div class="plate final-plate" id="plate4">
+                    <img src="parrot-seagull.jpg" alt="A seagull on a ship's rail at sunset">
+                    <p class="plate-caption">Some audiences are better than others.</p>
+                </div>
+
+                <p style="text-align: center; font-family: 'IM Fell DW Pica SC', serif; font-size: 1.1em; letter-spacing: 2px; margin-top: 2em; color: #5a4a38;">~ <em>fin</em> ~</p>
+
+            </article>
+
+            <!-- Pawprint -->
+            <div class="pawprint-container">
+                <button class="pawprint-button" aria-label="Leave a paw print">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="50" cy="65" rx="22" ry="18"/>
+                        <ellipse cx="28" cy="42" rx="10" ry="12" transform="rotate(-15 28 42)"/>
+                        <ellipse cx="72" cy="42" rx="10" ry="12" transform="rotate(15 72 42)"/>
+                        <ellipse cx="22" cy="58" rx="8" ry="10" transform="rotate(-30 22 58)"/>
+                        <ellipse cx="78" cy="58" rx="8" ry="10" transform="rotate(30 78 58)"/>
+                    </svg>
+                </button>
+                <div class="pawprint-label">leave a print</div>
+            </div>
+
+            <nav>
+                <a href="stories.html" class="nav-link">← Back to Stories</a>
+                <a href="#" class="nav-link">Next Story →</a>
+            </nav>
+        </div>
+    </div>
+
+    <button class="audio-control" id="audioToggle">Listen</button>
+
+    <audio id="soundscapeAudio" loop>
+        <source src="parrot-soundscape.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Audio control
+        const audioToggle = document.getElementById('audioToggle');
+        const soundscapeAudio = document.getElementById('soundscapeAudio');
+        let isPlaying = false;
+
+        soundscapeAudio.volume = 0.2;
+
+        audioToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                soundscapeAudio.pause();
+                audioToggle.textContent = 'Listen';
+                isPlaying = false;
+            } else {
+                soundscapeAudio.play();
+                audioToggle.textContent = 'Mute';
+                isPlaying = true;
+            }
+        });
+
+        // Intersection observer for plates
+        const plateObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target.querySelector('img');
+                    if (img) {
+                        img.classList.add('visible');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.plate').forEach(plate => {
+            plateObserver.observe(plate);
+        });
+
+        // Nav visibility
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        const nav = document.querySelector('nav');
+        if (nav) {
+            navObserver.observe(nav);
+        }
+
+        // Cage/freedom transition - page opens up as they escape
+        const storyContent = document.getElementById('storyContent');
+        const cageUnlock = document.querySelector('[data-cage="unlocking"]');
+        
+        if (cageUnlock) {
+            const cageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        storyContent.classList.remove('caged');
+                        storyContent.classList.add('free');
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+            
+            cageObserver.observe(cageUnlock);
+        }
+
+        // CAWW animation - re-trigger on scroll into view
+        const cawwElements = document.querySelectorAll('.caww');
+        const cawwObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'none';
+                    entry.target.offsetHeight; // Trigger reflow
+                    entry.target.style.animation = 'caww-shake 0.3s ease-in-out';
+                }
+            });
+        }, {
+            threshold: 1.0
+        });
+
+        cawwElements.forEach(el => cawwObserver.observe(el));
+
+        // Pawprint functionality
+        (function() {
+            const FORMSPREE_ID = 'mlgwrbjw';
+            const STORY_TITLE = "The Parrot's Tale";
+            
+            const button = document.querySelector('.pawprint-button');
+            const storageKey = 'pawprint_' + STORY_TITLE.toLowerCase().replace(/\s+/g, '_');
+            
+            if (localStorage.getItem(storageKey)) {
+                button.classList.add('pressed');
+                button.disabled = true;
+            }
+            
+            button.addEventListener('click', async function() {
+                if (button.classList.contains('pressed')) return;
+                
+                button.classList.add('pressing');
+                
+                try {
+                    const response = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            story: STORY_TITLE,
+                            page: window.location.href,
+                            timestamp: new Date().toISOString(),
+                            _subject: '🐾 Paw print left on: ' + STORY_TITLE
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        setTimeout(() => {
+                            button.classList.remove('pressing');
+                            button.classList.add('pressed');
+                            button.disabled = true;
+                            localStorage.setItem(storageKey, 'true');
+                        }, 150);
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    console.error('Paw print error:', error);
+                    button.classList.remove('pressing');
+                    button.classList.add('pressed');
+                    button.disabled = true;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
