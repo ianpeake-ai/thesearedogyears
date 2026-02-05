@@ -507,22 +507,17 @@
     <div class="pawprint-thanks"></div>
   </div>
 </div>
-
 <script>
 (function() {
   // === CONFIGURATION ===
-  // Replace with your Formspree form ID after signup
   const FORMSPREE_ID = 'mlgwrbjw';
-  
-  // Change this for each story page
   const STORY_TITLE = 'Aurignacian Night';
   // === END CONFIGURATION ===
 
   const button = document.querySelector('.pawprint-button');
   const thanks = document.querySelector('.pawprint-thanks');
   
-  // Check if already pressed this session (optional - remove if you want to allow multiple)
-  const storageKey = 'pawprint_' + Aurignacian Night.toLowerCase().replace(/\s+/g, '_');
+  const storageKey = 'pawprint_' + STORY_TITLE.toLowerCase().replace(/\s+/g, '_');
   
   if (localStorage.getItem(storageKey)) {
     button.classList.add('pressed');
@@ -532,12 +527,10 @@
   button.addEventListener('click', async function() {
     if (button.classList.contains('pressed')) return;
     
-    // Visual feedback
     button.classList.add('pressing');
     
     try {
-      // Send to Formspree
-      const response = await fetch('https://formspree.io/f/' + mlgwrbjw, {
+      const response = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -547,21 +540,16 @@
           story: STORY_TITLE,
           page: window.location.href,
           timestamp: new Date().toISOString(),
-          _subject: '🐾 Paw print left on: ' + Aurignacian Night
+          _subject: '🐾 Paw print left on: ' + STORY_TITLE
         })
       });
 
       if (response.ok) {
-        // Success animation
         setTimeout(() => {
           button.classList.remove('pressing');
           button.classList.add('pressed');
           button.disabled = true;
           localStorage.setItem(storageKey, 'true');
-          
-          // Optional: show thank you message below
-          // thanks.textContent = 'noted';
-          // thanks.classList.add('visible');
         }, 150);
       } else {
         throw new Error('Form submission failed');
@@ -569,8 +557,6 @@
     } catch (error) {
       console.error('Paw print error:', error);
       button.classList.remove('pressing');
-      // Fail silently for the user - they don't need to know
-      // But still give them the satisfaction
       button.classList.add('pressed');
       button.disabled = true;
     }
