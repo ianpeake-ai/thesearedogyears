@@ -1414,56 +1414,16 @@
         cawwElements.forEach(el => cawwObserver.observe(el));
 
         // Pawprint functionality
-        (function() {
-            const FORMSPREE_ID = 'mlgwrbjw';
-            const STORY_TITLE = "The Parrot's Tale";
-            
-            const button = document.querySelector('.pawprint-button');
-            const storageKey = 'pawprint_' + STORY_TITLE.toLowerCase().replace(/\s+/g, '_');
-            
-            if (localStorage.getItem(storageKey)) {
-                button.classList.add('pressed');
-                button.disabled = true;
-            }
-            
-            button.addEventListener('click', async function() {
-                if (button.classList.contains('pressed')) return;
-                
-                button.classList.add('pressing');
-                
-                try {
-                    const response = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            story: STORY_TITLE,
-                            page: window.location.href,
-                            timestamp: new Date().toISOString(),
-                            _subject: '🐾 Paw print left on: ' + STORY_TITLE
-                        })
-                    });
-                    
-                    if (response.ok) {
-                        setTimeout(() => {
-                            button.classList.remove('pressing');
-                            button.classList.add('pressed');
-                            button.disabled = true;
-                            localStorage.setItem(storageKey, 'true');
-                        }, 150);
-                    } else {
-                        throw new Error('Form submission failed');
-                    }
-                } catch (error) {
-                    console.error('Paw print error:', error);
-                    button.classList.remove('pressing');
-                    button.classList.add('pressed');
-                    button.disabled = true;
-                }
-            });
-        })();
-    </script>
+               throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Paw print error:', error);
+      button.classList.remove('pressing');
+      button.classList.add('pressed');
+      button.disabled = true;
+    }
+  });
+})();
+</script>
 </body>
 </html>
