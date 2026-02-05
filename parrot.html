@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Parrot's Tale — Dog Years</title>
+  <meta name="description" content="Agra, 1618. Four cages. One girl. A parrot who remembers everything." />
+  <link rel="canonical" href="https://thesearedogyears.dog/parrot.html" />
+
+  <meta property="og:title" content="The Parrot's Tale — Dog Years" />
+  <meta property="og:description" content="Agra, 1618. Four cages. One girl. A parrot who remembers everything." />
+  <!-- Optional: update once you have a share image -->
+  <!-- <meta property="og:image" content="https://thesearedogyears.dog/images/parrot-og.jpg" /> -->
+  <meta property="og:type" content="article" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <script data-goatcounter="https://dogyears.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+  <style>
+    :root{
+      --paper: #f6f0e4;
+      --paper-2: #f2eadc;
+      --ink: #1c1a17;
+      --ink-soft: rgba(28, 26, 23, 0.72);
+      --rule: rgba(28, 26, 23, 0.18);
+      --wash: rgba(28, 26, 23, 0.06);
+      --shadow: rgba(0,0,0,0.12);
+
+      /* Edwardian book geometry */
+      --maxw: 46rem;              /* narrower = bookish */
+      --base-pad: 2.6rem;         /* baseline margin */
+      --tighten: 0rem;            /* scroll-driven */
+      --pad: calc(var(--base-pad) - var(--tighten));
+
+      --leading: 1.72;
+      --fs: 1.12rem;
+
+      --radius: 14px;
+      --img-border: rgba(28, 26, 23, 0.14);
+
+      --fade: 520ms;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      color: var(--ink);
+      font-family: "Crimson Text", serif;
+      font-size: var(--fs);
+      line-height: var(--leading);
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+
+    /* Subtle “old page” without noisy texture */
+    body:before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 800px at 50% -10%, rgba(0,0,0,0.06), transparent 60%),
+        radial-gradient(900px 600px at 20% 30%, rgba(0,0,0,0.04), transparent 55%),
+        radial-gradient(900px 600px at 85% 70%, rgba(0,0,0,0.03), transparent 60%),
+        linear-gradient(to bottom, rgba(255,255,255,0.45), rgba(255,255,255,0));
+      mix-blend-mode: multiply;
+      opacity: 0.55;
+    }
+
+    /* Page container */
+    .page{
+      position: relative;
+      max-width: calc(var(--maxw) + 2*var(--pad));
+      margin: 0 auto;
+      padding: 0 var(--pad);
+      transition: padding 240ms ease;
+    }
+
+    /* “Book spread” block */
+    .spread{
+      position: relative;
+      margin: 0 auto;
+      padding: 3.2rem 0 2.2rem;
+    }
+
+    header.story-head{
+      margin-bottom: 2rem;
+      padding-top: 0.6rem;
+    }
+
+    .kicker{
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 0.75rem;
+    }
+
+    h1{
+      font-size: 2.35rem;
+      line-height: 1.08;
+      margin: 0 0 0.4rem;
+      font-weight: 600;
+    }
+
+    .meta{
+      font-size: 1.02rem;
+      color: var(--ink-soft);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .rule{
+      height: 1px;
+      background: var(--rule);
+      margin: 1.35rem 0 0;
+    }
+
+    /* Audio toggle – your usual gentle affordance */
+    .audio-toggle{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      background: rgba(246,240,228,0.92);
+      border: 1px solid var(--img-border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 22px var(--shadow);
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.98rem;
+      color: var(--ink);
+      backdrop-filter: blur(6px);
+    }
+    .audio-toggle:hover{ background: rgba(246,240,228,0.98); }
+    .audio-toggle span{
+      display:inline-block;
+      transform: translateY(0.5px);
+    }
+
+    /* Story */
+    article.story{
+      padding-bottom: 2.5rem;
+    }
+
+    .story p{
+      margin: 0 0 1.05rem;
+    }
+
+    .dropcap:first-letter{
+      float:left;
+      font-size: 3.15rem;
+      line-height: 0.9;
+      padding-right: 0.45rem;
+      padding-top: 0.18rem;
+      font-weight: 600;
+    }
+
+    .smallcaps{
+      font-variant: small-caps;
+      letter-spacing: 0.03em;
+    }
+
+    .scene-break{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      margin: 2.0rem 0;
+      color: rgba(28,26,23,0.42);
+      font-size: 0.95rem;
+    }
+    .scene-break:before,
+    .scene-break:after{
+      content:"";
+      height:1px;
+      flex: 1;
+      background: rgba(28,26,23,0.12);
+    }
+    .scene-break .dot{
+      width: 4px; height:4px;
+      border-radius: 999px;
+      background: rgba(28,26,23,0.35);
+    }
+
+    /* Illustrations: Edwardian “plates” */
+    figure.plate{
+      margin: 1.9rem auto;
+      padding: 0;
+      max-width: var(--maxw);
+    }
+    figure.plate img{
+      width: 100%;
+      height: auto;
+      display:block;
+      border: 1px solid var(--img-border);
+      border-radius: var(--radius);
+      background: var(--paper-2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity var(--fade) ease, transform var(--fade) ease;
+    }
+    figure.plate.revealed img{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    figcaption{
+      margin-top: 0.55rem;
+      font-size: 0.95rem;
+      color: rgba(28,26,23,0.62);
+      font-style: italic;
+      text-align: center;
+    }
+    /* Default: no captions (old plates often unlabeled) */
+    figure.plate figcaption{ display:none; }
+
+    /* Docks plate: feels “louder” without gimmicks */
+    figure.plate.docks img{
+      border-radius: 10px;
+      box-shadow: 0 14px 38px rgba(0,0,0,0.12);
+    }
+
+    /* Peril plate: constriction moment */
+    .constrict{
+      margin-left: auto;
+      margin-right: auto;
+      max-width: var(--maxw);
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .constrict[data-tight="1"]{
+      /* When peril approaches, squeeze the measure slightly */
+      transform: translateZ(0);
+    }
+
+    /* Margin “ornaments” that appear rarely */
+    .margin-glyph{
+      position: absolute;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+      opacity: 0.0;
+      transition: opacity 420ms ease;
+    }
+    .margin-glyph.on{ opacity: 0.22; }
+    .margin-glyph svg{
+      width: 100%;
+      height: 42px;
+      display:block;
+    }
+
+    /* Footer nav – quiet */
+    footer.nav{
+      border-top: 1px solid var(--rule);
+      padding: 1.6rem 0 2.2rem;
+      margin-top: 2rem;
+      display:flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    a.navlink{
+      color: rgba(28,26,23,0.82);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(28,26,23,0.18);
+      padding-bottom: 2px;
+    }
+    a.navlink:hover{
+      border-bottom-color: rgba(28,26,23,0.45);
+    }
+
+    /* Final seagull plate: lots of air */
+    .endplate{
+      margin-top: 2.8rem;
+      margin-bottom: 0.2rem;
+    }
+    .endspace{
+      height: 3.4rem;
+    }
+
+    /* Mobile */
+    @media (max-width: 620px){
+      :root{
+        --base-pad: 1.35rem;
+        --fs: 1.06rem;
+      }
+      h1{ font-size: 2.05rem; }
+      .audio-toggle{ right: 12px; bottom: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Optional ambience -->
+  <button class="audio-toggle" id="audioToggle" aria-label="Toggle ambience">
+    <span id="audioLabel">Ambient: off</span>
+  </button>
+  <audio id="ambience" preload="none" loop>
+    <!-- Replace with your file if you want a soundscape -->
+    <!-- <source src="audio/parrot-ambience.mp3" type="audio/mpeg"> -->
+  </audio>
+
+  <div class="page">
+    <div class="spread">
+      <header class="story-head">
+        <p class="kicker">Dog Years</p>
+        <h1>The Parrot’s Tale</h1>
+        <p class="meta">Agra, 1618</p>
+        <div class="rule"></div>
+      </header>
+
+      <!-- Occasional margin glyphs (subtle, not constant) -->
+      <div class="margin-glyph" id="glyph1" style="top: 180px;">
+        <svg viewBox="0 0 1000 42" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M40 21 H420" stroke="rgba(28,26,23,0.55)" stroke-width="1"/>
+          <circle cx="500" cy="21" r="2.2" fill="rgba(28,26,23,0.55)"/>
+          <path d="M580 21 H960" stroke="rgba(28,26,23,0.55)" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <article class="story">
+        <!-- START STORY TEXT ==================================================
+             Paste your story HTML here.
+             Keep paragraphs as <p>…</p>. Use class="dropcap" on the first para if you want.
+        ===================================================================== -->
+
+        <p class="dropcap"><span class="smallcaps">We were</span> all in a gilded cage.</p>
+
+        <p>Are you listening to me? CAWW! CAWWW! Focus please, I hate to repeat myself.</p>
+
+        <p>Let me explain.</p>
+
+        <!-- Place the Zenana image near the beginning, after the opening has begun -->
+        <figure class="plate" data-reveal>
+          <!-- Replace src with your zenana image -->
+          <img src="images/parrot-zenana-view.png" alt="A distant view from a palace window: walls, towers, and sky beyond." />
+        </figure>
+
+        <p>A cage is something that makes the world smaller…</p>
+
+        <!-- …continue your full story here… -->
+
+        <div class="scene-break" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+
+        <!-- PERIL PLATE: place immediately before Noor hears the singing -->
+        <div class="constrict" id="perilZone">
+          <figure class="plate" data-reveal>
+            <!-- Replace src with your barred-window peril image -->
+            <img src="images/parrot-barred-window.png" alt="A high, narrow barred window at night; faint light behind the bars." />
+          </figure>
+        </div>
+
+        <p>From somewhere close—below us, almost, muffled by wood and water—a voice. Singing.</p>
+
+        <!-- DOCKS PLATE: place right after “And then: the docks.” -->
+        <figure class="plate docks" data-reveal>
+          <!-- Replace src with your child-eye docks image -->
+          <img src="images/parrot-docks-child-eye.png" alt="A crowded river dock seen from low down: hulls looming, rigging tangled overhead, legs and cargo passing." />
+        </figure>
+
+        <!-- …continue through to the end… -->
+
+        <div class="scene-break" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+
+        <!-- ENDING PLATE: after story ends, lots of air -->
+        <figure class="plate endplate" data-reveal>
+          <!-- Replace src with your seagull image -->
+          <img src="images/parrot-seagull-dusk.png" alt="A single seagull on a ship's rail at dusk, looking out over open sea." />
+        </figure>
+
+        <div class="endspace"></div>
+
+        <!-- END STORY TEXT =================================================== -->
+      </article>
+
+      <footer class="nav">
+        <a class="navlink" href="index.html">← Back to Stories</a>
+        <!-- Update these links to match your sequence -->
+        <a class="navlink" href="next-story.html">Next story →</a>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Audio toggle (gentle, optional)
+    (function(){
+      const btn = document.getElementById('audioToggle');
+      const label = document.getElementById('audioLabel');
+      const audio = document.getElementById('ambience');
+
+      let on = false;
+
+      function setLabel(){
+        label.textContent = on ? "Ambient: on" : "Ambient: off";
+      }
+      setLabel();
+
+      btn.addEventListener('click', async () => {
+        try{
+          if (!audio.querySelector('source')) {
+            // No audio source provided – keep toggle harmless
+            on = false; setLabel();
+            return;
+          }
+          if (!on){
+            await audio.play();
+            on = true;
+          } else {
+            audio.pause();
+            on = false;
+          }
+          setLabel();
+        } catch(e){
+          on = false; setLabel();
+        }
+      });
+    })();
+
+    // Reveal plates on scroll (slow, once)
+    (function(){
+      const plates = document.querySelectorAll('[data-reveal]');
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries){
+          if (e.isIntersecting){
+            e.target.classList.add('revealed');
+            io.unobserve(e.target);
+          }
+        }
+      }, { threshold: 0.14, rootMargin: "0px 0px -6% 0px" });
+
+      plates.forEach(p => io.observe(p));
+    })();
+
+    // Edwardian-web “pressure”: margins tighten as peril approaches, then relax.
+    // This is subtle: it should be *felt*, not noticed.
+    (function(){
+      const root = document.documentElement;
+      const peril = document.getElementById('perilZone');
+      const glyph1 = document.getElementById('glyph1');
+
+      if (!peril) return;
+
+      const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+      function update(){
+        const r = peril.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+
+        // Progress 0..1 as peril zone moves from below viewport to near middle
+        // Tuned for “slow squeeze”
+        const start = vh * 0.92;
+        const end   = vh * 0.40;
+        const t = (start - r.top) / (start - end);
+        const p = clamp(t, 0, 1);
+
+        // Tighten up to ~0.75rem max
+        const tightenRem = (0.75 * p).toFixed(3);
+        root.style.setProperty('--tighten', tightenRem + 'rem');
+
+        // Glyph appears briefly early, then fades out as things get serious
+        if (glyph1){
+          if (p < 0.25) glyph1.classList.add('on');
+          else glyph1.classList.remove('on');
+        }
+      }
+
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+    })();
+  </script>
+</body>
+</html>
