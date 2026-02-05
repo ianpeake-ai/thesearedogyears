@@ -1296,20 +1296,6 @@
 
             </article>
 
-            <!-- Pawprint -->
-            <div class="pawprint-container">
-                <button class="pawprint-button" aria-label="Leave a paw print">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="50" cy="65" rx="22" ry="18"/>
-                        <ellipse cx="28" cy="42" rx="10" ry="12" transform="rotate(-15 28 42)"/>
-                        <ellipse cx="72" cy="42" rx="10" ry="12" transform="rotate(15 72 42)"/>
-                        <ellipse cx="22" cy="58" rx="8" ry="10" transform="rotate(-30 22 58)"/>
-                        <ellipse cx="78" cy="58" rx="8" ry="10" transform="rotate(30 78 58)"/>
-                    </svg>
-                </button>
-                <div class="pawprint-label">leave a print</div>
-            </div>
-
             <nav>
                 <a href="stories.html" class="nav-link">← Back to Stories</a>
                 <a href="#" class="nav-link">Next Story →</a>
@@ -1413,17 +1399,7 @@
 
         cawwElements.forEach(el => cawwObserver.observe(el));
 
-        // Pawprint functionality
-               throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      console.error('Paw print error:', error);
-      button.classList.remove('pressing');
-      button.classList.add('pressed');
-      button.disabled = true;
-    }
-  });
-})();
+        
 </script>
 </body>
 </html>
