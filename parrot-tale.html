@@ -90,21 +90,6 @@
             right: 20px;
         }
 
-        /* Corner ornaments */
-        .corner-ornament {
-            position: absolute;
-            font-size: 14px;
-            color: rgba(90, 70, 50, 0.25);
-        }
-        .corner-ornament.bottom-left {
-            bottom: 15px;
-            left: 20px;
-        }
-        .corner-ornament.bottom-right {
-            bottom: 15px;
-            right: 20px;
-        }
-
         header {
             text-align: center;
             margin-bottom: 50px;
@@ -1406,21 +1391,39 @@
             cageObserver.observe(cageUnlock);
         }
 
-        // CAWW animation - re-trigger on scroll into view
-        const cawwElements = document.querySelectorAll('.caww');
-        const cawwObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'none';
-                    entry.target.offsetHeight; // Trigger reflow
-                    entry.target.style.animation = 'caww-shake 0.3s ease-in-out';
-                }
-            });
-        }, {
-            threshold: 1.0
-        });
+        // CAWW animation - wobble every 10 seconds
+const cawwElements = document.querySelectorAll('.caww');
 
-        cawwElements.forEach(el => cawwObserver.observe(el));
+// Initial wobble when scrolled into view
+const cawwObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.animation = 'none';
+            entry.target.offsetHeight; // Trigger reflow
+            entry.target.style.animation = 'caww-shake 0.3s ease-in-out';
+            
+            // Set up repeating wobble every 10 seconds
+            const wobbleInterval = setInterval(() => {
+                entry.target.style.animation = 'none';
+                entry.target.offsetHeight; // Trigger reflow
+                entry.target.style.animation = 'caww-shake 0.3s ease-in-out';
+            }, 10000);
+            
+            // Store interval ID on element so we can clean up later if needed
+            entry.target.wobbleInterval = wobbleInterval;
+        } else {
+            // Clean up interval when element leaves viewport
+            if (entry.target.wobbleInterval) {
+                clearInterval(entry.target.wobbleInterval);
+                entry.target.wobbleInterval = null;
+            }
+        }
+    });
+}, {
+    threshold: 1.0
+});
+
+cawwElements.forEach(el => cawwObserver.observe(el));
 
         
 </script>
