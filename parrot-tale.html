@@ -1306,29 +1306,142 @@
 
     <button class="audio-control" id="audioToggle">Listen</button>
 
-    <audio id="soundscapeAudio" loop>
-        <source src="parrot-soundscape.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
-        // Audio control
-        const audioToggle = document.getElementById('audioToggle');
-        const soundscapeAudio = document.getElementById('soundscapeAudio');
-        let isPlaying = false;
+        // Replace the existing audio control section with this:
 
-        soundscapeAudio.volume = 0.2;
+// Three-track audio system for The Parrot's Tale
+const palace = new Audio('audio/parrot-palace.mp3');
+const docks = new Audio('audio/parrot-docks.mp3');
+const sea = new Audio('audio/parrot-sea.mp3');
 
-        audioToggle.addEventListener('click', function() {
-            if (isPlaying) {
-                soundscapeAudio.pause();
-                audioToggle.textContent = 'Listen';
-                isPlaying = false;
-            } else {
-                soundscapeAudio.play();
-                audioToggle.textContent = 'Mute';
-                isPlaying = true;
+// Configure all tracks
+[palace, docks, sea].forEach(audio => {
+    audio.loop = true;
+    audio.volume = 0;
+    audio.preload = 'auto';
+});
+
+let currentTrack = null;
+let isTransitioning = false;
+let audioEnabled = false;
+
+// Crossfade function
+function crossfade(fromTrack, toTrack, duration, toVolume = 0.6) {
+    if (isTransitioning || !audioEnabled) return;
+    isTransitioning = true;
+    
+    const steps = 60;
+    const stepDuration = (duration * 1000) / steps;
+    const fromVolumeDelta = fromTrack ? fromTrack.volume / steps : 0;
+    const toVolumeDelta = toVolume / steps;
+    
+    let step = 0;
+    
+    // Start the new track if it's not playing
+    if (toTrack.paused) {
+        toTrack.currentTime = 0;
+        toTrack.play().catch(e => console.log('Audio play prevented:', e));
+    }
+    
+    const interval = setInterval(() => {
+        step++;
+        
+        // Fade out old track
+        if (fromTrack && fromTrack.volume > 0) {
+            fromTrack.volume = Math.max(0, fromTrack.volume - fromVolumeDelta);
+        }
+        
+        // Fade in new track
+        if (toTrack.volume < toVolume) {
+            toTrack.volume = Math.min(toVolume, toTrack.volume + toVolumeDelta);
+        }
+        
+        if (step >= steps) {
+            clearInterval(interval);
+            if (fromTrack) {
+                fromTrack.pause();
+                fromTrack.volume = 0;
+            }
+            toTrack.volume = toVolume;
+            currentTrack = toTrack;
+            isTransitioning = false;
+        }
+    }, stepDuration);
+}
+
+// Listen button control
+const audioToggle = document.getElementById('audioToggle');
+let isPlaying = false;
+
+audioToggle.addEventListener('click', function() {
+    if (isPlaying) {
+        // Pause all tracks
+        audioEnabled = false;
+        [palace, docks, sea].forEach(audio => audio.pause());
+        audioToggle.textContent = 'Listen';
+        isPlaying = false;
+    } else {
+        // Start audio system
+        audioEnabled = true;
+        audioToggle.textContent = 'Mute';
+        isPlaying = true;
+        
+        // Start with palace music
+        if (!currentTrack) {
+            crossfade(null, palace, 2, 0.6);
+        } else {
+            // Resume current track
+            currentTrack.play();
+        }
+    }
+});
+
+// Set up intersection observers for transitions
+
+// TRANSITION 1: Palace → Docks (3 seconds)
+const docksTransition = document.querySelector('#docks-transition');
+if (docksTransition) {
+    const docksObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && currentTrack !== docks && audioEnabled) {
+                console.log('Transitioning to docks (3s)');
+                crossfade(currentTrack, docks, 3, 0.6);
             }
         });
+    }, { threshold: 0.5 });
+    
+    docksObserver.observe(docksTransition);
+}
+
+// TRANSITION 2: Docks → Sea (5 seconds)
+const seaTransition = document.querySelector('#sea-transition');
+if (seaTransition) {
+    const seaObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && currentTrack !== sea && audioEnabled) {
+                console.log('Transitioning to sea (5s)');
+                crossfade(currentTrack, sea, 5, 0.6);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    seaObserver.observe(seaTransition);
+}
+
+// TRANSITION 3: Sea → Palace (quiet, 5 seconds)
+const palaceReturnTransition = document.querySelector('#palace-return-transition');
+if (palaceReturnTransition) {
+    const palaceReturnObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && currentTrack !== palace && audioEnabled) {
+                console.log('Transitioning to palace (quiet, 5s)');
+                crossfade(currentTrack, palace, 5, 0.3); // Quieter return
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    palaceReturnObserver.observe(palaceReturnTransition);
+}
 
         // Intersection observer for plates
         const plateObserver = new IntersectionObserver((entries) => {
