@@ -3,9 +3,9 @@
 
 (function() {
     // Create audio elements
-    const palace = new Audio('audio/parrot-palace.mp3');
-    const docks = new Audio('audio/parrot-docks.mp3');
-    const sea = new Audio('audio/parrot-sea.mp3');
+    const palace = new Audio('parrot-palace.mp3');
+    const docks = new Audio('parrot-docks.mp3');
+    const sea = new Audio('parrot-sea.mp3');
     
     // Configure all tracks
     [palace, docks, sea].forEach(audio => {
