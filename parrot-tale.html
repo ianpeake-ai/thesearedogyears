@@ -1436,10 +1436,41 @@ const palaceReturnTransition = document.querySelector('#palace-return-transition
 if (palaceReturnTransition) {
     const palaceReturnObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && currentTrack !== palace && audioEnabled) {
-                console.log('Transitioning to palace (quiet, 5s)');
-                crossfade(currentTrack, palace, 5, 0.3); // Quieter return
-            }
+            if (entry.isIntersecting && currentTrack === sea && audioEnabled) {
+    console.log('Layering quiet palace under sea (5s)');
+    
+    // Don't stop sea, just fade it down
+    let step = 0;
+    const steps = 60;
+    const stepDuration = (5 * 1000) / steps;
+    const seaTargetVolume = 0.25; // Fade sea down to 25%
+    const seaVolumeDelta = (sea.volume - seaTargetVolume) / steps;
+    
+    // Start palace quietly underneath
+    palace.volume = 0;
+    palace.play().catch(e => console.log('Palace play error:', e));
+    
+    const interval = setInterval(() => {
+        step++;
+        
+        // Fade sea down
+        if (sea.volume > seaTargetVolume) {
+            sea.volume = Math.max(seaTargetVolume, sea.volume - seaVolumeDelta);
+        }
+        
+        // Fade palace in (quiet)
+        if (palace.volume < 0.2) {
+            palace.volume = Math.min(0.2, palace.volume + (0.2 / steps));
+        }
+        
+        if (step >= steps) {
+            clearInterval(interval);
+            sea.volume = seaTargetVolume;
+            palace.volume = 0.2;
+            // Don't update currentTrack - both are playing now
+        }
+    }, stepDuration);
+}
         });
     }, { threshold: 0.5 });
     
