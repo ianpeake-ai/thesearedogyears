@@ -1386,9 +1386,12 @@ audioToggle.addEventListener('click', function() {
         audioToggle.textContent = 'Mute';
         isPlaying = true;
         
-        // Start with palace music
+        // Start with palace music immediately
         if (!currentTrack) {
-            crossfade(null, palace, 2, 0.6);
+            palace.volume = 0;
+            palace.play().then(() => {
+                crossfade(null, palace, 2, 0.6);
+            }).catch(e => console.log('Audio play error:', e));
         } else {
             // Resume current track
             currentTrack.play();
