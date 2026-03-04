@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Treeline — An Advanced AI Practitioner's Course</title>
+    <meta name="description" content="A six-week, one-hour-per-day curriculum for advanced AI practice. From fluent user to architectural thinker.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bark: #2e2318;
+            --heartwood: #3d2f1f;
+            --earth: #4a3c2a;
+            --loam: #6b5744;
+            --lichen: #8a7d6b;
+            --dry-grass: #b8a88a;
+            --birch: #d4c8b0;
+            --parchment: #e8dcc4;
+            --light: #f2ece0;
+            --canopy: #2d4a2d;
+            --moss: #4a6741;
+            --fern: #5a7a4f;
+            --rust: #8b4513;
+            --ember: #a0522d;
+            --gold: #b8860b;
+            --sky: #4a6a8a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 18px;
+        }
+
+        body {
+            font-family: 'Crimson Text', Georgia, serif;
+            background-color: var(--light);
+            color: var(--bark);
+            line-height: 1.75;
+            min-height: 100vh;
+        }
+
+        /* Subtle texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ---- HERO ---- */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 30px;
+            background: linear-gradient(175deg, var(--bark) 0%, var(--heartwood) 35%, var(--earth) 65%, var(--loam) 100%);
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent, var(--light));
+            pointer-events: none;
+        }
+
+        /* Treeline silhouette */
+        .treeline-svg {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            width: 100%;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--parchment);
+            letter-spacing: 0.08em;
+            margin-bottom: 0.3em;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out 0.3s forwards;
+        }
+
+        .hero-rule {
+            width: 80px;
+            height: 1px;
+            background: var(--dry-grass);
+            border: none;
+            margin: 0 auto 1.5em;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out 0.6s forwards;
+        }
+
+        .hero-subtitle {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--dry-grass);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.8em;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out 0.9s forwards;
+        }
+
+        .hero-meta {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--lichen);
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out 1.2s forwards;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            opacity: 0;
+            animation: fadeUp 1.2s ease-out 1.8s forwards;
+        }
+
+        .scroll-hint svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--lichen);
+            animation: bob 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        /* ---- NAVIGATION ---- */
+        .course-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bark);
+            border-bottom: 1px solid var(--earth);
+            padding: 0;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .course-nav.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-inner::-webkit-scrollbar { display: none; }
+
+        .nav-brand {
+            font-family: 'Crimson Text', Georgia, serif;
+            color: var(--parchment);
+            font-size: 0.95rem;
+            padding: 14px 20px;
+            white-space: nowrap;
+            letter-spacing: 0.05em;
+            border-right: 1px solid var(--earth);
+            flex-shrink: 0;
+        }
+
+        .nav-week {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--lichen);
+            padding: 14px 16px;
+            white-space: nowrap;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.2s, background 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-week:hover, .nav-week.active {
+            color: var(--parchment);
+            background: var(--heartwood);
+        }
+
+        /* ---- MAIN CONTENT ---- */
+        .main-content {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 80px 30px 120px;
+        }
+
+        /* ---- PREAMBLE ---- */
+        .preamble {
+            margin-bottom: 80px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid var(--birch);
+        }
+
+        .preamble p {
+            margin-bottom: 1.2em;
+            color: var(--earth);
+        }
+
+        .preamble p:first-child::first-line {
+            font-weight: 600;
+        }
+
+        /* ---- PHILOSOPHY ---- */
+        .philosophy {
+            margin-bottom: 80px;
+            padding: 40px;
+            background: var(--parchment);
+            border-left: 3px solid var(--gold);
+        }
+
+        .philosophy h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--bark);
+            margin-bottom: 1em;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 1.5em;
+        }
+
+        .philosophy-item {
+            padding: 0;
+        }
+
+        .philosophy-item strong {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--moss);
+            display: block;
+            margin-bottom: 0.4em;
+        }
+
+        .philosophy-item span {
+            font-size: 0.95rem;
+            color: var(--earth);
+            line-height: 1.6;
+        }
+
+        /* ---- SESSION STRUCTURE ---- */
+        .session-structure {
+            display: flex;
+            gap: 0;
+            margin: 30px 0 80px;
+            border: 1px solid var(--birch);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .session-block {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            border-right: 1px solid var(--birch);
+        }
+
+        .session-block:last-child { border-right: none; }
+
+        .session-block .time {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--lichen);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .session-block .label {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 0.95rem;
+            color: var(--earth);
+        }
+
+        /* ---- WEEK SECTIONS ---- */
+        .week-section {
+            margin-bottom: 80px;
+        }
+
+        .week-header {
+            position: relative;
+            margin-bottom: 50px;
+            padding: 30px 0 20px;
+            cursor: default;
+        }
+
+        .week-number {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--moss);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .week-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--bark);
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .week-subtitle {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--lichen);
+        }
+
+        .week-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin-top: 20px;
+        }
+
+        /* ---- DAY CARDS ---- */
+        .day-card {
+            margin-bottom: 40px;
+            border: 1px solid var(--birch);
+            background: white;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .day-card:hover {
+            box-shadow: 0 2px 12px rgba(46,35,24,0.08);
+        }
+
+        .day-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 20px 28px;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .day-header:hover {
+            background: rgba(232,220,196,0.3);
+        }
+
+        .day-card.open .day-header {
+            border-bottom-color: var(--birch);
+        }
+
+        .day-label {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+        }
+
+        .day-number {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--ember);
+            flex-shrink: 0;
+        }
+
+        .day-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--bark);
+        }
+
+        .day-toggle {
+            font-size: 1.2rem;
+            color: var(--lichen);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .day-card.open .day-toggle {
+            transform: rotate(45deg);
+        }
+
+        .day-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .day-card.open .day-body {
+            max-height: 3000px;
+        }
+
+        .day-content {
+            padding: 28px;
+        }
+
+        .day-content p {
+            margin-bottom: 1em;
+            color: var(--earth);
+        }
+
+        /* Section labels within days */
+        .section-label {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-top: 1.8em;
+            margin-bottom: 0.6em;
+            padding-bottom: 4px;
+            display: inline-block;
+        }
+
+        .section-label.concept { color: var(--sky); border-bottom: 2px solid var(--sky); }
+        .section-label.explore { color: var(--moss); border-bottom: 2px solid var(--moss); }
+        .section-label.build { color: var(--ember); border-bottom: 2px solid var(--ember); }
+        .section-label.field-notes { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+        .day-content .section-label:first-child {
+            margin-top: 0;
+        }
+
+        .day-content ul {
+            margin: 0.5em 0 1em 1.5em;
+            color: var(--earth);
+        }
+
+        .day-content li {
+            margin-bottom: 0.5em;
+            padding-left: 0.3em;
+        }
+
+        .day-content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82em;
+            background: var(--parchment);
+            padding: 2px 6px;
+            border-radius: 2px;
+            color: var(--heartwood);
+        }
+
+        .day-content em {
+            color: var(--heartwood);
+        }
+
+        /* ---- PROGRESS TRACKER ---- */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--moss), var(--gold), var(--ember));
+            z-index: 200;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* ---- APPENDICES ---- */
+        .appendices {
+            margin-top: 100px;
+            padding-top: 60px;
+            border-top: 2px solid var(--birch);
+        }
+
+        .appendices h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--bark);
+            margin-bottom: 40px;
+        }
+
+        .appendix-section {
+            margin-bottom: 50px;
+        }
+
+        .appendix-section h3 {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--moss);
+            margin-bottom: 16px;
+        }
+
+        .reading-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .reading-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--birch);
+            color: var(--earth);
+        }
+
+        .reading-list .category {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--lichen);
+            margin-right: 10px;
+        }
+
+        /* Domain reference table */
+        .domain-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .domain-table th {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--lichen);
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--birch);
+        }
+
+        .domain-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--birch);
+            color: var(--earth);
+            vertical-align: top;
+        }
+
+        .domain-table tr:hover td {
+            background: rgba(232,220,196,0.3);
+        }
+
+        .risk-low { color: var(--moss); font-weight: 600; }
+        .risk-med { color: var(--gold); font-weight: 600; }
+        .risk-high { color: var(--ember); font-weight: 600; }
+
+        /* Glossary */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .glossary-item {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--birch);
+        }
+
+        .glossary-term {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--heartwood);
+        }
+
+        .glossary-def {
+            font-size: 0.95rem;
+            color: var(--earth);
+        }
+
+        /* ---- COLOPHON ---- */
+        .colophon {
+            margin-top: 100px;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--birch);
+        }
+
+        .colophon p {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-style: italic;
+            color: var(--lichen);
+            font-size: 0.95rem;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .colophon .date {
+            font-family: 'Source Sans 3', sans-serif;
+            font-style: normal;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 16px;
+            display: block;
+        }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 768px) {
+            html { font-size: 16px; }
+
+            .hero { min-height: 85vh; padding: 40px 20px; }
+            .hero-title { font-size: 2.5rem; }
+            .main-content { padding: 50px 20px 80px; }
+            .philosophy-grid { grid-template-columns: 1fr; gap: 20px; }
+            .session-structure { flex-direction: column; }
+            .session-block { border-right: none; border-bottom: 1px solid var(--birch); }
+            .session-block:last-child { border-bottom: none; }
+            .day-header { padding: 16px 20px; }
+            .day-content { padding: 20px; }
+            .day-label { gap: 10px; }
+            .day-title { font-size: 1.05rem; }
+            .week-title { font-size: 1.6rem; }
+            .philosophy { padding: 28px; }
+            .nav-brand { display: none; }
+            .glossary-item { grid-template-columns: 1fr; gap: 4px; }
+            .domain-table { font-size: 0.8rem; }
+            .domain-table th, .domain-table td { padding: 8px 6px; }
+        }
+
+        /* ---- PRINT ---- */
+        @media print {
+            .hero { min-height: auto; padding: 40px; page-break-after: always; }
+            .course-nav, .progress-bar, .scroll-hint { display: none; }
+            .day-body { max-height: none !important; }
+            .day-card { break-inside: avoid; }
+            body::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+    <h1 class="hero-title">The Treeline</h1>
+    <hr class="hero-rule">
+    <p class="hero-subtitle">An Advanced AI Practitioner's Course</p>
+    <p class="hero-meta">A six-week, one-hour-per-day curriculum.<br>From fluent user to architectural thinker.</p>
+
+    <svg class="treeline-svg" viewBox="0 0 1200 200" preserveAspectRatio="none" fill="var(--parchment)">
+        <path d="M0,200 L0,140 L30,145 L50,80 L65,130 L80,60 L95,125 L110,140 L130,90 L145,135 L160,70 L175,120 L190,145 L210,100 L230,55 L245,110 L260,140 L280,95 L300,50 L315,100 L330,130 L350,85 L370,45 L385,95 L400,125 L420,80 L440,40 L455,90 L470,120 L490,75 L510,35 L525,85 L540,115 L560,70 L580,130 L600,90 L620,50 L635,100 L650,130 L670,85 L690,45 L705,95 L720,125 L740,80 L760,40 L775,90 L790,120 L810,75 L830,55 L845,105 L860,135 L880,90 L900,50 L915,100 L930,130 L950,85 L970,45 L985,95 L1000,125 L1020,80 L1040,60 L1055,110 L1070,135 L1090,90 L1110,70 L1125,120 L1140,140 L1160,100 L1180,130 L1200,145 L1200,200 Z" opacity="0.6"/>
+        <path d="M0,200 L0,160 L40,155 L70,100 L90,140 L120,80 L140,130 L170,95 L200,60 L220,110 L250,140 L280,100 L310,65 L340,115 L370,140 L400,105 L430,70 L460,120 L490,145 L520,100 L550,60 L580,110 L610,140 L640,100 L670,65 L700,115 L730,140 L760,105 L790,70 L820,115 L850,140 L880,100 L910,65 L940,115 L970,140 L1000,100 L1030,75 L1060,120 L1090,145 L1120,110 L1150,80 L1180,130 L1200,155 L1200,200 Z" opacity="0.3"/>
+    </svg>
+
+    <div class="scroll-hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ============ NAV ============ -->
+<nav class="course-nav" id="courseNav">
+    <div class="nav-inner">
+        <span class="nav-brand">The Treeline</span>
+        <a class="nav-week" href="#preamble">Preamble</a>
+        <a class="nav-week" href="#week1">Week 1</a>
+        <a class="nav-week" href="#week2">Week 2</a>
+        <a class="nav-week" href="#week3">Week 3</a>
+        <a class="nav-week" href="#week4">Week 4</a>
+        <a class="nav-week" href="#week5">Week 5</a>
+        <a class="nav-week" href="#week6">Week 6</a>
+        <a class="nav-week" href="#appendices">Appendices</a>
+    </div>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main class="main-content">
+
+    <!-- PREAMBLE -->
+    <section class="preamble" id="preamble">
+        <p>You already talk to AI the way most people talk to colleagues — with context, nuance, and expectation. You've built websites, run complex creative collaborations, designed content strategies, wrestled with philosophical questions about machine consciousness, and used AI as genuine intellectual infrastructure. You are not a beginner. Most courses would bore you within ten minutes.</p>
+        <p>This course starts where you actually are and pushes into territory that separates people who <em>use</em> AI from people who <em>think in</em> AI — who understand the architecture beneath the conversation, who can build systems rather than fire off prompts, and who can see both the extraordinary capability and the structural limitations clearly enough to work at the genuine frontier.</p>
+        <p>The title borrows from your own instinct: scan the treeline. Know what's coming. Build before you need to.</p>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section class="philosophy">
+        <h2>Course Philosophy</h2>
+        <div class="philosophy-grid">
+            <div class="philosophy-item">
+                <strong>Pedagogy</strong>
+                <span>Spiral curriculum — each week revisits earlier concepts at greater depth. Theory is never separated from practice. Every session ends with something you've <em>made</em>.</span>
+            </div>
+            <div class="philosophy-item">
+                <strong>Assessment</strong>
+                <span>No tests. You build a portfolio of artefacts — tools, workflows, documents, web applications — that prove competence by existing.</span>
+            </div>
+            <div class="philosophy-item">
+                <strong>Domains</strong>
+                <span>Every exercise is rooted in your actual life. Clinical medicine, literary fiction, ecological land management, web design, strategic resilience planning.</span>
+            </div>
+            <div class="philosophy-item">
+                <strong>Principle</strong>
+                <span>Nothing generic. Nothing hypothetical. Nothing you couldn't use the same afternoon you learn it.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Session structure -->
+    <div class="session-structure">
+        <div class="session-block">
+            <span class="time">15 min</span>
+            <span class="label">Concept</span>
+        </div>
+        <div class="session-block">
+            <span class="time">30 min</span>
+            <span class="label">Build</span>
+        </div>
+        <div class="session-block">
+            <span class="time">15 min</span>
+            <span class="label">Field Notes</span>
+        </div>
+    </div>
+
+    <!-- ======== WEEK 1 ======== -->
+    <section class="week-section" id="week1">
+        <div class="week-header">
+            <span class="week-number">Week One</span>
+            <h2 class="week-title">The Engine Room</h2>
+            <p class="week-subtitle">Understanding what's actually happening beneath the conversation</p>
+        </div>
+
+        <div class="day-card" id="day1">
+            <div class="day-header" onclick="toggleDay('day1')">
+                <div class="day-label">
+                    <span class="day-number">Day 1</span>
+                    <span class="day-title">The Context Window as Architecture</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>The context window isn't a chat history — it's a <em>stage</em>. Everything the model sees exists simultaneously. There is no real "memory" — only what's loaded into the window right now. Understanding this changes how you structure every interaction.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <ul>
+                        <li>Open a new Claude conversation. Ask: "What is the first thing I said to you?" Notice that it knows. Now understand <em>why</em> it knows — not because it remembers, but because the full transcript is re-presented every turn.</li>
+                        <li>Ask Claude to estimate how much of its context window your conversation currently occupies. Discuss what happens as you approach the limit.</li>
+                    </ul>
+
+                    <div class="section-label build">Build</div>
+                    <p>Write a system-prompt-style preamble (300–500 words) that would set up Claude as a collaborator on Dog Years. Include: your writing voice, the collection's thematic arc, the stories that exist, the ones in development, your editorial preferences. Think of this as <em>furnishing the stage</em> before the actor walks on.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>How does thinking of context as architecture (not conversation) change what you'd front-load into a session?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day2">
+            <div class="day-header" onclick="toggleDay('day2')">
+                <div class="day-label">
+                    <span class="day-number">Day 2</span>
+                    <span class="day-title">Tokenisation and the Shape of Language</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>AI doesn't read words — it reads tokens. English prose tokenises efficiently; code, poetry, and non-English text often don't. The "length" of your context window depends partly on <em>what kind of language</em> fills it.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <ul>
+                        <li>Tokenise: a paragraph of Dog Years prose, the same content as bullet points, a block of HTML/CSS from your website, a medical case summary with abbreviations. Compare token counts.</li>
+                    </ul>
+
+                    <div class="section-label build">Build</div>
+                    <p>Take one of your Dog Years story pages (the HTML file). Estimate its token count. Now write a <em>compressed reference version</em> — same essential information in 40% fewer tokens. This is the art of context-window efficiency: saying more with less.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Where in your current AI use are you "spending" tokens wastefully? Where could compression help?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day3">
+            <div class="day-header" onclick="toggleDay('day3')">
+                <div class="day-label">
+                    <span class="day-number">Day 3</span>
+                    <span class="day-title">System Prompts — The Invisible Hand</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Every conversation with Claude begins with a system prompt you never see. It shapes tone, capability, safety behaviour, and persona. Understanding system prompts means understanding <em>why</em> Claude behaves the way it does.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <ul>
+                        <li>Try giving Claude an explicit persona: "You are a gruff Scottish veterinarian with 40 years of experience." Then ask it a medical question. Notice how persona shapes not just tone but <em>what information it foregrounds</em>.</li>
+                    </ul>
+
+                    <div class="section-label build">Build</div>
+                    <p>Write three different system-prompt-style openings for the same task (editing a Dog Years story). One positions Claude as a literary editor, one as a sensitivity reader, one as a structural analyst. Run the same passage through each. Compare and document the differences.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>What did the persona experiment reveal about how framing shapes output?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day4">
+            <div class="day-header" onclick="toggleDay('day4')">
+                <div class="day-label">
+                    <span class="day-number">Day 4</span>
+                    <span class="day-title">Failure Modes and Hallucination Anatomy</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>AI fails in predictable, structural ways. Understanding <em>why</em> it hallucinates (pattern-completion without grounding), <em>when</em> it's most likely to confabulate (obscure facts, precise numbers, recent events), and <em>how</em> to detect it makes you dramatically better at this.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <ul>
+                        <li>Deliberately try to make Claude hallucinate. Ask about: a very specific but obscure clinical trial in addiction medicine, the publication history of a fictional author you invent, detailed statistics about Scottish SDCF outcomes.</li>
+                        <li>When it produces confident-sounding answers, fact-check them. Map the failure pattern.</li>
+                    </ul>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a personal "hallucination field guide" — a short document listing the types of queries where you've found AI most and least reliable, with examples from your actual domains.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>How does understanding hallucination change your trust calibration?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day5">
+            <div class="day-header" onclick="toggleDay('day5')">
+                <div class="day-label">
+                    <span class="day-number">Day 5</span>
+                    <span class="day-title">Temperature, Sampling, and the Randomness Dial</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>AI responses aren't deterministic — they're probabilistic. "Temperature" controls how much randomness enters the output. Low temperature = predictable, convergent. High temperature = surprising, divergent. This matters enormously for creative vs. analytical work.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <p>Ask Claude to write the same scene from Dog Years three times: once "as safely and predictably as possible," once "with moderate creative risk," and once "with maximum creative divergence." Notice the differences in word choice, structure, and surprise.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Map your regular AI tasks onto a temperature spectrum. Clinical information → low. Brainstorming → high. Editing prose → medium. Website code → low. Create a visual reference chart.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Week 1 synthesis. What has shifted in your understanding? What questions have opened up?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== WEEK 2 ======== -->
+    <section class="week-section" id="week2">
+        <div class="week-header">
+            <span class="week-number">Week Two</span>
+            <h2 class="week-title">Prompt Architecture</h2>
+            <p class="week-subtitle">From individual prompts to systems of prompts</p>
+        </div>
+
+        <div class="day-card" id="day6">
+            <div class="day-header" onclick="toggleDay('day6')">
+                <div class="day-label">
+                    <span class="day-number">Day 6</span>
+                    <span class="day-title">The Anatomy of an Expert Prompt</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Great prompts have structure: <em>role</em> (who is the AI being?), <em>context</em> (what does it need to know?), <em>task</em> (what should it do?), <em>constraints</em> (what should it avoid?), <em>format</em> (how should the output look?), and <em>examples</em> (what does good look like?). Not every prompt needs all six, but knowing the toolkit matters.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <p>Take five of your recent Claude conversations. Reverse-engineer the prompts. Which elements were present? Which were missing? Correlate with output quality.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design a reusable prompt template for one of your recurring tasks — "Draft a Bluesky post for Dog Years" or "Review this passage for pacing and voice." Make it modular: a skeleton you can fill in quickly each time.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Where does explicit structure improve your results? Where does it constrain them?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day7">
+            <div class="day-header" onclick="toggleDay('day7')">
+                <div class="day-label">
+                    <span class="day-number">Day 7</span>
+                    <span class="day-title">Chain-of-Thought and Reasoning Scaffolds</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Asking AI to "think step by step" genuinely improves reasoning by forcing intermediate tokens that inform subsequent output. But you can go further: you can <em>design</em> the reasoning scaffold. Your PGCE brain will recognise this immediately.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <p>Take a complex clinical scenario — polysubstance use, unstable housing, new medical complication. Ask Claude to reason through it three ways: directly, with chain-of-thought, and with a structured scaffold you provide. Compare depth and quality.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a clinical reasoning scaffold — a reusable framework for presenting complex cases to AI. Test it against three different scenarios. Refine it.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>How does scaffold design compare to lesson planning? What makes a good scaffold?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day8">
+            <div class="day-header" onclick="toggleDay('day8')">
+                <div class="day-label">
+                    <span class="day-number">Day 8</span>
+                    <span class="day-title">Structured Outputs — XML, JSON, Markdown as Control</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Asking AI to produce structured output — XML tags, JSON objects, Markdown with specific headings — gives you <em>programmable</em> results. This is the bridge between conversational AI and AI-as-infrastructure.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <p>Ask Claude to analyse a Dog Years story and return its assessment as free prose, then as a structured Markdown template, then as XML tags. Notice how format shapes content, not just appearance.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design a structured output template for your Bluesky content calendar: post text, image suggestion, hashtags, posting time, engagement hook, and a "why this post matters" note. Generate a week's posts in one go.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Where in your workflow would structured outputs save you time or improve consistency?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day9">
+            <div class="day-header" onclick="toggleDay('day9')">
+                <div class="day-label">
+                    <span class="day-number">Day 9</span>
+                    <span class="day-title">Few-Shot Learning — Teaching by Example</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>The most powerful way to control AI output is to <em>show it what you want</em>. Few-shot prompting — providing 2–5 examples of input→output pairs — lets the model learn your style and quality bar in-context, without any training.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <p>Take three of your best Bluesky posts. Feed them as examples, then ask for five new ones in the same voice. Compare with posts generated without examples. Do the same with Dog Years prose.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a "voice library" — a curated set of 3–5 exemplar passages from your own writing that you can drop into any prompt to calibrate output. Organise by type: narrative prose, social media, clinical writing, reflective essay.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>How does few-shot compare to verbal instruction? When is showing better than telling?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day10">
+            <div class="day-header" onclick="toggleDay('day10')">
+                <div class="day-label">
+                    <span class="day-number">Day 10</span>
+                    <span class="day-title">Adversarial Prompting and Red-Teaming Your Work</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>One of the most advanced uses of AI is turning it <em>against</em> your own output — using it as a deliberate devil's advocate, stress-tester, hostile reader. Not about being negative; about building robustness.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <ul>
+                        <li>Take a piece of writing you're satisfied with. Ask Claude to find the three weakest sentences, argue the opposite thesis, read it as someone who dislikes the genre, and identify where a hostile reviewer would attack.</li>
+                    </ul>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design a "red team" prompt for Dog Years editorial work — a reusable framework that stress-tests a story before you consider it finished: structural critique, voice consistency, anachronism scan, emotional pacing, and a "would this survive a workshop?" assessment.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Week 2 synthesis. How has your relationship with prompting changed?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== WEEK 3 ======== -->
+    <section class="week-section" id="week3">
+        <div class="week-header">
+            <span class="week-number">Week Three</span>
+            <h2 class="week-title">Beyond the Chat Window</h2>
+            <p class="week-subtitle">The API, automation, and programmable intelligence</p>
+        </div>
+
+        <div class="day-card" id="day11">
+            <div class="day-header" onclick="toggleDay('day11')">
+                <div class="day-label">
+                    <span class="day-number">Day 11</span>
+                    <span class="day-title">API Fundamentals — Your First Programmatic Call</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>The chat window is a <em>consumer product</em>. The API is the <em>raw material</em>. It gives you control over system prompts, temperature, token limits, model selection, and — critically — the ability to chain calls together programmatically.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Set up an Anthropic API key. Make your first API call using <code>curl</code> or Python. Send a simple message and receive a response. If Python is unfamiliar, use Claude itself to help you write the script — that's not cheating, it's meta-learning.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>What feels different about API access vs. the chat window? What possibilities do you immediately see?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day12">
+            <div class="day-header" onclick="toggleDay('day12')">
+                <div class="day-label">
+                    <span class="day-number">Day 12</span>
+                    <span class="day-title">System Prompts and Model Parameters in Practice</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Via the API, you can set system prompts, adjust temperature, choose models, set max token limits, and control stop sequences. Each parameter is a lever. Learning to pull them deliberately is what separates a user from a practitioner.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a script with configurable parameters. Use it to process a Dog Years passage through three different editorial lenses — structural editor, line editor, copy editor — saving each output. You've just built your first automated editorial pipeline.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Which parameters matter most for which tasks? Start building intuition.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day13">
+            <div class="day-header" onclick="toggleDay('day13')">
+                <div class="day-label">
+                    <span class="day-number">Day 13</span>
+                    <span class="day-title">Prompt Chaining — Multi-Step Workflows</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>The real power of the API is chaining: output from one call becomes input to the next. This lets you build workflows that no single conversation could achieve — decomposing complex tasks into specialised steps.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Implement a three-step chain in Python: (1) Haiku extracts themes and settings from a story, (2) Sonnet generates a Bluesky post from those themes, (3) Sonnet critiques the post for voice and accuracy. Each step calls the API, processes the output, and feeds the next.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>What tasks in your life would benefit from decomposition into chains? List five.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day14">
+            <div class="day-header" onclick="toggleDay('day14')">
+                <div class="day-label">
+                    <span class="day-number">Day 14</span>
+                    <span class="day-title">Batch Processing and Scale</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Once you can make one API call, you can make a hundred. Batch processing lets you apply AI to <em>collections</em> of inputs — every story in Dog Years, every post in a calendar, every case in a dataset.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a batch script that runs multiple story summaries through the same analytical prompt: word count, dominant themes, temporal setting, narrative voice, emotional register, dog's role. Output as a structured dataset (CSV or JSON).</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Where else would batch processing be valuable? Clinical audit data? Garden planting records?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day15">
+            <div class="day-header" onclick="toggleDay('day15')">
+                <div class="day-label">
+                    <span class="day-number">Day 15</span>
+                    <span class="day-title">Error Handling, Rate Limits, and Robustness</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Real-world API use means dealing with failures: rate limits, timeouts, malformed responses. Building robust systems means anticipating failure and designing for graceful recovery.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Add error handling to your batch script: retry logic, exponential backoff, logging, progress indicators. Make it production-quality rather than prototype-quality.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Week 3 synthesis. You now have programmatic access to AI. What does that change about how you think about your work?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== WEEK 4 ======== -->
+    <section class="week-section" id="week4">
+        <div class="week-header">
+            <span class="week-number">Week Four</span>
+            <h2 class="week-title">Tool Use and the Agentic Frontier</h2>
+            <p class="week-subtitle">Making AI do things in the world, not just talk about them</p>
+        </div>
+
+        <div class="day-card" id="day16">
+            <div class="day-header" onclick="toggleDay('day16')">
+                <div class="day-label">
+                    <span class="day-number">Day 16</span>
+                    <span class="day-title">Tool Use — The Concept</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Modern AI can use tools: web search, code execution, file manipulation, API calls. This transforms AI from a language machine into an <em>agent</em> — something that can perceive, reason, and act.</p>
+
+                    <div class="section-label explore">Explore</div>
+                    <p>In Claude, deliberately trigger different tool uses. Notice how it <em>decides</em> which tool to use. Try to find the limits: what tools does it have that you hadn't realised? What tools does it lack?</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Map your ideal tool ecosystem — a diagram showing every tool you'd want an AI assistant to access in your daily work: clinical databases, story files, Bluesky, your website, calendar, garden planning data.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>What are the ethical implications of agentic AI in your clinical work vs. your creative work?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day17">
+            <div class="day-header" onclick="toggleDay('day17')">
+                <div class="day-label">
+                    <span class="day-number">Day 17</span>
+                    <span class="day-title">MCP — The Model Context Protocol</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>MCP is an open standard for connecting AI to external tools and data sources. Think of it as USB for AI — a universal connector. Understanding MCP means understanding how the next generation of AI integrations will work.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design (on paper) an MCP server for Dog Years. What tools would it expose? <code>list_stories</code>, <code>get_story_metadata</code>, <code>search_themes</code>, <code>get_timeline</code>, <code>suggest_gaps</code>. What resources would it offer? You don't need to build it yet — the <em>design</em> is the learning.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>How does MCP change your mental model of what AI can do?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day18">
+            <div class="day-header" onclick="toggleDay('day18')">
+                <div class="day-label">
+                    <span class="day-number">Day 18</span>
+                    <span class="day-title">Computer Use and Code Execution</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Claude can write and execute code, create files, and interact with a computing environment. This means you can automate tasks that would normally require programming — data processing, file conversion, report generation.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Use Claude to build a small tool: a script that takes a Dog Years story as text and generates a structured metadata card — title, word count, era, setting, characters, themes, estimated reading time. Output as both JSON and pretty-printed Markdown.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>What tasks in your daily life involve repetitive data processing that could be automated?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day19">
+            <div class="day-header" onclick="toggleDay('day19')">
+                <div class="day-label">
+                    <span class="day-number">Day 19</span>
+                    <span class="day-title">Web Research as a Compound Skill</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>AI-assisted research isn't just "search for X." It's compound: formulating queries, evaluating sources, synthesising, identifying gaps. Doing this well requires understanding how AI's search tool works and what it's good and bad at.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design a research protocol — a reusable prompt structure for deep research tasks. Include: query formulation, source evaluation criteria, synthesis format, confidence rating, and a "gaps and limitations" section. Test it on a real question from your clinical or creative work.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>How does AI-assisted research compare to your own practice? Where does it excel? Where do you still need to do the work yourself?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day20">
+            <div class="day-header" onclick="toggleDay('day20')">
+                <div class="day-label">
+                    <span class="day-number">Day 20</span>
+                    <span class="day-title">Building Your First Integrated Workflow</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Everything converges. An integrated workflow chains API calls, tool use, structured outputs, and prompt architecture into a single system that accomplishes something meaningful.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Choose one and build it:</p>
+                    <ul>
+                        <li><strong>Dog Years Editorial Pipeline:</strong> Upload draft → AI analyses structure, pacing, voice, anachronisms → generates editorial notes → suggests Bluesky posts for publication</li>
+                        <li><strong>Clinical Case Summariser:</strong> Input scenario → structured reasoning → evidence gap search → formatted case summary</li>
+                        <li><strong>South Acre Seasonal Planner:</strong> Current date + weather → cross-reference planting calendar, microseasons → prioritised task list</li>
+                    </ul>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Week 4 synthesis. You've moved from talking to AI to building with it. What surprised you?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== WEEK 5 ======== -->
+    <section class="week-section" id="week5">
+        <div class="week-header">
+            <span class="week-number">Week Five</span>
+            <h2 class="week-title">Knowledge Systems and Critical Practice</h2>
+            <p class="week-subtitle">Building personal knowledge infrastructure and developing a critical eye</p>
+        </div>
+
+        <div class="day-card" id="day21">
+            <div class="day-header" onclick="toggleDay('day21')">
+                <div class="day-label">
+                    <span class="day-number">Day 21</span>
+                    <span class="day-title">RAG — Retrieval-Augmented Generation</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>RAG gives AI access to your own documents at query time. Instead of relying on training data, you feed it <em>your</em> information and it reasons over that. The difference between an AI that knows the world and one that knows <em>your</em> world.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a Claude Project for Dog Years editorial work. Upload: story files, collection overview, style guide, thematic timeline. Test with editorial questions. Document what it gets right and wrong.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Where would RAG most transform your work? What documents would you most want an AI to access?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day22">
+            <div class="day-header" onclick="toggleDay('day22')">
+                <div class="day-label">
+                    <span class="day-number">Day 22</span>
+                    <span class="day-title">Evaluation — How Do You Know If It's Good?</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Most people evaluate AI output by vibes. That works for casual use but fails at scale. Systematic evaluation means defining quality criteria, creating rubrics, and applying them consistently. Your teaching background is a superpower here.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design an evaluation rubric for your most common AI use case. 4–5 criteria, each scored 1–5 with anchor descriptions. Test it. Refine it. This becomes a permanent tool.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>How does formalising evaluation change your relationship with AI output?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day23">
+            <div class="day-header" onclick="toggleDay('day23')">
+                <div class="day-label">
+                    <span class="day-number">Day 23</span>
+                    <span class="day-title">AI Clichés, Sycophancy, and Voice Contamination</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>AI has characteristic failure modes in creative work: overuse of certain words ("delve," "tapestry," "nuanced"), sycophantic agreement, and a tendency to flatten distinctive voices into a generic AI register. Recognising and counteracting these patterns is an advanced skill.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create an "anti-AI-ism" style guide — words, phrases, and patterns you want Claude to avoid when writing in your voice. Include positive instructions too: "Use Anglo-Saxon monosyllables where possible," "Prefer concrete nouns." Add it to your Dog Years Project and test the difference.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>What's the relationship between AI clichés and the loss of individual voice?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day24">
+            <div class="day-header" onclick="toggleDay('day24')">
+                <div class="day-label">
+                    <span class="day-number">Day 24</span>
+                    <span class="day-title">Multi-Modal Thinking</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>AI can process images, PDFs, and structured documents. Understanding multi-modal input means you can use AI for tasks most people don't attempt: analysing photographs, interpreting charts, extracting data from scans, combining visual and textual reasoning.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a multi-modal workflow: photograph from South Acre → species identification → habitat assessment → management recommendations → microseasons journal entry. Or: clinical PDF → extraction → comparison with current practice → gap analysis.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Where does multi-modal AI surprise you? Where does it still fall short?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day25">
+            <div class="day-header" onclick="toggleDay('day25')">
+                <div class="day-label">
+                    <span class="day-number">Day 25</span>
+                    <span class="day-title">The Ethics and Politics of AI Use</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>You think about this already — but this session asks you to systematise it. Labour displacement, intellectual property, environmental cost, access equity, dependency risk, and the philosophical status of the systems themselves.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Write a personal AI ethics statement — 500–1000 words — articulating your position on responsible AI use in your creative, clinical, and personal life. Not performative; a working document that guides practice. Let it be honest about tensions and unresolved questions.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Week 5 synthesis. How has your critical framework evolved? What practices will you change?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== WEEK 6 ======== -->
+    <section class="week-section" id="week6">
+        <div class="week-header">
+            <span class="week-number">Week Six</span>
+            <h2 class="week-title">Integration, Mastery, and the Frontier</h2>
+            <p class="week-subtitle">Building capstone projects and looking ahead</p>
+        </div>
+
+        <div class="day-card" id="day26">
+            <div class="day-header" onclick="toggleDay('day26')">
+                <div class="day-label">
+                    <span class="day-number">Day 26</span>
+                    <span class="day-title">The Personal AI Toolkit</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>By now you have: prompt templates, evaluation rubrics, voice libraries, workflow scripts, research protocols, and an ethics statement. This session organises them into a coherent, maintainable personal toolkit — not a junk drawer, but a system.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create a structured repository containing all your artefacts, organised by domain. Write a brief README for your future self explaining each component and when to use it.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day27">
+            <div class="day-header" onclick="toggleDay('day27')">
+                <div class="day-label">
+                    <span class="day-number">Day 27</span>
+                    <span class="day-title">AI-Powered Web Application</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>You build websites. You now understand the API. This session combines both: a web page that <em>calls</em> Claude and does something intelligent. This is about understanding that AI can be embedded in the things you build.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Create an HTML page with JavaScript that calls the Claude API. A Dog Years Story Explorer, a South Acre Field Guide, or a Microseason Checker. Something real, something you'd actually use or share.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day28">
+            <div class="day-header" onclick="toggleDay('day28')">
+                <div class="day-label">
+                    <span class="day-number">Day 28</span>
+                    <span class="day-title">Multi-Model Strategy</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>Different models excel at different things. Opus is deep and nuanced but slow. Sonnet is fast and capable. Haiku is lightning-quick and cheap. An advanced practitioner uses each strategically — sometimes chaining them.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design and document your personal multi-model strategy: which model for which tasks, with rationale. Test it by running the same editorial passage through Haiku (technical scan), Sonnet (structural analysis), and Opus (deep reading).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day29">
+            <div class="day-header" onclick="toggleDay('day29')">
+                <div class="day-label">
+                    <span class="day-number">Day 29</span>
+                    <span class="day-title">The Capstone — Design</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>The capstone integrates everything into a single, substantial artefact that solves a real problem. Choose one:</p>
+                    <ul>
+                        <li><strong>The Dog Years Companion System:</strong> Claude Project with full context, prompt library, automated Bluesky pipeline, story analysis dashboard, web exploration tool.</li>
+                        <li><strong>The Clinical Intelligence Framework:</strong> Reasoning scaffold, research protocol, case summarisation pipeline, guidelines comparison tool, ethics framework.</li>
+                        <li><strong>The South Acre Observatory:</strong> Seasonal task planner, ecological monitoring framework, plant identification workflow, resilience planning tool, journaling system.</li>
+                    </ul>
+
+                    <div class="section-label build">Build</div>
+                    <p>Design the capstone on paper. Define: scope, components, tools required, data needed, success criteria, and a build plan for the final days.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day30">
+            <div class="day-header" onclick="toggleDay('day30')">
+                <div class="day-label">
+                    <span class="day-number">Day 30</span>
+                    <span class="day-title">The Capstone — Build</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label build">Build</div>
+                    <p>Execute your design. Use everything: API access, prompt architecture, structured outputs, tool use, evaluation rubrics, multi-model strategy. Document as you go.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="day-card" id="day31">
+            <div class="day-header" onclick="toggleDay('day31')">
+                <div class="day-label">
+                    <span class="day-number">Day 31</span>
+                    <span class="day-title">The Frontier</span>
+                </div>
+                <span class="day-toggle">+</span>
+            </div>
+            <div class="day-body">
+                <div class="day-content">
+                    <div class="section-label concept">Concept</div>
+                    <p>The course is over, but the frontier isn't. Where is the field going? Longer context windows, persistent memory, autonomous agents, multi-modal generation. What are the risks on the horizon? Deepfakes, labour displacement, dependency, the alignment problem at scale.</p>
+
+                    <div class="section-label build">Build</div>
+                    <p>Write a letter to yourself in six months. What should future-you know about the state of AI? What should you be watching? Building? Wary of? Post it somewhere you'll find it in September.</p>
+
+                    <div class="section-label field-notes">Field Notes</div>
+                    <p>Final synthesis. How has this course changed your practice, your thinking, your relationship with AI? What's the most important thing you learned that you didn't expect?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== APPENDICES ======== -->
+    <section class="appendices" id="appendices">
+        <h2>Appendices</h2>
+
+        <div class="appendix-section">
+            <h3>Recommended Reading</h3>
+            <ul class="reading-list">
+                <li><span class="category">Technical</span> Anthropic's documentation (docs.anthropic.com), Simon Willison's blog, The Gradient</li>
+                <li><span class="category">Philosophical</span> <em>Atlas of AI</em> (Kate Crawford), <em>The Alignment Problem</em> (Brian Christian)</li>
+                <li><span class="category">Creative</span> Ted Chiang's stories about AI, Kazuo Ishiguro's <em>Klara and the Sun</em></li>
+                <li><span class="category">Critical</span> Bender &amp; Gebru's "Stochastic Parrots" paper, Arvind Narayanan's <em>AI Snake Oil</em></li>
+            </ul>
+        </div>
+
+        <div class="appendix-section">
+            <h3>Domain Reference</h3>
+            <table class="domain-table">
+                <thead>
+                    <tr>
+                        <th>Domain</th>
+                        <th>AI Strengths</th>
+                        <th>AI Weaknesses</th>
+                        <th>Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Literary fiction</td>
+                        <td>Voice matching, structural analysis, brainstorming</td>
+                        <td>Originality, emotional truth, genuine surprise</td>
+                        <td><span class="risk-med">Medium</span></td>
+                    </tr>
+                    <tr>
+                        <td>Clinical medicine</td>
+                        <td>Evidence synthesis, case structuring, guidelines</td>
+                        <td>Clinical judgment, rapport, contextual nuance</td>
+                        <td><span class="risk-high">High</span></td>
+                    </tr>
+                    <tr>
+                        <td>Web development</td>
+                        <td>Code generation, debugging, design iteration</td>
+                        <td>Aesthetic judgment, accessibility nuance</td>
+                        <td><span class="risk-low">Low</span></td>
+                    </tr>
+                    <tr>
+                        <td>Land management</td>
+                        <td>Species identification, seasonal planning, research</td>
+                        <td>Local ecology, weather intuition, embodied experience</td>
+                        <td><span class="risk-low">Low–Med</span></td>
+                    </tr>
+                    <tr>
+                        <td>Strategic planning</td>
+                        <td>Scenario modelling, risk assessment, frameworks</td>
+                        <td>True uncertainty, black swans, human motivation</td>
+                        <td><span class="risk-med">Medium</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="appendix-section">
+            <h3>Glossary</h3>
+            <div class="glossary-grid">
+                <div class="glossary-item"><span class="glossary-term">API</span><span class="glossary-def">Application Programming Interface — programmatic access to AI models</span></div>
+                <div class="glossary-item"><span class="glossary-term">Context window</span><span class="glossary-def">The total text an AI can process in a single interaction</span></div>
+                <div class="glossary-item"><span class="glossary-term">Few-shot</span><span class="glossary-def">Teaching AI by providing examples within the prompt</span></div>
+                <div class="glossary-item"><span class="glossary-term">Hallucination</span><span class="glossary-def">AI generating confident but false information</span></div>
+                <div class="glossary-item"><span class="glossary-term">MCP</span><span class="glossary-def">Model Context Protocol — a standard for connecting AI to external tools</span></div>
+                <div class="glossary-item"><span class="glossary-term">RAG</span><span class="glossary-def">Retrieval-Augmented Generation — giving AI access to external documents</span></div>
+                <div class="glossary-item"><span class="glossary-term">System prompt</span><span class="glossary-def">Hidden instructions that shape AI behaviour before conversation begins</span></div>
+                <div class="glossary-item"><span class="glossary-term">Temperature</span><span class="glossary-def">A parameter controlling randomness in AI output</span></div>
+                <div class="glossary-item"><span class="glossary-term">Token</span><span class="glossary-def">The basic unit of text AI processes (roughly ¾ of an English word)</span></div>
+                <div class="glossary-item"><span class="glossary-term">Tool use</span><span class="glossary-def">AI's ability to interact with external systems — search, code, files, APIs</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COLOPHON -->
+    <div class="colophon">
+        <p>"Don't count on too much. But count on this: the tools are here. Learn them well enough to build what matters."</p>
+        <span class="date">The Treeline — designed for Ian Peake, March 2026</span>
+    </div>
+
+</main>
+
+<script>
+    // Toggle day cards
+    function toggleDay(id) {
+        const card = document.getElementById(id);
+        card.classList.toggle('open');
+    }
+
+    // Progress bar
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+    }
+
+    // Nav scroll state
+    function updateNav() {
+        const nav = document.getElementById('courseNav');
+        if (window.scrollY > window.innerHeight - 100) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    }
+
+    // Active nav highlighting
+    function updateActiveNav() {
+        const sections = document.querySelectorAll('.week-section, .preamble, .appendices');
+        const navLinks = document.querySelectorAll('.nav-week');
+        let current = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (window.scrollY >= sectionTop) {
+                current = section.id;
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Scroll-triggered fade-in for day cards
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.day-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Week headers fade in too
+    document.querySelectorAll('.week-header').forEach(header => {
+        header.style.opacity = '0';
+        header.style.transform = 'translateY(15px)';
+        header.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(header);
+    });
+
+    window.addEventListener('scroll', () => {
+        updateProgress();
+        updateNav();
+        updateActiveNav();
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('.nav-week').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                const offset = target.offsetTop - 60;
+                window.scrollTo({ top: offset, behavior: 'smooth' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
