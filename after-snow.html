@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After Snow - Dog Years</title>
+    <meta name="description" content="Edo, Japan, 1720. A woman, a room, a trembling chin dog. The objects that outlast us.">
+    <link rel="canonical" href="https://thesearedogyears.dog/after-snow.html">
+    <meta property="og:title" content="Edo, Japan · 1720 — Dog Years">
+    <meta property="og:description" content="One woman of middle age whose eyes avoid others'. One trembling chin dog, whose eyes find only Auntie.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://thesearedogyears.dog/after-snow.html">
+    <meta property="og:image" content="https://thesearedogyears.dog/og/og-after-snow.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="After Snow — Dog Years">
+    <meta name="twitter:description" content="One woman of middle age whose eyes avoid others'. One trembling chin dog, whose eyes find only Auntie.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <script data-goatcounter="https://dogyears.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #f0ece4;
+            color: #3a3430;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 20px;
+            line-height: 1.85;
+            overflow-x: hidden;
+        }
+
+        /* Subtle paper texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,115,85,.018) 2px, rgba(139,115,85,.018) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139,115,85,.018) 2px, rgba(139,115,85,.018) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 80px 40px 100px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #c4b5a0;
+        }
+
+        .story-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.8em;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #2a2520;
+            margin-bottom: 15px;
+        }
+
+        .story-meta {
+            color: #8b7355;
+            font-size: 1.05em;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        /* Story content */
+        .story-content {
+            margin-bottom: 80px;
+        }
+
+        .story-content p {
+            margin-bottom: 1.7em;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .story-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-content em {
+            font-style: italic;
+        }
+
+        /* Breathing classes */
+        .breath {
+            margin-bottom: 2.2em;
+        }
+
+        .beat {
+            margin-top: 2em;
+            margin-bottom: 2em;
+        }
+
+        .close {
+            margin-bottom: 0.7em;
+        }
+
+        .final {
+            margin-top: 2.4em;
+            margin-bottom: 1.8em;
+        }
+
+        .final-last {
+            margin-top: 2.4em;
+            margin-bottom: 0;
+        }
+
+        /* Section dividers */
+        .section-heading {
+            font-weight: 600;
+            color: #2a2520;
+            margin-top: 3.5em;
+            margin-bottom: 1.8em;
+            padding-top: 2em;
+            padding-bottom: 0.5em;
+            font-size: 1.1em;
+            letter-spacing: 1.5px;
+            border-top: 1px solid rgba(139, 115, 85, 0.25);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .section-heading.visible {
+            opacity: 1;
+        }
+
+        .section-heading:first-of-type {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        /* Haiku */
+        .haiku {
+            margin: 2.4em 0;
+            padding-left: 2.4em;
+            font-style: italic;
+            color: #5a5045;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .haiku.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .haiku p {
+            margin-bottom: 0.3em;
+            font-size: 1em;
+            line-height: 1.7;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .haiku p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Inventory block — the room's catalogue */
+        .inventory {
+            margin: 2em 0;
+            padding-left: 1.6em;
+            border-left: 2px solid rgba(139, 115, 85, 0.2);
+            font-size: 0.96em;
+            color: #4a4035;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .inventory.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .inventory p {
+            margin-bottom: 1.1em;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .inventory p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Tch — centred, italic, its own breath */
+        .tch {
+            display: block;
+            text-align: center;
+            font-style: italic;
+            color: #5a5045;
+            margin: 1.6em 0;
+            font-size: 1.02em;
+            letter-spacing: 0.03em;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+        }
+
+        .tch.visible {
+            opacity: 1;
+        }
+
+        /* Letter section */
+        .letter {
+            font-style: italic;
+            color: #4a4035;
+        }
+
+        .letter-open {
+            color: #3a3430;
+        }
+
+        .letter-close {
+            margin-top: 2em;
+        }
+
+        .confession {
+            display: block;
+            color: #2a2520;
+            margin: 1.8em 0;
+        }
+
+        /* Poem within story (Tomoe's tanka) */
+        .tanka {
+            margin: 2em 0;
+            padding-left: 2.4em;
+            font-style: italic;
+            color: #4a4035;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .tanka.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tanka p {
+            margin-bottom: 0.3em;
+            font-size: 0.98em;
+            line-height: 1.7;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .tanka p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tanka-echo {
+            margin: 2em 0 1.4em;
+            padding-left: 2.4em;
+            font-style: italic;
+            color: #4a4035;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .tanka-echo.visible {
+            opacity: 1;
+        }
+
+        .tanka-echo p {
+            font-size: 0.98em;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        /* Internal voice */
+        .internal {
+            font-style: italic;
+            color: #5a5045;
+            padding-left: 1.2em;
+        }
+
+        /* Story image */
+        .story-image {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding-top: 50px;
+            border-top: 1px solid #c4b5a0;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 2s ease-out, transform 2s ease-out;
+        }
+
+        .story-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-image img {
+            max-width: 100%;
+            height: auto;
+            opacity: 0.92;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 40px;
+            border-top: 1px solid #c4b5a0;
+            flex-wrap: wrap;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 1.2s ease-out;
+        }
+
+        nav.visible {
+            opacity: 1;
+        }
+
+        .nav-link {
+            color: #8b7355;
+            text-decoration: none;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #2a2520;
+        }
+
+        .nav-center {
+            text-align: center;
+        }
+
+        /* Audio control */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            background: rgba(139, 115, 85, 0.15);
+            border: 1px solid #a89777;
+            padding: 10px 15px;
+            cursor: pointer;
+            color: #5a5045;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(139, 115, 85, 0.25);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 25px 80px;
+            }
+
+            .story-title {
+                font-size: 2em;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .audio-control {
+                bottom: 18px;
+                right: 18px;
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1 class="story-title">After Snow</h1>
+            <p class="story-meta">Edo, Japan &middot; 1720</p>
+        </header>
+
+        <article class="story-content">
+
+            <!-- I -->
+            <p class="section-heading" style="margin-top: 0; padding-top: 0; border-top: none;">I</p>
+
+            <div class="haiku">
+                <p>warbler tries again</p>
+                <p>girls together dream aloud</p>
+                <p>spring is still not yet</p>
+            </div>
+
+            <!-- II — Auntie's and Yuki's Room -->
+            <p class="section-heading">II &middot; Auntie's and Yuki's Room</p>
+
+            <div class="inventory">
+                <p>The room contains the following:</p>
+                <p>One tanzaku rack, which is lacquered black with the inlaid crane who has stood on one leg in the mother-of-pearl stream for decades. The rack holds the seven paper strips in four different hands.</p>
+                <p>One bronze mirror on a stand, which she turns to face to the wall as she passes, and which Michi will correct tomorrow without comment.</p>
+                <p>One celadon incense burner in the lotus-form, ash still warm, which she presses out with two fingers without licking them first and then smudges the ash on the underside of her hem before folding it back over.</p>
+                <p>One cylindrical box containing the forty-eight painted clamshell halves, which she lifts and places in the cabinet, then stops, staring into space for a moment and retrieves, sets on the low table beside the window without opening but tapping twice on the lid with her finger.</p>
+                <p>One set of hina dolls in paulownia wood trays, fifteen figures, which must come out now as the season dictates.</p>
+                <p>One woman of middle age whose eyes avoid others'.</p>
+                <p>One trembling chin dog, whose eyes find only Auntie.</p>
+            </div>
+
+            <p class="beat">She begins with the emperor and empress.</p>
+
+            <em class="tch">Tch.</em>
+
+            <p>They smile at her blankly. She places them on the highest tier, flicking dust from the empress like a cruel giant. The court ladies follow. The musicians. The officials with their wooden instruments of office. Each figure handled correctly, placed correctly, facing correctly outward toward the room.</p>
+
+            <p class="breath">Yuki wheezes.</p>
+
+            <p>She moves from the second tier to the third. The dog has stationed herself beside the paulownia box, trembling finely, watching with her bulging weeping eyes the specific movements of the hem, the hands, the figures emerging one by one into their annual positions. When footsteps pass in the corridor she flattens briefly as the woman drains. Yuki whines one short thin note and then resumes trembling. The footsteps pass. The corridor returns to its usual silence.</p>
+
+            <p>She picks up the tanzaku rack which is two inches to the left of where it should be, and steadies it, and her thumb finds the third strip without looking. She reads it. She has read it perhaps four thousand times. Her thumb moves across the characters slowly, learning them again, and she brings it to her mouth for just a moment, barely, the paper against her lower lip, and then it is back on the rack and she is moving the rack two inches to the right of where it was, and should not have been.</p>
+
+            <p class="breath">The dog circles. Hops from foot to foot. Her nails on the wooden floor make their small insistence in percussion, the room's only sound.</p>
+
+            <p>The last tier. Liveried bodyguards. She places them with a small exasperated sound low in her throat, adjusted once, adjusted again.</p>
+
+            <em class="tch">Tch.</em>
+
+            <p class="beat">The figures smile.</p>
+
+            <p>She lifts the dog, who is barely there, a warm insistence, a heartbeat in silk, and sits. Yuki turns twice in her lap and folds herself into the warmth and wheezes and is still. Outside the paper screens the light is the particular grey of late afternoon at the ending of the second month, which is the same light as last year and the year before and will be the same light again, and the dolls smile from their seven tiers at the room, at the woman, at the small warm animal whose fur she is combing now with her fingers, slowly, as she begins to sing under her breath the song that lovestruck girls sing about waiting, about the one who is coming, about the night that is almost over.</p>
+
+            <p class="breath">Yuki's eyes close. Her nose whistles once with each breath.</p>
+
+            <p class="final">The mirror faces the wall.</p>
+
+
+            <!-- III — A letter buried under a stone marked Yuki -->
+            <p class="section-heading">III &middot; A letter buried under a stone marked <em>Yuki</em></p>
+
+            <p class="letter letter-open beat">Happy Birthday, my sweet little Yuki. Seven times I have written to you on this day since the bitter spring when they buried you in the courtyard by the paulownia.</p>
+
+            <p class="letter">I must tell you what I did last week as I packed the dolls away. I held the stupid hina empress in the incense as it burned and now her face is ash and she stinks in her box of soot. Nobody but Michi will notice and she is old and slow and won't say. I thrill to think of opening the box again next year.</p>
+
+            <p class="letter">Sometimes I think I will claw my brother's face when he brings me some new trinket. He is only ever kind to me, just as my father was, but I imagine sometimes setting the house to burn and hearing him scream for my nieces and nephews and only I will laugh, because I have died so many times already and nothing like that holds fear for me.</p>
+
+            <p class="letter breath">I miss you, Yuki. I miss the way you held onto my secrets and my grief and how you looked at me like I moved the earth for you. You have never really left me. Tomoe left me twice: once the day she married and once the day their ship went down off Niigata. But you, you stayed until you could not.</p>
+
+            <p class="letter">I think perhaps my brother will always be afraid of me. Perhaps he remembers when he was only small and I was fresh in grief and mother shook me and said: <em>you must forget all of this. We have made you a good match.</em> Perhaps he still sees the girl who refused and set her jaw against all food until she was bones in her bed, and wonders if I'll do it again.</p>
+
+            <span class="letter confession beat">I wonder if I'll do it again.</span>
+
+            <p class="letter">If the house does not burn then I hope when I am gone my brother's wife boxes all these useless ornaments and leaves them somewhere quiet to rot. I hate the little figures and their smiles. I hate the lonely crane waiting on his one leg forever. I hate the clamshells and the cloying incense.</p>
+
+            <p class="letter breath">One day some young woman of the family will open the box with curiosity and puzzle over the sad antiques that made a life. How she will pity me. And you and I, Yuki, our ghosts will laugh. You loved me better than she ever did and longer. Whatever I have been, I was with you. You alone know. I don't care. I don't care.</p>
+
+            <p class="letter letter-close final">Happy Birthday, my sweet girl. Every year apart is one less year apart.</p>
+
+
+            <!-- IV — Tanabata's Reunions -->
+            <p class="section-heading">IV &middot; Tanabata's Reunions</p>
+
+            <p class="beat">The courtyard is high summer and too loud.</p>
+
+            <p>Tomoe is describing her husband. He doesn't exist yet but she knows him precisely: kind eyes, clever in business, a name that will sit well next to hers. She is writing this down on the tanzaku strip, pressing every word hard into the bamboo. The other girl listens with her whole body.</p>
+
+            <p>Tomoe says: He'll be strong, but gentle. Handsome but not pretty. I think we should marry in spring, don't you?</p>
+
+            <p>The other girl thinks, says: Spring, yes... I'll carry flowers. And you will carry them at mine. And afterwards we'll still take tea together in our afternoons.</p>
+
+            <p>Tomoe says: I'll have strong clever sons, and pretty daughters who make sweet music.</p>
+
+            <p>The other girl thinks, says: Yes, and our children will all play together like one family.</p>
+
+            <p>Tomoe says: It will be a grand house in a valley. Breathtaking and peaceful and far from the dirt and noise. Far from here.</p>
+
+            <p>The other girl thinks.</p>
+
+            <p class="beat">Tomoe is reading the poem aloud now, the one she has just finished, holding it up in the summer light.</p>
+
+            <p>Tomoe says: this is a wish for you, my very best friend.</p>
+
+            <div class="tanka">
+                <p>two cranes leave the marsh.</p>
+                <p>the valley holds room for both.</p>
+                <p>autumn is not yet.</p>
+                <p>may you find the still water.</p>
+                <p>may I find you finding it.</p>
+            </div>
+
+            <p>Something moves through the other girl like the first cold morning of a season that hasn't arrived yet. She reaches for Tomoe and they hold each other until Tomoe shakes and the other girl realises it is because she is laughing, and then the other girl laughs too, which is loud enough that the voice comes from somewhere inside the house:</p>
+
+            <p class="internal beat">Girls. Girls.</p>
+
+            <p>The aunt appears in the doorway. Small and dry, her ugly little dog tucked under one arm, its eyes wet and bulging, its breathing audible from across the courtyard.</p>
+
+            <p class="breath">It is Tomoe who whispers into the other girl's hair: silly old spare woman. My aunt hates to see people enjoying themselves.</p>
+
+            <p>They giggle. They are told again. They giggle again. The afternoon stretches in the heat and they play next the game of clamshells and more times the old woman chides them.</p>
+
+            <p class="beat">The tanzaku strip dries in the summer air, the ink fixed, the wish now permanent.</p>
+
+            <div class="tanka-echo">
+                <p><em>May I find you finding it.</em></p>
+            </div>
+
+
+            <!-- V -->
+            <p class="section-heading">V</p>
+
+            <div class="haiku">
+                <p>stone for a small dog</p>
+                <p>the old woman sits alone</p>
+                <p>moved the earth for her</p>
+            </div>
+
+        </article>
+
+        <div class="story-image">
+            <img src="after-snow.png" alt="">
+        </div>
+
+        <nav>
+            <a href="stories.html" class="nav-link">&larr; Back to Stories</a>
+            <div class="nav-center">
+                <a href="#" class="nav-link">Next Story &rarr;</a>
+            </div>
+        </nav>
+
+    </div>
+
+    <button class="audio-control" id="audioToggle">Listen</button>
+
+    <audio id="soundscapeAudio" loop>
+        <source src="audio/after-snow-ambient.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Scroll-based fade in
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll(
+            '.story-content p, .haiku, .inventory, .section-heading, .tch, .tanka, .tanka-echo, .story-image, nav'
+        ).forEach(el => observer.observe(el));
+
+        // Audio toggle
+        const audio = document.getElementById('soundscapeAudio');
+        const audioBtn = document.getElementById('audioToggle');
+        let audioStarted = false;
+
+        audioBtn.addEventListener('click', () => {
+            if (!audioStarted) {
+                audio.volume = 0.25;
+                audio.play().catch(() => {});
+                audioBtn.textContent = 'Mute';
+                audioStarted = true;
+            } else if (audio.paused) {
+                audio.play();
+                audioBtn.textContent = 'Mute';
+            } else {
+                audio.pause();
+                audioBtn.textContent = 'Listen';
+            }
+        });
+    </script>
+
+<!-- Pawprint -->
+<style>
+.pawprint-container {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+  user-select: none;
+}
+
+.pawprint-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  position: relative;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+  color: inherit;
+}
+
+.pawprint-button:hover {
+  opacity: 0.8;
+}
+
+.pawprint-button:disabled {
+  cursor: default;
+}
+
+.pawprint-button svg {
+  width: 96px;
+  height: 96px;
+  fill: currentColor;
+  transition: transform 0.15s ease, filter 0.3s ease;
+}
+
+.pawprint-button:active:not(:disabled) svg,
+.pawprint-button.pressing svg {
+  transform: scale(0.85);
+}
+
+.pawprint-button.pressed svg {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px currentColor);
+  animation: glowFade 1.5s ease forwards;
+}
+
+.pawprint-button.pressed {
+  opacity: 1;
+}
+
+@keyframes glowFade {
+  0% {
+    filter: drop-shadow(0 0 12px currentColor);
+    transform: scale(0.85);
+  }
+  30% {
+    filter: drop-shadow(0 0 20px currentColor);
+    transform: scale(1.05);
+  }
+  100% {
+    filter: drop-shadow(0 0 4px currentColor);
+    transform: scale(1);
+  }
+}
+
+.pawprint-button::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  margin-bottom: 8px;
+}
+
+.pawprint-button:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pawprint-button.pressed::before {
+  content: "thank you";
+}
+
+.pawprint-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.4;
+  margin-top: 0.25rem;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+}
+</style>
+
+<div class="pawprint-container">
+  <div>
+    <button
+      class="pawprint-button"
+      data-tooltip="leave a paw print if you came this way and liked it"
+      aria-label="Leave a paw print to show this story meant something to you"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <defs>
+          <filter id="inkbleed" x="-10%" y="-10%" width="120%" height="120%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+          </filter>
+        </defs>
+        <path filter="url(#inkbleed)" d="M256 224c-79.41 0-192 122.76-192 200.25 0 34.9 26.81 55.75 71.74 55.75 48.84 0 81.09-25.08 120.26-25.08 39.51 0 71.85 25.08 120.26 25.08 44.93 0 71.74-20.85 71.74-55.75C448 346.76 335.41 224 256 224zm-147.28-12.61c-10.4-34.65-42.44-57.09-71.56-50.13-29.12 6.96-44.29 40.69-33.89 75.34 10.4 34.65 42.44 57.09 71.56 50.13 29.12-6.96 44.29-40.69 33.89-75.34zm84.72-20.78c30.94-8.14 46.42-49.94 34.58-93.36s-46.52-72.01-77.46-63.87-46.42 49.94-34.58 93.36c11.84 43.42 46.53 72.02 77.46 63.87zm281.39-29.34c-29.12-6.96-61.15 15.48-71.56 50.13-10.4 34.65 4.77 68.38 33.89 75.34 29.12 6.96 61.15-15.48 71.56-50.13 10.4-34.65-4.77-68.38-33.89-75.34zm-156.27 29.34c30.94 8.14 65.62-20.45 77.46-63.87 11.84-43.42-3.64-85.21-34.58-93.36s-65.62 20.45-77.46 63.87c-11.84 43.42 3.64 85.22 34.58 93.36z"/>
+      </svg>
+    </button>
+    <div class="pawprint-label">leave a print</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const FORMSPREE_ID = 'mlgwrbjw';
+  const STORY_TITLE = 'After Snow';
+
+  const button = document.querySelector('.pawprint-button');
+  const storageKey = 'pawprint_' + STORY_TITLE.toLowerCase().replace(/\s+/g, '_');
+
+  if (localStorage.getItem(storageKey)) {
+    button.classList.add('pressed');
+    button.disabled = true;
+  }
+
+  button.addEventListener('click', async function() {
+    if (button.classList.contains('pressed')) return;
+
+    button.classList.add('pressing');
+
+    try {
+      const response = await fetch('https://formspree.io/f/' + FORMSPREE_ID, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          story: STORY_TITLE,
+          page: window.location.href,
+          timestamp: new Date().toISOString(),
+          _subject: '🐾 Paw print left on: ' + STORY_TITLE
+        })
+      });
+
+      if (response.ok) {
+        setTimeout(() => {
+          button.classList.remove('pressing');
+          button.classList.add('pressed');
+          button.disabled = true;
+          localStorage.setItem(storageKey, 'true');
+        }, 150);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      console.error('Paw print error:', error);
+      button.classList.remove('pressing');
+      button.classList.add('pressed');
+      button.disabled = true;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
