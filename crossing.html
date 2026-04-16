@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crossing - Dog Years</title>
+
+    <meta name="description" content="She had learned the smell of their passage before she had learned their shapes.">
+    <meta property="og:title" content="Aurignac, Southern France · 32,000 BCE — Dog Years">
+    <meta property="og:description" content="A wolf at the treeline. A fire in the dark. The moment everything changed.">
+    <meta property="og:image" content="https://thesearedogyears.dog/og/og-crossing.jpg">
+    <meta property="og:url" content="https://thesearedogyears.dog/crossing.html">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Crossing — Dog Years">
+    <meta name="twitter:description" content="A wolf at the treeline. A fire in the dark. The moment everything changed.">
+    <meta name="twitter:image" content="https://thesearedogyears.dog/og/og-crossing.jpg">
+    <link rel="canonical" href="https://thesearedogyears.dog/crossing.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+
+    <script data-goatcounter="https://dogyears.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0908;
+            --text: #e8dcc8;
+            --text-muted: #a89880;
+            --text-internal: #c8b898;
+            --ember: #c8641e;
+            --ember-soft: rgba(180, 90, 20, 0.15);
+            --ember-glow: rgba(200, 100, 30, 0.08);
+        }
+
+        html {
+            background: var(--bg);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 20px;
+            line-height: 1.85;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* === AMBIENT LAYERS === */
+
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(
+                ellipse 60% 55% at 50% 48%,
+                transparent 0%,
+                transparent 35%,
+                rgba(5, 4, 3, 0.4) 60%,
+                rgba(3, 2, 1, 0.85) 100%
+            );
+        }
+
+        .ambient-fire {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(
+                ellipse 45% 40% at 50% 52%,
+                rgba(160, 70, 15, 0.12) 0%,
+                rgba(120, 50, 10, 0.06) 45%,
+                transparent 70%
+            );
+            animation: firebreath 4s ease-in-out infinite;
+        }
+
+        .ambient-smoke {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(
+                ellipse 80% 60% at 50% 20%,
+                rgba(30, 20, 10, 0.3) 0%,
+                transparent 60%
+            );
+        }
+
+        @keyframes firebreath {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            25% { opacity: 0.75; transform: scale(1.02) translateY(-2px); }
+            50% { opacity: 0.9; transform: scale(0.98) translateY(1px); }
+            75% { opacity: 0.8; transform: scale(1.01) translateY(-1px); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            8% { opacity: 0.92; }
+            15% { opacity: 0.97; }
+            23% { opacity: 0.88; }
+            40% { opacity: 0.95; }
+            57% { opacity: 0.85; }
+            72% { opacity: 0.93; }
+            88% { opacity: 0.89; }
+        }
+
+        /* === LAYOUT === */
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 90px 50px 120px;
+        }
+
+        /* === HEADER === */
+
+        header {
+            text-align: center;
+            margin-bottom: 70px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(200, 160, 80, 0.2);
+            animation: flicker 8s ease-in-out infinite;
+        }
+
+        .story-title {
+            font-size: 2.6em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--text);
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+
+        .story-meta {
+            font-size: 0.82em;
+            font-style: italic;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: none;
+        }
+
+        .story-meta-separator {
+            display: inline-block;
+            margin: 0 8px;
+            opacity: 0.5;
+        }
+
+        /* === STORY CONTENT === */
+
+        .story-content p {
+            margin-bottom: 1.5em;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .story-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .story-content p.breath {
+            margin-bottom: 2.4em;
+        }
+
+        .story-content p.beat {
+            margin-top: 2.2em;
+            margin-bottom: 2.2em;
+        }
+
+        .story-content p.close {
+            margin-bottom: 0.6em;
+        }
+
+        .story-content p.final {
+            margin-top: 2em;
+            margin-bottom: 1.8em;
+        }
+
+        .story-content p.final-last {
+            margin-top: 2.4em;
+            margin-bottom: 3em;
+        }
+
+        .story-content p.internal {
+            font-style: italic;
+            color: var(--text-internal);
+            padding-left: 1.2em;
+        }
+
+        /* Section break */
+        .section-break {
+            text-align: center;
+            color: var(--text-muted);
+            margin: 2.8em 0;
+            letter-spacing: 6px;
+            font-size: 0.75em;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .section-break.visible {
+            opacity: 0.5;
+            transform: translateY(0);
+        }
+
+        /* Em dashes and italics in text */
+        em {
+            font-style: italic;
+            color: var(--text-internal);
+        }
+
+        /* === HERE — the centrepiece word === */
+
+        .here-word {
+            display: block;
+            text-align: center;
+            font-size: 1.3em;
+            font-style: italic;
+            letter-spacing: 0.15em;
+            color: var(--ember);
+            margin: 2.8em auto;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+            text-shadow: 0 0 30px rgba(200, 100, 30, 0.4);
+        }
+
+        .here-word.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === RESPONSIVE === */
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 28px 90px;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            .story-title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-fire"></div>
+    <div class="ambient-smoke"></div>
+    <div class="ambient-vignette"></div>
+
+    <div class="container">
+
+        <header>
+            <h1 class="story-title">The Crossing</h1>
+            <p class="story-meta">
+                Aurignac, Southern France
+                <span class="story-meta-separator">·</span>
+                32,000 BCE
+            </p>
+        </header>
+
+        <article class="story-content">
+
+            <p class="breath">She had learned the smell of their passage before she had learned their shapes.</p>
+
+            <p>The pack followed three days behind at first, then two, then one. Caution written into every step: heads low, bellies not quite touching ground, the whole body asking: <em>safe? not safe? safe?</em></p>
+
+            <p class="breath">The humans left behind them a trail of abundance that made no sense. Cracked bones still threaded with good marrow. Hide-scraps rank with fat. Ash-pits warm enough to sleep beside, if you dared.</p>
+
+            <p class="beat">She dared longer than the others.</p>
+
+            <p class="breath">The cooked fat was the thing. Nothing else in the world smelled like it — not fresh kill, not marrow, not the milk-sweet smell of cubs. It was fat transformed into something with no name in the world she knew, and it hit the back of her throat and made her shake her head from side to side without meaning to.</p>
+
+            <p class="breath">While the pack slept she ranged ahead. The night was hers and the trail was fresh and her paws found it without effort.</p>
+
+            <p class="beat">The camp was still when she found it.</p>
+
+            <p>Their fire was low, banked for sleeping. The humans a collection of shapes under skins, breathing slow and various. The smell was <em>overwhelming</em>. Their bodies, the grease of them. There was urine and smoke, the cooked-fat smell thick as the fogs that flood the low places in the time of the brown leaves and the great bird flocks. She stood at the treeline and let it move through her. Her nose worked without her. Her heart was loud.</p>
+
+            <p class="close">She did not go closer.</p>
+            <p class="breath">But neither could she leave.</p>
+
+            <p class="breath">She stood until the fire shifted and a coal dropped from it and the breathing under the furs changed slightly and her body catalogued the change without being asked. Then she went back to the pack, her paws finding the trail home, and she slept among the bodies and scents of her own kind.</p>
+
+            <p class="close">The next night she came back.</p>
+            <p class="breath">And the next.</p>
+
+            <p class="breath">On the fourth night one of them was still moving at the edge of camp. Small. A cub? Maybe not — they carried their cubs close. A youngster then, like her. It moved with no purpose, the way young things can. Dawdling at the boundary where their firelight lost to the dark.</p>
+
+            <p class="beat">The youngster turned.</p>
+
+            <p class="breath">Their eyes met across the dark and held.</p>
+
+            <p class="breath">Neither moved. The fire breathed behind the long-limbed creature and its eyes grew wider. Her heart did the loud thing again, different from the hunt, and the moment stretched until the little human looked away first and scrambled back toward the light.</p>
+
+            <p class="breath">She was gone before he reached it.</p>
+
+            <p class="beat">She came back to the pack smelling of their smoke. She didn't know it yet. But the pack did.</p>
+
+            <p>There was no sound or display, but there was the way they oriented — heads coming up one by one, noses working, a slow collective stilling. Her sibling was the first to reach her, circling once, reading her flank, her throat, the length of her. Something in the circling was different from greeting.</p>
+
+            <p class="breath">She stood and let it happen.</p>
+
+            <p>The others came. The same slow inventory. The same hesitation in their posture. If not aggression, then a closing of the usual spaces. The places where bodies usually slotted together without thought simply didn't open. She moved toward the sleeping cluster and the shape of it didn't accommodate her the way it always had.</p>
+
+            <p class="close">She lay down at the edge.</p>
+            <p class="breath">Her sibling settled nearby but not touching.</p>
+
+            <p class="breath">The pack breathed itself to sleep around her and she lay in the cold at the margin of their warmth and her nose was still full of smoke and cooked fat and the particular smell of the youngster's fear and she did not sleep for a long time.</p>
+
+        </article>
+
+        <div class="section-break">— — —</div>
+
+        <article class="story-content">
+
+            <p class="breath">Three days later they ran deer.</p>
+
+            <p class="breath">The going was good: frost-hardened, open, the herd's tracks clear and fresh. The pack moved as one thing, the way they did when everything was right, with weight shifting, breath syncing, the world narrowed to hooves and wind and breath and the closing distance.</p>
+
+            <p class="beat internal">She lost the thread.</p>
+
+            <p class="breath">It was barely for a breath or two, but the pack is built to feel such things and the half-beat of wrongness in their unity was plain. The deer — whose clan too were built for noticing — felt it, or felt something, and the gap that should have closed didn't, and the herd found the treeline and was gone.</p>
+
+            <p class="breath">The pack milled without sound, but she felt their attention settle on her the way a break in the cloud lets the sun pick out a single tree from the copse.</p>
+
+            <p class="breath">Her sibling stood close by and watched her, head tilted.</p>
+
+            <p class="breath">In the crucial moment she had been somewhere else entirely. The frost-smell of the forest had shifted for her into ash and rendered fat and the particular warmth of banked coals and her legs had kept running but the rest of her had gone back to the treeline, back to the dark and the fire and the youngster's eyes.</p>
+
+            <p class="close">She shook herself. Scented the air. Offered her throat briefly to the lead female, who accepted it without warmth.</p>
+            <p class="breath">That night she ate last.</p>
+
+        </article>
+
+        <div class="section-break">— — —</div>
+
+        <article class="story-content">
+
+            <p class="breath">She was already moving when her sibling found her.</p>
+
+            <p class="breath">It was dusk and the pack was settling into the hollow where they'd denned two nights running. She had waited until the others were down, heads on haunches, eyes closing. Then she simply walked.</p>
+
+            <p class="breath">Her sibling was beside her before she'd cleared the rise. They made no move to block, rather kept back, a presence, matching her pace, their shoulders almost touching. She kept moving. Her sibling kept up.</p>
+
+            <p class="breath">They walked like that for a while, through the birch shadows, frost crackling under their feet. Then her sibling slowed, but she did not.</p>
+
+            <p class="breath">She felt the moment her sibling stopped. Felt the eyes on her back, tracking her through the trees. The pull of it was real — a physical thing, like the drag of deep water in a place you thought you could cross.</p>
+
+            <p class="breath">Her pace slowed only for two heartbeats.</p>
+
+            <p class="beat">She did not look back.</p>
+
+            <p class="breath">The birches thinned. The ground rose. Somewhere ahead, just over the ridge, the smell she'd been carrying in her chest for days was suddenly real and flavouring the actual air.</p>
+
+            <p class="close">Her nose opened to it.</p>
+            <p class="breath">Her pace quickened.</p>
+
+            <p class="breath">The camp was quieter than before. Later in the night, the fire lower, most of the humans already under their skins. A human sat apart from the others, feeding small sticks to the embers. It was awake in the way some of the pack must always be. It was present, unhurried. She realised it was keeping their light alive.</p>
+
+            <p class="breath">She watched from the treeline.</p>
+
+            <p class="breath">The human fed the fire, one stick, then another, the flames catching and settling, catching and settling. It did not look up. The smell this night was enormous — all of it, the whole overwhelming grammar of this place. She tried to hold it in her understanding.</p>
+
+            <p class="internal breath">The creatures were small in every way she could measure. Yet the space around them was larger than the space around prey, larger than the space around her pack — the way the light hit the great valley the day she first walked the high ridge and understood she could never find the size of the world.</p>
+
+            <p class="breath">She came off the ridge. Steady, each step placed with the full weight of attention, the frost giving softly under her paws. She stopped twice. The second time she was close enough to see the human's breath clouding in the cold.</p>
+
+            <p class="breath">The human had not looked up and the idea that she could be this close unscented, unheard, unseen was barely fathomable.</p>
+
+            <p class="breath">She came closer still.</p>
+
+            <p class="breath">When she finally stopped she was at the very edge of the firelight's reach, where the warmth licked only softly at her face. She lowered herself to the ground. Forelegs first, then her haunches. Her chin level. Watching.</p>
+
+            <p class="beat">The human looked up then.</p>
+
+            <p>It did not startle. Did not reach for anything. Slowly, it turned its head towards where the others of its kind were sleeping, then at last its eyes darted to the figures under fur, along the ground in between, then back to her. <em>Closing distance.</em></p>
+
+            <p class="breath">She held very still.</p>
+
+            <p>The human reached slowly to the edge of the fire, eyes kept always on her, and turned something in the ash. A scrap of meat, blackened at the edges. It pulled it out, stood, moved backwards slowly. Two steps, four. Then it tossed the meat, which hit the ground and rolled to her.</p>
+
+            <p class="breath">The smell of it hit like a hoof to the jaw. She did not move for a small lifetime of heartbeats.</p>
+
+            <p class="beat">Then she did.</p>
+
+            <p class="breath">Her nose touched it first: the warm wet of it against her skin. Then the meat was in her mouth and the fat of it was like nothing else, like first blood, like a perfect clearing she'd been trying to remember, and she crouched and ate it, sacred.</p>
+
+            <p class="breath">The human moved two steps back toward the fire. Four. Sat. Fed another stick to the flames. Checked again their sleeping pack.</p>
+
+            <p class="breath">Neither of them moved.</p>
+
+            <p class="breath">The cold settled around them both and the fire breathed between them and her heart was doing the loud thing, the not-hunt thing, and without deciding to, she rolled onto her right haunch, supine, belly catching firelight. The human's face changed, showing teeth without threat, eyes locking without challenge.</p>
+
+            <p class="breath">Warmth spread through fur to skin and down through everything and something in her chest that had been braced since she was born simply stopped bracing.</p>
+
+            <span class="here-word">Here.</span>
+
+            <p class="breath">They sat until the fire burned low.</p>
+
+        </article>
+
+        <div class="section-break">— — —</div>
+
+        <article class="story-content">
+
+            <p class="breath">She was back before dawn.</p>
+
+            <p class="breath">The pack was sleeping when she cleared the rise, her paws finding the hollow without thought. She moved through the outer edge of them and found her place and lay down and her sibling's eyes were open, watching her, and she met them briefly and looked away.</p>
+
+            <p class="close">Her sibling's nose worked once. Then again.</p>
+            <p class="breath">She tucked her chin to her chest and closed her eyes.</p>
+
+            <p class="breath">She did not sleep.</p>
+
+            <p class="breath">The days that followed were ordinary in every way that could be seen. She ran with the pack. She ate. She slept in the hollow. But the ordinary had a new texture, which was slightly wrong, like fur brushed the wrong way as you backed from a snake through a thicket. Together the pack felt it the way they felt weather coming, as a change in pressure, a collective unease that had no single source.</p>
+
+            <p class="breath">The spaces around her stayed slightly too wide.</p>
+
+            <p class="breath">She offered her throat more than she needed to. It was accepted less warmly each time.</p>
+
+            <p class="breath">Her sibling stayed close without touching, mostly. This constancy she felt even when she wasn't looking, a warmth at the edge of her awareness that cost her sibling something she could smell but not name.</p>
+
+            <p class="breath">One morning the lead female stood in her path, reading her with the full attention of authority. She held still and let it happen and what passed between them was entirely legible to both of them, to the watching pack, and when the lead female walked away something had been said that could not be unsaid.</p>
+
+            <p class="breath">That night the hollow felt very small. She left before the pack woke.</p>
+
+            <p class="breath">Her paws touched frost and she walked and the birches opened around her and behind her the hollow breathed its slow collective breath and she did not look back.</p>
+
+            <p class="breath">Her sibling would know first. Would stand at the rise and watch her line through the trees until the trees took her. She knew this without looking. She felt it along the vulnerable part of her neck, like the touch of her sibling's muzzle.</p>
+
+            <p class="beat">She walked.</p>
+
+            <p class="breath">The ground rose and the frost crackled and the sky was beginning its grey work at the edges and the smell she'd been carrying came up to meet her over the ridge like a tide and her pace didn't change but something in her chest did, opening the way a chest opens when the long hard hunt is nearly done.</p>
+
+            <p class="breath">She came down through the birches. Through the pine shadow. Across the frost-hardened open ground where the deer had run and she had lost the thread and known, though she hadn't known she knew.</p>
+
+            <p class="breath">Their camp was waking. Slow sounds, low voices, the fire being built from its embers. The smell of it all: the bodies, smoke, the cooked-fat smell, the particular human smell that had lived in her fur for weeks… was suddenly not the vast unknowable forest, but just the smell of where and when she was. She breathed it, then came to the edge of the light and stopped.</p>
+
+            <p>A human looked up from the fire. Not the same as before — broader, slower, a youngster balanced on its hip. It looked at the wolf at the edge of the firelight and it said something low to the others beside it and a tall, strong-looking one reached without hurry into the ash and turned something and stood and threw it.</p>
+
+            <p class="breath">It was a deer bone, charred, meat and glorious fat still clinging. It landed in the frost two steps from her nose.</p>
+
+            <p class="close">She looked at it.</p>
+            <p class="breath">She looked at them.</p>
+
+            <p class="breath">She walked forward and took it and stepped back and ate it in the light this time, not the dark, and when she had finished she lay down at the edge of the fire's warmth and the camp moved around her and the smoke settled into her fur and the frost was cold against her paws and the warmth of the fire reached her face.</p>
+
+            <p class="final">Her tail moved from one side to the other. Once. Then again.</p>
+
+            <span class="here-word final-last">Here.</span>
+
+        </article>
+
+    </div>
+
+    <script>
+        // === SCROLL FADE IN ===
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.story-content p, .section-break, .here-word').forEach(el => {
+            observer.observe(el);
+        });
+
+        // === FIRE WARMTH ON SCROLL ===
+        // Gently intensify the fire glow as reader descends
+        const fireLayer = document.querySelector('.ambient-fire');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const intensity = 0.12 + (scrolled * 0.1);
+            fireLayer.style.background = `radial-gradient(
+                ellipse 45% 40% at 50% 52%,
+                rgba(160, 70, 15, ${intensity}) 0%,
+                rgba(120, 50, 10, ${intensity * 0.5}) 45%,
+                transparent 70%
+            )`;
+        }, { passive: true });
+    </script>
+
+</body>
+</html>
