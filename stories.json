@@ -1,0 +1,158 @@
+{
+  "themes": [
+    {
+      "id": "myth",
+      "name": "Myth and Ancestors",
+      "description": "The first fires, the old gods, and the stories we carried forward."
+    },
+    {
+      "id": "teeth",
+      "name": "Teeth",
+      "description": "Empires crumble, borders shift, and dogs witness what humans build and abandon."
+    },
+    {
+      "id": "ourtime",
+      "name": "In Our Time",
+      "description": "The partnership as we know it now — ordinary and irreplaceable."
+    },
+    {
+      "id": "later",
+      "name": "Later, Elsewhere",
+      "description": "What comes next, after the familiar world loosens its grip."
+    }
+  ],
+  "stories": [
+    {
+      "id": "aurignacian",
+      "title": "Aurignacian Night",
+      "period": "32,000 BCE",
+      "location": "Aurignac, France",
+      "hook": "A boy at the edge of firelight. A wolf-shape in the dark. The first choice.",
+      "url": "aurignacian.html",
+      "ogImage": "og/og-aurignacian.jpg",
+      "cssClass": "aurignacian",
+      "theme": "myth"
+    },
+    {
+      "id": "shu",
+      "title": "The Story of Shu, Kuai, Grandson-Become-Grandfather, and the Tombs That Could Not See",
+      "period": "1200 BCE",
+      "location": "Yellow River Valley, Shang Dynasty China",
+      "hook": "A grandfather's story. A ratter named Shu. The tomb that could not see.",
+      "url": "shu.html",
+      "ogImage": "og/og-shu.jpg",
+      "cssClass": "shu",
+      "theme": "myth"
+    },
+    {
+      "id": "herrengasse",
+      "title": "Herrengasse Elegy",
+      "period": "1898\u20131914",
+      "location": "Vienna, Austria",
+      "hook": "A black Labrador. An empire collapsing. Loyalty until the end.",
+      "url": "herrengasse.html",
+      "ogImage": "og/og-herrengasse.jpg",
+      "cssClass": "herrengasse",
+      "theme": "teeth"
+    },
+    {
+      "id": "packless",
+      "title": "Packless",
+      "period": "1885",
+      "location": "Dakota Territory, USA",
+      "hook": "A wagon's wheel. A stray bleeding out in the grass. The sky pulling harder.",
+      "url": "packless.html",
+      "ogImage": "og/og-packless.jpg",
+      "cssClass": "packless",
+      "theme": "teeth"
+    },
+    {
+      "id": "wildhunt",
+      "title": "The Wild Hunt",
+      "period": "1885 / Never / Always / Now",
+      "location": "Prairie / Sky / Myth",
+      "hook": "What happens after the last breath. The Hunt rides. It was always riding for her.",
+      "url": "wildhunt.html",
+      "ogImage": "og/og-wildhunt.jpg",
+      "cssClass": "wildhunt",
+      "theme": "myth"
+    },
+    {
+      "id": "echo",
+      "title": "Echo",
+      "period": "2023",
+      "location": "Scotland",
+      "hook": "A man, a puppy, and the first day of everything.",
+      "url": "echo.html",
+      "ogImage": "og/og-echo.jpg",
+      "cssClass": "echo",
+      "theme": "ourtime"
+    },
+    {
+      "id": "marginalia",
+      "title": "Marginalia",
+      "period": "731 CE",
+      "location": "Northumbria",
+      "hook": "A Northumbrian hall at midwinter. A monk's sermon. A hound and a wounded rabbit.",
+      "url": "marginalia.html",
+      "ogImage": "og/og-marginalia.jpg",
+      "cssClass": "marginalia",
+      "theme": "myth"
+    },
+    {
+      "id": "anomaly",
+      "title": "Anomaly at ARCESS-7",
+      "period": "1972",
+      "location": "Svalbard Archipelago, Norwegian Arctic",
+      "hook": "A dog team. A polar night. Something impossible on the ice.",
+      "url": "anomaly.html",
+      "ogImage": "og/og-anomaly.jpg",
+      "cssClass": "anomaly",
+      "theme": "teeth"
+    },
+    {
+      "id": "glasgow",
+      "title": "The Importance of Consistency and Attention in One Specific Canine-Human Relationship",
+      "period": "2020",
+      "location": "Glasgow, Scotland",
+      "hook": "A man who counts everything. A dog who learns his language.",
+      "url": "glasgow.html",
+      "ogImage": "og/og-glasgow.jpg",
+      "cssClass": "glasgow",
+      "theme": "ourtime"
+    },
+    {
+      "id": "parrot-tale",
+      "title": "The Parrot's Tale",
+      "period": "1618",
+      "location": "Agra, Mughal India",
+      "hook": "A parrot who remembers everything. A girl who won't stay caged. A dog made of moonlight and hunger.",
+      "url": "parrot-tale.html",
+      "ogImage": "og/og-parrot-tale.jpg",
+      "cssClass": "parrot",
+      "theme": "myth"
+    },
+    {
+      "id": "do-better",
+      "title": "Do Better",
+      "period": "2026",
+      "location": "Sydney, Australia",
+      "hook": "A custody handover in a park. The dog is fine. They are not.",
+      "url": "do-better.html",
+      "ogImage": "og/og-dobetter.jpg",
+      "cssClass": "do-better",
+      "theme": "ourtime"
+    },
+    {
+      "id": "after-snow",
+      "title": "After Snow",
+      "period": "1720",
+      "location": "Edo, Japan",
+      "hook": "A woman, a room, a trembling chin dog. The objects that outlast us.",
+      "url": "after-snow.html",
+      "ogImage": "og/og-after-snow.jpg",
+      "cssClass": "after-snow",
+      "theme": "myth"
+    }
+  ]
+}
